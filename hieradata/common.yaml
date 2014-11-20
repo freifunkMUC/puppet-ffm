@@ -1,2 +1,4 @@
 ---
-role: '::ffm::roles::freifunk_gateway'
+role: '::roles::freifunk_gateway'
+
+profiles::fastd::version: '16-1'

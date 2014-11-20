@@ -2,7 +2,7 @@
 :backends:
   - yaml
 :yaml:
-  :datadir: 'hieradata'
+  :datadir: '/vagrant/hieradata'
 :hierarchy:
   - "node/%{::fqdn}"
   - common
