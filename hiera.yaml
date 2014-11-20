@@ -4,5 +4,5 @@
 :yaml:
   :datadir: '/vagrant/hieradata'
 :hierarchy:
-  - "node/%{::fqdn}"
+  - "node/%{::certname}"
   - common

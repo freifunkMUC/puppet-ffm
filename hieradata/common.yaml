@@ -2,3 +2,5 @@
 role: '::roles::freifunk_gateway'
 
 profiles::fastd::version: '16-1'
+profiles::fastd::interface: 'mesh-vpn'
+
