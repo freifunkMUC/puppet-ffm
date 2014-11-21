@@ -6,5 +6,5 @@ class roles::freifunk_gateway {
   include profiles::batman_advanced
   include profiles::fastd
   include profiles::gateway_networking
-  include profiles::dhcp
+  include profiles::dhcpd
 }
