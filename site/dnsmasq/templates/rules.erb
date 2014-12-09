@@ -1,0 +1,5 @@
+# this file is managed by puppet
+# Forward DNS requests via wan-vpn
+<% @auth_servers.each do |server| -%>
+server=<%= server %>@<%= @vpn_interface %>
+<% end -%>

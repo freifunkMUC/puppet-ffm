@@ -1,2 +1,2 @@
 #!/bin/bash
-puppet apply --modulepath=./modules --hiera_config=hiera.yaml site.pp
+puppet apply --modulepath=./modules:./site --hiera_config=hiera.yaml ./manifests/site.pp

@@ -1,8 +1,18 @@
 ---
 :backends:
   - yaml
-:yaml:
-  :datadir: '/vagrant/hieradata'
+
+:logger: puppet
+
 :hierarchy:
-  - "node/%{::certname}"
-  - common
+  - "%{::fqdn}"
+  - 'server-peers'
+  - 'client-peers'
+  - 'common'
+
+:yaml:
+  :datadir: '/tmp/hiera'
+
+:puppet:
+  :datasource: data
+

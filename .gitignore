@@ -1,2 +1,6 @@
 modules/*
 .vagrant/
+.librarian/
+.tmp/
+Puppetfile.lock
+*.swp

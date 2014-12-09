@@ -1,0 +1,4 @@
+#!/bin/sh
+# this file is managed by puppet
+ip link set address <%= @interface_mac %> up dev <%= @interface %>
+batctl if add <%= @interface %>

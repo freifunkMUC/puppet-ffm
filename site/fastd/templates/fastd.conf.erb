@@ -1,0 +1,13 @@
+log level debug2;
+log to syslog level debug2;
+interface "<%= @interface %>";
+<% @ciphers.each do |cipher| -%>
+method "<%= cipher %>";
+<% end -%>
+bind any:<%= @port %>;
+include "secret.conf";
+secure handshakes yes;
+mtu <%= @mtu %>;
+include peers from "peers";
+on up "./fastd-up";
+status socket "/var/run/fastd.sock";

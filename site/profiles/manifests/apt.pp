@@ -1,14 +1,16 @@
 class profiles::apt {
 
-  contain ::apt
+  include ::apt
 
-  apt::source { 'universe-factory':
-    location => 'http://repo.universe-factory.net/debian/',
-    release => 'sid',
-    repos => 'main',
-    key => 'AB7A88C5B89033D8',
-    key_server => 'subkeys.pgp.net',
-    include_src => false,
+  ::apt::source { 'universe-factory':
+    comment           => 'universe-factory repository for Freifunk',
+    location          => 'http://repo.universe-factory.net/debian/',
+    release           => 'sid',
+    repos             => 'main',
+    key               => '16EF3F64CB201D9C',
+    key_server        => 'pgp.mit.edu',
+    include_src       => false,
+    include_deb       => true
   }
 
 }

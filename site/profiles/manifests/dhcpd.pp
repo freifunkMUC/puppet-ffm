@@ -8,4 +8,6 @@
 
 class profiles::dhcpd {
 
+  include iscdhcpd
+
 }

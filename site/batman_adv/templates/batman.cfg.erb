@@ -1,0 +1,21 @@
+# this file is managed by puppet
+auto br-ffmuc
+iface br-ffmuc inet6 static
+        bridge-ports none
+        address fdef:ffc0:4fff::<%= @hex_gateway_number %>
+        netmask 64
+iface <%= @bridge %> inet static
+        address 10.80.0.<%= @gateway_number %>
+        netmask 255.255.0.0
+allow-hotplug bat0
+iface bat0 inet6 manual
+        pre-up modprobe batman-adv
+        pre-up batctl gw server <%= @download_bandwidth %>/<%= @upload_bandwidth %>
+        pre-up batctl vm server
+        pre-up batctl if add mesh-vpn
+        up ip link set $IFACE up
+        post-up brctl addif <%= @bridge %> $IFACE
+        post-up batctl it 10000
+        post-up ip rule add from all fwmark 0x1 table <%= @vpn_routing_table %>
+        pre-down brctl delif <%= @bridge %> $IFACE || true
+        down ip link set $IFACE down

@@ -1,0 +1,13 @@
+# this file is managed by puppet
+bind-interfaces
+except-interface=lo
+<% @dns_interfaces.each do |interface| -%>
+interface=<%= interface %>
+<% end -%>
+listen-address=127.0.0.2
+no-dhcp-interface=<%= @no_dhcp_interface %>
+domain-needed
+no-resolv
+no-hosts
+cache-size=4096
+log-facility=/var/log/dnsmasq.log
