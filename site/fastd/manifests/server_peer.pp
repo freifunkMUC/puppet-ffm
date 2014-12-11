@@ -7,7 +7,7 @@ define fastd::server_peer (
   $community = hiera('community')
   $community_folder = "/etc/fastd/${community}-mesh-vpn"
 
-  $fastd_connection_ip = hiera('fastd_connection_ip')
+  $fastd_connection_ip = hiera('fastd::fastd_connection_ip')
   if ($name != $fqdn) and ($name != $fastd_connection_ip) {
     file {"${community_folder}/peers/${name}":
       ensure  => file,
@@ -15,7 +15,7 @@ define fastd::server_peer (
       group   => 'root',
       mode    => 0644,
       content => template('fastd/fastd-server-peer.erb'),
-      require => File["${community_folder}/peers/"],
+      require => [ Server['fastd'], File["${community_folder}/peers/"] ],
       notify  => Service['fastd'],
     }
   }

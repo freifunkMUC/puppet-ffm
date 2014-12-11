@@ -27,7 +27,6 @@ class dnsmasq (
   service { 'dns':
     name     => 'dnsmasq',
     ensure   => running,
-    provider => systemd,
     require  => Package['dnsmasq'],
   }
 

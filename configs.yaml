@@ -1,0 +1,10 @@
+---
+
+vagrant_provider: 'libvirt'
+hostname: 'ubuntu'
+ip: '192.168.100.100'
+boxname: 'trino/ubuntu_14.04.1_lts'
+puppet_folder: '/opt/puppet/puppet-ffm'
+hiera_folder: 'hieradata'
+hiera_folder_on_guest: '/tmp/hieradata'
+

@@ -1,2 +1,2 @@
 #!/bin/bash
-puppet apply --debug --show_diff --noop --modulepath=./modules --hiera_config=hiera.yaml site.pp
+puppet apply --debug --show_diff --noop --modulepath=./modules:./site --hiera_config=hiera.yaml ./manifests/site.pp

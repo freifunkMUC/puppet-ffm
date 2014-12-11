@@ -3,6 +3,9 @@ class batman_adv (
   $download_bandwidth = '10',
   $upload_bandwidth = '5',
 ) {
+  # default needed due to a kmod-bug which would be fixed with
+  # https://github.com/camptocamp/puppet-kmod/pull/25.patch
+  Exec { path => [ '/usr/local/sbin', '/usr/sbin', '/sbin', '/usr/local/bin', '/usr/bin', '/bin' ] }
 
   include kmod
   include fastd
@@ -35,6 +38,7 @@ class batman_adv (
     group   => 'root',
     mode    => 0644,
     content => template('batman_adv/batman.cfg.erb'),
+    notify  => Service['fastd'],
   }
 
   exec { "/sbin/ifup ${bridge}":

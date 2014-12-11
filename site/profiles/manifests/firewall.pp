@@ -1,9 +1,8 @@
 class profiles::firewall ( 
   $purge = 'false',
   $route_traffic_through_vpn_tunnel = 'true',
+  $fastd_connection_interface,
 ) {
-
-  package { 'iptables-persistent': }  # # this is autorequired by the puppetlabs-firewall
 
   if str2bool($purge) {
     resources { 'firewall':
@@ -14,7 +13,6 @@ class profiles::firewall (
   class { '::firewall': }
 
   $batman_bridge = hiera('batman_bridge')
-  $fastd_connection_interface = hiera('fastd_connection_interface')
 
   if str2bool($route_traffic_through_vpn_tunnel) {
     firewall { '100 Mark Mesh VPN Traffic':

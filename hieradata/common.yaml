@@ -1,6 +1,24 @@
 ---
-role: '::roles::freifunk_gateway'
 
-profiles::fastd::version: '16-1'
-profiles::fastd::interface: 'mesh-vpn'
+classes:
+  - roles::freifunk_gateway
+
+profiles::firewall::route_traffic_through_vpn_tunnel: 'true'
+profiles::firewall::purge: 'true'
+
+radvd::ipv6_prefix_wo_len: 'fdef:ffc0:4fff::'
+radvd::ipv6_prefix_length: 64
+
+dnsmasq::auth_servers:
+  - '85.214.20.141'  # FoeBud
+  - '213.73.91.35'   # dnscache.berlin.ccc.d
+
+batman_bridge: 'br-ff'
+fastd_connection_interface: 'eth0'
+vpn_interface: 'eth0'
+runs_on_box_behind_nat: 'false'
+
+vpn_routing_table_nr: 42
+
+
 

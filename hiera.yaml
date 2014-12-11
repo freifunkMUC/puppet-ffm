@@ -11,7 +11,7 @@
   - 'common'
 
 :yaml:
-  :datadir: '/tmp/hiera'
+  :datadir: '/tmp/hieradata'
 
 :puppet:
   :datasource: data

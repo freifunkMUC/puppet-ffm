@@ -12,7 +12,7 @@
 #     * MAC
 #     * IPv4/IPv6
 
-class profiles::fastd (
+class profiles::fastd {
 
   include ::fastd
 

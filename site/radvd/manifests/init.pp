@@ -25,7 +25,6 @@ class radvd (
 
   service { 'radvd':
     ensure   => running,
-    provider => systemd,
     require  => Package['radvd'],
   }
 

@@ -1,4 +1,6 @@
-class profiles::networking {
+class profiles::networking (
+  $fastd_connection_interface,
+) {
 
   include profiles::dns
 
@@ -37,17 +39,26 @@ class profiles::networking {
   # very hackish...
   $runs_on_box_behind_nat = hiera('runs_on_box_behind_nat')
   if str2bool($runs_on_box_behind_nat) {
-    $fastd_connection_interface = hiera('fastd_connection_interface')
     $internal_fastd_connection_ip = inline_template(
               "<%= scope.lookupvar('::ipaddress_${fastd_connection_interface}') -%>")
 
     $default_gw_ip = inline_template(
                      "<%= '${internal_fastd_connection_ip}'.sub(/\\.[0-9]*\$/,'.1') -%>")
+
+#   #TODO
+#   augeas { 'nameserver resolv.conf':
+#     context => '/files/etc/resolv.conf',
+#     changes => "set nameserver[0] ${default_gw_ip}",
+#     onlyif  => "match nameserver[. = '${default_gw_ip}' size == 0",
+#     incl    => '/etc/resolv.conf',
+#     lens    => 'Resolv.lns',
+#   } ->
     exec { "ip route del default; ip route add default via ${default_gw_ip} dev ${fastd_connection_interface}":
       path    => '/usr/local/bin:/usr/bin:/bin:/usr/local/sbin/:/usr/sbin/:/sbin',
       unless  => "ip route show | grep 'default via ${default_gw_ip}'",
       require => File['/etc/network/interfaces.d/batman.cfg'],
     }
+
   }
 
 }

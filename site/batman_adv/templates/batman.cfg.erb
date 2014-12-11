@@ -10,7 +10,7 @@ iface <%= @bridge %> inet static
 allow-hotplug bat0
 iface bat0 inet6 manual
         pre-up modprobe batman-adv
-        pre-up batctl gw server <%= @download_bandwidth %>/<%= @upload_bandwidth %>
+        pre-up batctl gw server <%= @download_bandwidth %>mbit/<%= @upload_bandwidth %>mbit
         pre-up batctl vm server
         pre-up batctl if add mesh-vpn
         up ip link set $IFACE up

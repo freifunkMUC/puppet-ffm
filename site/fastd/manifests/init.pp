@@ -7,6 +7,7 @@ class fastd (
   $mtu = '1426',
   $interface = 'mesh-vpn',
   $ciphers = [ 'salsa2012+umac', 'salsa2012+gmac', 'xsalsa20-poly1305' ],
+  $fastd_connection_ip,
 ) {
   include gwlib
 
@@ -66,13 +67,13 @@ class fastd (
   } ->
   service { 'fastd':
     ensure   => running,
-    provider => systemd,
   }
 
   class { 'fastd::gluonconfig':
     fastd_port             => $port,
     fastd_public_key       => $public_key,
     fastd_community_folder => $community_folder,
+    fastd_connection_ip    => $fastd_connection_ip,
   }
   File["${community_folder}"] -> Class['fastd::gluonconfig']
 

@@ -1,0 +1,3 @@
+# this file is managed by puppet
+/sbin/ip route add unreachable default table <%= @vpn_routing_table %>
+/sbin/ip rule add from all fwmark 0x1 table <%= @vpn_routing_table %>

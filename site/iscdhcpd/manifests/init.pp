@@ -23,7 +23,6 @@ class iscdhcpd (
 
   service { 'isc-dhcp-server':
     ensure   => running,
-    provider => systemd,
     require  => Package['isc-dhcp-server'],
   }
 
