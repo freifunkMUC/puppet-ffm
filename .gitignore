@@ -4,3 +4,4 @@ modules/*
 .tmp/
 Puppetfile.lock
 *.swp
+hieradata/ubuntu.yaml

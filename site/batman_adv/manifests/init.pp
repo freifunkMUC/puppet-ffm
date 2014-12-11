@@ -5,11 +5,9 @@ class batman_adv (
 ) {
   # default needed due to a kmod-bug which would be fixed with
   # https://github.com/camptocamp/puppet-kmod/pull/25.patch
-  Exec { path => [ '/usr/local/sbin', '/usr/sbin', '/sbin', '/usr/local/bin', '/usr/bin', '/bin' ] }
-
-  include kmod
   include fastd
   include gwlib
+  class { 'batman_adv::module': }
 
   $vpn_routing_table   = hiera('vpn_routing_table_nr')
   $gateway_number      = hiera('gateway_number')
@@ -19,10 +17,8 @@ class batman_adv (
     fail('Only Debian is supported right now.')
   }
 
-  kmod::load { 'batman_adv':
-  } ->
-  package { 'batctl':
-  }
+
+
 
   package { 'bridge-utils':
   } ->
