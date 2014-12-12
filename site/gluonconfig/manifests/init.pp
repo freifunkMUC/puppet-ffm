@@ -1,3 +1,4 @@
+# vim: set sw=2 sts=2 et tw=80 :
 class gluonconfig {
 
 # # we should generate some parts of the configs automatically

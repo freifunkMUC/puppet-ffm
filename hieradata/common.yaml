@@ -3,8 +3,8 @@
 classes:
   - roles::freifunk_gateway
 
-profiles::firewall::route_traffic_through_vpn_tunnel: 'true'
-profiles::firewall::purge: 'true'
+profiles::firewall::route_traffic_through_vpn_tunnel: true
+profiles::firewall::purge: true
 
 radvd::ipv6_prefix_wo_len: 'fdef:ffc0:4fff::'
 radvd::ipv6_prefix_length: 64
@@ -17,7 +17,7 @@ dnsmasq::listen_address: '127.0.0.1'    # if running another dns-server then 127
 batman_bridge: 'br-ff'
 fastd_connection_interface: 'eth0'
 vpn_interface: 'eth0'
-runs_on_box_behind_nat: 'false'
+runs_on_box_behind_nat: false
 
 vpn_routing_table_nr: 42
 

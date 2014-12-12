@@ -1,7 +1,8 @@
+# vim: set sw=2 sts=2 et tw=80 :
 class fastd (
   $public_key,
   $secret_key,
-  $client_pubkeys = [], 
+  $client_pubkeys = [],
   $port = '10000',
   $server_peers,
   $mtu = '1426',
@@ -28,16 +29,16 @@ class fastd (
   package { 'fastd':
   } ->
   file { [ '/etc/fastd/', $community_folder, "${community_folder}/peers/" ]:
-    ensure  => 'directory',
-    owner   => 'root',
-    group   => 'root',
-    mode    => 0755,
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   } ->
   file { "${community_folder}/keys":
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode    => 0600,
+    mode    => '0600',
     content => template('fastd/keys.erb'),
     notify  => Service['fastd'],
   } ->
@@ -45,7 +46,7 @@ class fastd (
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode    => 0600,
+    mode    => '0600',
     content => template('fastd/secret.conf.erb'),
     notify  => Service['fastd'],
   } ->
@@ -53,7 +54,7 @@ class fastd (
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode    => 0700,
+    mode    => '0700',
     content => template('fastd/fastd-up.erb'),
     notify  => Service['fastd'],
   } ->
@@ -61,12 +62,12 @@ class fastd (
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode    => 0600,
+    mode    => '0600',
     content => template('fastd/fastd.conf.erb'),
     notify  => Service['fastd'],
   } ->
   service { 'fastd':
-    ensure   => running,
+    ensure => running,
   }
 
   class { 'fastd::gluonconfig':
@@ -75,13 +76,13 @@ class fastd (
     fastd_community_folder => $community_folder,
     fastd_connection_ip    => $fastd_connection_ip,
   }
-  File["${community_folder}"] -> Class['fastd::gluonconfig']
+  File[$community_folder] -> Class['fastd::gluonconfig']
 
   file { '/usr/local/sbin/fastd-status':
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode    => 0744,
+    mode    => '0744',
     content => template('fastd/fastd-status.erb'),
   }
 

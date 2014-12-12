@@ -1,3 +1,4 @@
+# vim: set sw=2 sts=2 et tw=80 :
 class fastd::gluonconfig (
   $fastd_public_key,
   $fastd_port,
@@ -10,9 +11,9 @@ class fastd::gluonconfig (
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode    => 0600,
+    mode    => '0600',
     content => template('fastd/fastd-router-snippet.erb'),
-    require => File["${fastd_community_folder}"],
+    require => File[$fastd_community_folder],
   }
 
 }

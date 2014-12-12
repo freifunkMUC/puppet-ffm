@@ -1,3 +1,4 @@
+# vim: set sw=2 sts=2 et tw=80 :
 class batman_adv (
   $bridge,
   $download_bandwidth = '10',
@@ -9,9 +10,9 @@ class batman_adv (
   include gwlib
   class { 'batman_adv::module': }
 
-  $vpn_routing_table   = hiera('vpn_routing_table_nr')
-  $gateway_number      = hiera('gateway_number')
-  $hex_gateway_number  = int_to_hex( $gateway_number )
+  $vpn_routing_table  = hiera('vpn_routing_table_nr')
+  $gateway_number     = hiera('gateway_number')
+  $hex_gateway_number = int_to_hex( $gateway_number )
 
   if $::osfamily != 'Debian' {
     fail('Only Debian is supported right now.')
@@ -20,16 +21,16 @@ class batman_adv (
   package { 'bridge-utils':
   } ->
   file { '/etc/network/interfaces.d/':
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    mode    => 0755,
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   } ->
   file { '/etc/network/interfaces.d/batman.cfg':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => 0644,
+    mode    => '0644',
     content => template('batman_adv/batman.cfg.erb'),
     notify  => Service['fastd'],
   }

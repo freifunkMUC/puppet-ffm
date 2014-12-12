@@ -15,17 +15,17 @@ class radvd (
   package { 'radvd':
   } ->
   file { '/etc/radvd.conf':
-    ensure      => file,
-    owner       => 'root',
-    group       => 'root',
-    mode        => 0644,
-    content     => template('radvd/radvd.conf.erb'),
-    notify      => Service['radvd'],
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('radvd/radvd.conf.erb'),
+    notify  => Service['radvd'],
   }
 
   service { 'radvd':
-    ensure   => running,
-    require  => Package['radvd'],
+    ensure  => running,
+    require => Package['radvd'],
   }
 
 }

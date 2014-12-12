@@ -1,6 +1,6 @@
-class profiles::firewall ( 
-  $purge = 'false',
-  $route_traffic_through_vpn_tunnel = 'true',
+class profiles::firewall (
+  $purge = false,
+  $route_traffic_through_vpn_tunnel = true,
   $fastd_connection_interface,
 ) {
 
@@ -14,15 +14,15 @@ class profiles::firewall (
 
   $batman_bridge = hiera('batman_bridge')
 
-  if str2bool($route_traffic_through_vpn_tunnel) {
+  if $route_traffic_through_vpn_tunnel {
     firewall { '100 Mark Mesh VPN Traffic':
-      provider  => 'iptables',
-      chain     => 'PREROUTING',
-      table     => 'mangle',
-      iniface   => $batman_bridge,
-      proto     => 'all',
-      jump      => 'MARK',
-      set_mark  => '0x1/0xffffffff',
+      provider => 'iptables',
+      chain    => 'PREROUTING',
+      table    => 'mangle',
+      iniface  => $batman_bridge,
+      proto    => 'all',
+      jump     => 'MARK',
+      set_mark => '0x1/0xffffffff',
     }
   }
 

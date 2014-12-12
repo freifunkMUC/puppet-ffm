@@ -19,7 +19,7 @@ class profiles::networking (
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => 0644,
+    mode    => '0644',
     content => template('profiles/rc.local.erb'),
     notify  => Service['dns'],
   }
@@ -40,10 +40,10 @@ class profiles::networking (
   $runs_on_box_behind_nat = hiera('runs_on_box_behind_nat')
   if str2bool($runs_on_box_behind_nat) {
     $internal_fastd_connection_ip = inline_template(
-              "<%= scope.lookupvar('::ipaddress_${fastd_connection_interface}') -%>")
+      "<%= scope.lookupvar('::ipaddress_${fastd_connection_interface}') -%>")
 
     $default_gw_ip = inline_template(
-                     "<%= '${internal_fastd_connection_ip}'.sub(/\\.[0-9]*\$/,'.1') -%>")
+      "<%= '${internal_fastd_connection_ip}'.sub(/\\.[0-9]*\$/,'.1') -%>")
 
     exec { "ip route del default; ip route add default via ${default_gw_ip} dev ${fastd_connection_interface}":
       path    => '/usr/local/bin:/usr/bin:/bin:/usr/local/sbin/:/usr/sbin/:/sbin',

@@ -1,3 +1,4 @@
+# vim: set sw=2 sts=2 et tw=80 :
 class vpntunnel (
   $vpn_provider = 'default',
 ) {
