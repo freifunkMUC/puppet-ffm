@@ -1,9 +1,11 @@
 class batman_adv::module (
-  $version = '2014.3.0'
+  $version = '2014.3.0',
+  $batctl_minor_version = '2',
 ) {
   include kmod
 
   Exec { path => [ '/usr/local/sbin', '/usr/sbin', '/sbin', '/usr/local/bin', '/usr/bin', '/bin' ] }
+  Kmod::Load { notify => Service['fastd'] }
 
   case $::operatingsystem {
     'Debian': {
@@ -11,30 +13,47 @@ class batman_adv::module (
         kmod::load { 'batman_adv':
         } ->
         package { 'batctl':
+          ensure => "${version}-${batctl_minor_version}",
         }
       } else {
         fail("${::operatingsystemmajrelease} is not yet supported!")
       }
     }
     'Ubuntu': {
-    #  package { 'batman-adv-dkms':
-    #  }
-    # apt-get install batman-adv-dkms
-    # dkms remove batman-adv/2013.4.0 --all
+      if $::operatingsystemmajrelease == '14.04' {
+        $old_version = '2013.4.0'
 
-    # batman-adv-dkms
-    # dkms --force install batman-adv/2014.3.0
-    # http://www.open-mesh.net/
-    #   if $::operatingsystemmajrelease {
-        kmod::load { 'batman_adv':
+        package { 'batman-adv-dkms':
+        } ->
+        package { 'batman-adv-source':
         } ->
         package { 'batctl':
+          ensure => "${version}-${batctl_minor_version}",
+        } ->
+        exec { "dkms remove batman-adv/${old_version} --all":
+          unless => "test -n \"\$( dkms status -m batman-adv/${old_version} )\"",
+        } ->
+        exec { "git clone http://git.open-mesh.org/batman-adv.git batman-adv-${version}":
+          cwd    => '/usr/src',
+          unless => "stat /usr/src/batman-adv-${version}",
+        } ->
+        exec { "git checkout v${version}":
+          cwd => "/usr/src/batman-adv-${version}",
+        } ->
+        file { "/usr/src/batman-adv-${version}/dkms.conf":
+          ensure  => file,
+          owner   => 'root',
+          group   => 'root',
+          mode    => 0644,
+          content => template('batman_adv/dkms.conf.erb'),
+        } ->
+        exec { "dkms --force install batman-adv/${version}":
+        } ->
+        kmod::load { 'batman_adv':
         }
-    # } else {
-    #   fail("${::operatingsystemmajrelease} is not yet supported!")
-    # }
-
-      fail("${::operatingsystem} is not supported at the moment!")
+      } else {
+        fail("${::operatingsystem} ${::operatingsystemmajrelease} is not yet supported!")
+      }
     }
     default: {
       fail("${::operatingsystem} is not yet supported!")

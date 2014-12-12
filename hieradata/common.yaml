@@ -12,6 +12,7 @@ radvd::ipv6_prefix_length: 64
 dnsmasq::auth_servers:
   - '85.214.20.141'  # FoeBud
   - '213.73.91.35'   # dnscache.berlin.ccc.d
+dnsmasq::listen_address: '127.0.0.1'    # if running another dns-server then 127.0.0.2 is appropriate
 
 batman_bridge: 'br-ff'
 fastd_connection_interface: 'eth0'

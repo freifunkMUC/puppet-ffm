@@ -17,9 +17,6 @@ class batman_adv (
     fail('Only Debian is supported right now.')
   }
 
-
-
-
   package { 'bridge-utils':
   } ->
   file { '/etc/network/interfaces.d/':

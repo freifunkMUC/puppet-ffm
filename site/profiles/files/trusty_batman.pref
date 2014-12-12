@@ -1,0 +1,3 @@
+Package: *
+Pin: release v=14.04, l=Ubuntu
+Pin-Priority: 1000

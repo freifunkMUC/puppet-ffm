@@ -2,6 +2,7 @@ class dnsmasq (
   $auth_servers = [ '85.214.20.141', '213.73.91.35' ],
   $dns_interfaces,
   $no_dhcp_interface,
+  $listen_address,
 ) {
   $vpn_interface = hiera('vpn_interface')
 

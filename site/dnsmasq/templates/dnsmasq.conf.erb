@@ -4,7 +4,7 @@ except-interface=lo
 <% @dns_interfaces.each do |interface| -%>
 interface=<%= interface %>
 <% end -%>
-listen-address=127.0.0.2
+listen-address=<%= @listen_address %>
 no-dhcp-interface=<%= @no_dhcp_interface %>
 domain-needed
 no-resolv

@@ -13,4 +13,21 @@ class profiles::apt {
     include_deb       => true
   }
 
+  if $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '14.04' {
+    file { '/etc/apt/preferences.d/batman.pref':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => 0644,
+      source  => 'puppet:///modules/profiles/trusty_batman.pref',
+    } -> ::apt::source { 'utopic':
+      comment           => 'ubuntu utopic',
+      location          => 'http://de.archive.ubuntu.com/ubuntu/',
+      release           => 'utopic',
+      repos             => 'main universe',
+      include_src       => true,
+      include_deb       => true
+    }
+  }
+
 }
