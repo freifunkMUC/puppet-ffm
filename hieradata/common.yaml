@@ -23,5 +23,6 @@ vpn_routing_table_nr: 42
 
 ubuntu_kernelversion: '3.16.0.23.24',
 
+fastd::port: 10000
 
 
