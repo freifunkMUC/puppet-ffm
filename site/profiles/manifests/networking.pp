@@ -1,5 +1,6 @@
 class profiles::networking (
   $fastd_connection_interface,
+  $default_gateway_ip = undef,
 ) {
 
   include profiles::dns
@@ -42,13 +43,12 @@ class profiles::networking (
     $internal_fastd_connection_ip = inline_template(
       "<%= scope.lookupvar('::ipaddress_${fastd_connection_interface}') -%>")
 
-    $default_gw_ip = inline_template(
-      "<%= '${internal_fastd_connection_ip}'.sub(/\\.[0-9]*\$/,'.1') -%>")
-
-    exec { "ip route del default; ip route add default via ${default_gw_ip} dev ${fastd_connection_interface}":
-      path    => '/usr/local/bin:/usr/bin:/bin:/usr/local/sbin/:/usr/sbin/:/sbin',
-      unless  => "ip route show | grep 'default via ${default_gw_ip}'",
-      require => File['/etc/network/interfaces.d/batman.cfg'],
+    if $default_gateway_ip != undef {
+      exec { "ip route del default; ip route add default via ${default_gateway_ip} dev ${fastd_connection_interface}":
+        path    => '/usr/local/bin:/usr/bin:/bin:/usr/local/sbin/:/usr/sbin/:/sbin',
+        unless  => "ip route show | grep 'default via ${default_gateway_ip}'",
+        require => File['/etc/network/interfaces.d/batman.cfg'],
+      }
     }
 
   }
