@@ -14,10 +14,6 @@ hiera_folder  = puppet_folder + '/' + configs['hiera_folder']
 ENV['VAGRANT_DEFAULT_PROVIDER'] ||= configs['vagrant_provider']
 
 Vagrant.configure( 2 ) do |config|
-# config.vm.provision "shell", :inline => <<-SHELL
-#   apt-get update
-#   apt-get install -y puppet
-# SHELL
 
   config.vm.define configs['hostname'] do |d|
     d.vm.box = configs['boxname']
@@ -37,7 +33,7 @@ Vagrant.configure( 2 ) do |config|
     puppet.module_path = [ puppet_folder + "/site", puppet_folder + "/modules" ]
     puppet.hiera_config_path = puppet_folder + "/hiera.yaml"
     puppet.working_directory = configs['hiera_folder_on_guest']
-    puppet.options = "--verbose --debug"
+    puppet.options = configs['puppet_options']
   end
 
 end

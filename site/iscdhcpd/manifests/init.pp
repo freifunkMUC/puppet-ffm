@@ -25,8 +25,9 @@ class iscdhcpd (
   }
 
   service { 'isc-dhcp-server':
-    ensure  => running,
-    require => Package['isc-dhcp-server'],
+    ensure     => running,
+    hasrestart => true,
+    require    => Package['isc-dhcp-server'],
   }
 
 }

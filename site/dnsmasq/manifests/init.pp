@@ -4,8 +4,8 @@ class dnsmasq (
   $dns_interfaces,
   $no_dhcp_interface,
   $listen_address,
+  $vpn_interface,
 ) {
-  $vpn_interface = hiera('vpn_interface')
 
   package { 'dnsmasq':
   } ->
@@ -27,9 +27,10 @@ class dnsmasq (
   }
 
   service { 'dns':
-    ensure  => running,
-    name    => 'dnsmasq',
-    require => Package['dnsmasq'],
+    ensure     => running,
+    name       => 'dnsmasq',
+    hasrestart => true,
+    require    => Package['dnsmasq'],
   }
 
 }

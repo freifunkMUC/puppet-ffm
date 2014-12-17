@@ -1,6 +1,6 @@
 # this file is managed by puppet
-auto br-ffmuc
-iface br-ffmuc inet6 static
+auto <%= @bridge %>
+iface <%= @bridge %> inet6 static
         bridge-ports none
         address fdef:ffc0:4fff::<%= @hex_gateway_number %>
         netmask 64

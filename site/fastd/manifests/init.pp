@@ -67,7 +67,8 @@ class fastd (
     notify  => Service['fastd'],
   } ->
   service { 'fastd':
-    ensure => running,
+    ensure     => running,
+    hasrestart => true,
   }
 
   class { 'fastd::gluonconfig':

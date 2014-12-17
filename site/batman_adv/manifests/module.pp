@@ -23,9 +23,10 @@ class batman_adv::module (
     }
     'Ubuntu': {
       if $::operatingsystemmajrelease == '14.04' {
-        if kernelmajversion != '3.16' {
+        if $::kernelmajversion != '3.16' {
+          $ubuntu_kernelversion = hiera('ubuntu_kernelversion')
           package { 'linux-image-generic':
-            ensure => '3.16.0.23.24',
+            ensure => $ubuntu_kernelversion,
           } ->
           notify { 'You need to reboot first with your new kernel!': }
         }

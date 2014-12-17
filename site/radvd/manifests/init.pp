@@ -24,8 +24,9 @@ class radvd (
   }
 
   service { 'radvd':
-    ensure  => running,
-    require => Package['radvd'],
+    ensure     => running,
+    hasrestart => true,
+    require    => Package['radvd'],
   }
 
 }
