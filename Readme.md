@@ -1,13 +1,12 @@
-### FFMUC Puppet Repo
 
-## base system
+# base system
 ```
 As a first step you should install ubuntu 14.04 lts on your machine.
 Debian Jessie should also work.
 ```
 
 
-## bootstrapping the installation
+# bootstrapping the installation
 ```
 sudo apt-get -y upgrade
 curl https://apt.puppetlabs.com/puppetlabs-release-trusty.deb -O
@@ -25,7 +24,7 @@ librarian-puppet install
 ```
 
 
-## configuration
+# configuration
 /usr/bin/editor hieradata/$(facter fqdn).yaml
 
 
@@ -61,20 +60,20 @@ The example-file also refers to a provider 'libvirt' which you may
 install with "vagrant plugin install vagrant-libvirt".
 
 
-# box behind nat
+#### box behind nat
 Please look up how to set up the right firewall-rules for your operating
 system to forward the port to your Virtual Machine if you want to use this
 kind of setup.
 
 
-# With Vagrant
+#### With Vagrant
 After you modified "configs.yaml" to your needs, you may hit "vagrant up"
 into your terminal.
 Make sure, that your Operating System is allowing you to add the NFS-folders
 and that the firewall is not blocking nfs.
 
 
-# Without Vagrant
+#### Without Vagrant
 This changes the configuration and packages of your machine where you
 are logged in right now!
 Etckeeper comes with this installation so you may check for changes there as well.
@@ -82,7 +81,7 @@ Etckeeper comes with this installation so you may check for changes there as wel
 sudo ./apply.sh
 
 
-# A new Kernel for Ubuntu 14.04. LTS
+#### A new Kernel for Ubuntu 14.04. LTS
 Because puppet installed you a new kernel, you need to reboot your machine.
 It is possible, that fastd isn't correctly setting up the bat0 interface after
 a reboot. If this is the case, you need to restart fastd by hand.
