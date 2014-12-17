@@ -87,5 +87,20 @@ It is possible, that fastd isn't correctly setting up the bat0 interface after
 a reboot. If this is the case, you need to restart fastd by hand.
 
 
+# fastd clients
+In the file "hieradata/client-peers.yaml" exists an array of public keys of
+fastd clients.
+---
+
+fastd::client_pubkeys:
+  - 'insert first key here...'
+  - 'insert second key here...'
+  - 'insert third key here...'
+  - '...'
+
+
+If you change the client-peers you should just run puppet again, either with
+"sudo ./apply.sh" or with "vagrant provision".
+
 
 
