@@ -11,7 +11,6 @@ allow-hotplug bat0
 iface bat0 inet6 manual
         pre-up modprobe batman-adv
         pre-up batctl gw server <%= @download_bandwidth %>mbit/<%= @upload_bandwidth %>mbit
-        pre-up batctl vm server
         pre-up batctl if add mesh-vpn
         up ip link set $IFACE up
         post-up brctl addif <%= @bridge %> $IFACE
