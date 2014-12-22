@@ -1,5 +1,8 @@
 ---
 
+nfs_udp: true
+nfs_version: 3
+
 vagrant_provider: 'libvirt'
 ip: '192.168.100.100'
 puppet_folder: '/opt/puppet-ffm'

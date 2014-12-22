@@ -18,7 +18,7 @@ Vagrant.configure( 2 ) do |config|
   config.vm.define configs['hostname'] do |d|
     d.vm.box = configs['boxname']
     d.vm.hostname = configs['hostname']
-    d.vm.synced_folder hiera_folder, configs['hiera_folder_on_guest'], type: 'nfs'
+    d.vm.synced_folder hiera_folder, configs['hiera_folder_on_guest'], type: 'nfs', :nfs_version => conf
     d.vm.network :private_network, :ip => configs['ip']
   end
 
