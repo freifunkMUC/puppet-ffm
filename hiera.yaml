@@ -5,7 +5,8 @@
 :logger: puppet
 
 :hierarchy:
-  - "%{::fqdn}"
+  - "hosts/%{::fqdn}"
+  - "hosts/%{::hostname}"
   - 'server-peers'
   - 'client-peers'
   - 'common'
