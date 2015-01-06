@@ -1,12 +1,10 @@
 class profiles::etckeeper {
 
   include ::apt
-  Exec['apt_update'] -> Package <| title != 'etckeeper' and title != 'git' |>
 
-  package { 'git':
-  } ->
-  package { 'etckeeper':
-  } -> File <| |>
+  Exec['apt_update'] ->
+  package { 'git': } ->
+  package { 'etckeeper': } ->
 
   file { '/etc/etckeeper/etckeeper.conf':
     ensure => file,
@@ -15,7 +13,8 @@ class profiles::etckeeper {
     mode   => '0644',
     source => 'puppet:///modules/profiles/etckeeper.conf',
   } ->
-  exec { 'etckeeper init':
-    path   => '/usr/local/bin:/usr/bin:/bin:/usr/local/sbin/:/usr/sbin/:/sbin',
+
+  exec { '/usr/bin/etckeeper init':
+    creates => '/etc/.etckeeper',
   }
 }
