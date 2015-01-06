@@ -8,7 +8,7 @@ class profiles::apt {
     release     => 'sid',
     repos       => 'main',
     key         => '16EF3F64CB201D9C',
-    key_server  => 'pgp.mit.edu',
+    key_server  => 'pool.sks-keyservers.net',
     include_src => false,
     include_deb => true
   }
