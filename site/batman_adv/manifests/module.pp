@@ -11,14 +11,16 @@ class batman_adv::module (
 
   case $::operatingsystem {
     'Debian': {
-      if $::operatingsystemmajrelease == 'jessie/sid' {
-        kmod::load { 'batman_adv':
-        } ->
-        package { 'batctl':
-          ensure => "${version}-${batctl_minor_version}",
+      case $::operatingsystemmajrelease {
+        'jessie/sid', '8': {
+          kmod::load { 'batman_adv': } ->
+          package { 'batctl':
+            ensure => "${version}-${batctl_minor_version}",
+          }
         }
-      } else {
-        fail("${::operatingsystemmajrelease} is not yet supported!")
+        default: {
+          fail("${::operatingsystemmajrelease} is not yet supported!")
+        }
       }
     }
     'Ubuntu': {
