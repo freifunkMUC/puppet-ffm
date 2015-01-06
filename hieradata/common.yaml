@@ -1,5 +1,7 @@
 ---
 
+community: 'ffmuc'
+
 classes:
   - roles::freifunk_gateway
 
