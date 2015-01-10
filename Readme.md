@@ -1,24 +1,28 @@
+# puppet-ffm
 
-# Warning
+These are puppet manifests to set up Freifunk gateways and servers that are
+compatible with the gluon firmware. The goal is to keep them as general and
+configurable as possible to be used in other communities.
+
+Status: *very experimental*
+
+# what's missing right now
+- There is no configuration of a vpn for the user-traffic from the routers.
+  Therefor the traffic is either directly going into the internet or cannot
+  be delivered at all.
+  (`profiles::firewall::route_traffic_through_vpn_tunnel`)
+- No Alfred is being configured.
+- no intercity-vpn yet
+
+## warning
 You should set up a vpn for the traffic which will flow through the
 new gateway.
 Until that you should probably stop fastd with "service fastd stop".
 
-
-# whats missing right now
-- There is no configuration of a vpn for the user-traffic from the routers.
-  Therefor the traffic is either directly going into the internet or cannot
-  be delivered at all.
-  (Config-Flag: profiles::firewall::route_traffic_through_vpn_tunnel)
-- No Alfred is being configured.
-- no intercity-vpn yet
-
-
 # base system
-```
+
 As a first step you should install ubuntu 14.04 lts on your machine.
 Debian Jessie should also work.
-```
 
 
 # bootstrapping the installation
@@ -32,15 +36,16 @@ sudo apt-get -y install git puppet make ruby-dev
 sudo gem install librarian-puppet
 
 cd /opt
-sudo git clone -b automatic_gw_01 https://github.com/freifunkMUC/puppet-ffm.git
+sudo git clone https://github.com/freifunkMUC/puppet-ffm.git
 sudo chown -R $USER:$USER puppet-ffm
 cd puppet-ffm
 librarian-puppet install
 ```
 
-
 # configuration
-/usr/bin/editor hieradata/$(facter fqdn).yaml
+```
+$EDITOR hieradata/hosts/$(facter fqdn).yaml
+```
 
 If you are not on the system which should be changed, you need to
 use the fqdn of the corresponding virtual machine as the name of
@@ -48,7 +53,7 @@ the yaml-file.
 
 **Attention:** The following config will not use a vpn tunnel!
 
-Example hieradata/$( facter fqdn ).yaml file
+Example hieradata/hosts/$(facter fqdn).yaml file:
 ```
 ---
 
@@ -90,7 +95,6 @@ You should also have a look at "hieradata/common.yaml" which has
 several default parameters set. This data however gets overwritten
 by the more specific file "hieradata/$( facter fqdn ).yaml".
 
-
 If you would like to use Vagrant for setting up a Virtual Machine
 you will need to change "configs.yaml" as well.
 
@@ -120,8 +124,9 @@ This changes the configuration and packages of your machine where you
 are logged in right now!
 Etckeeper comes with this installation so you may check for changes there as well.
 
+```
 sudo ./apply.sh
-
+```
 
 #### A new Kernel for Ubuntu 14.04. LTS
 Because puppet installed you a new kernel, you need to reboot your machine.
@@ -132,6 +137,7 @@ a reboot. If this is the case, you need to restart fastd by hand.
 # fastd clients
 In the file "hieradata/client-peers.yaml" exists an array of public keys of
 fastd clients.
+
 ```
 ---
 
@@ -142,9 +148,18 @@ fastd::client_pubkeys:
   - '...'
 ```
 
-
 If you change the client-peers you should just run puppet again, either with
-"sudo ./apply.sh" or with "vagrant provision".
+`sudo ./apply.sh` or with `vagrant provision`.
 
+# code checking & testing
 
+For syntax and lint checking install the ruby dependencies i.e. with `bundler`
+and call `rake`:
+
+```
+bundle install --path vendor/bundle
+bundle exec rake
+```
+
+Use `bundle update` to keep your Gems up-to-date.
 
