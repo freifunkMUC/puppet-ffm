@@ -12,8 +12,8 @@ class fastd (
   $community,
   $gateway_number,
 ) {
-  include gwlib
-  include fastd::service
+  include ::gwlib
+  include ::fastd::service
 
   $hex_gateway_number  = int_to_hex( $gateway_number )
   $interface_mac = "10:80:00:${hex_gateway_number}:66:66"

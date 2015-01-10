@@ -4,10 +4,11 @@ class radvd (
   $ipv6_prefix_length,
   $gateway_number,
 ) {
-  include gwlib
+  include ::gwlib
+  include ::radvd::service
 
-  $hex_gateway_number  = int_to_hex( $gateway_number )
-  $RDNSS               = "${ipv6_prefix_wo_len}${hex_gateway_number}"
+  $hex_gateway_number = int_to_hex( $gateway_number )
+  $RDNSS              = "${ipv6_prefix_wo_len}${hex_gateway_number}"
 
   package { 'radvd':
   } ->
@@ -18,12 +19,7 @@ class radvd (
     mode    => '0644',
     content => template('radvd/radvd.conf.erb'),
     notify  => Service['radvd'],
-  }
-
-  service { 'radvd':
-    ensure     => running,
-    hasrestart => true,
-    require    => Package['radvd'],
-  }
+  } ->
+  Service['radvd']
 
 }
