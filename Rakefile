@@ -4,11 +4,9 @@ Rake::Task['lint'].clear
 
 PuppetLint::RakeTask.new :lint do |config|
   config.pattern = ['manifests/**/*.pp', 'site/**/*.pp']
-  config.fail_on_warnings = true
 end
 
 PuppetLint.configuration.send('disable_documentation')
-PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.send('disable_class_inherits_from_params_class')
 
 require 'puppet-syntax/tasks/puppet-syntax'
