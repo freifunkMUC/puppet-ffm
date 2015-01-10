@@ -2,6 +2,8 @@ class profiles::apt {
 
   include ::apt
 
+  Exec['apt_update'] -> Package <||>
+
   ::apt::source { 'universe-factory':
     comment     => 'universe-factory repository for Freifunk',
     location    => 'http://repo.universe-factory.net/debian/',
