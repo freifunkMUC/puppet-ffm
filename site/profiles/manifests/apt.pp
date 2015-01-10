@@ -31,6 +31,14 @@ class profiles::apt {
       include_src => true,
       include_deb => true
     }
+
+    ::apt::source { 'vivid':
+      comment     => 'ubuntu vivid',
+      location    => 'http://de.archive.ubuntu.com/ubuntu/',
+      release     => 'vivid',
+      repos       => 'main universe',
+      include_deb => true
+    }
   }
 
 }
