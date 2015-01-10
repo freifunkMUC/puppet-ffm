@@ -6,8 +6,12 @@
 # * DNS server
 # * Domain
 
-class profiles::dhcpd {
+class profiles::dhcpd (
+  $gateway_number,
+) {
 
-  include iscdhcpd
+  class { '::iscdhcpd':
+    gateway_number => $gateway_number,
+  }
 
 }

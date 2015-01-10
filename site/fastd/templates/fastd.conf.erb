@@ -1,6 +1,6 @@
 log level debug2;
 log to syslog level debug2;
-interface "<%= @interface %>";
+interface "<%= @mesh_vpn_interface %>";
 <% @ciphers.each do |cipher| -%>
 method "<%= cipher %>";
 <% end -%>

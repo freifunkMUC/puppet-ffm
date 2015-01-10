@@ -12,11 +12,11 @@ allow-hotplug bat0
 iface bat0 inet6 manual
         pre-up modprobe batman-adv
         pre-up batctl gw server <%= @download_bandwidth %>mbit/<%= @upload_bandwidth %>mbit
-        pre-up batctl if add mesh-vpn
+        pre-up batctl if add <%= @mesh_vpn_interface %>
         up ip link set $IFACE up
         post-up brctl addif <%= @bridge %> $IFACE
         post-up batctl it 10000
-        post-up ip rule add from all fwmark 0x1 table <%= @vpn_routing_table %>
-        pre-down ip rule del from all fwmark 0x1 table <%= @vpn_routing_table %>
+        post-up ip rule add from all fwmark 0x1 table <%= @vpn_routing_table_nr %>
+        pre-down ip rule del from all fwmark 0x1 table <%= @vpn_routing_table_nr %>
         pre-down brctl delif <%= @bridge %> $IFACE || true
         down ip link set $IFACE down

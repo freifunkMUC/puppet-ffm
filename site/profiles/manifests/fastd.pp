@@ -12,8 +12,16 @@
 #     * MAC
 #     * IPv4/IPv6
 
-class profiles::fastd {
+class profiles::fastd (
+  $mesh_vpn_interface,
+  $community,
+  $gateway_number,
+) {
 
-  include ::fastd
+  class { '::fastd':
+    mesh_vpn_interface => $mesh_vpn_interface,
+    community          => $community,
+    gateway_number     => $gateway_number,
+  }
 
 }

@@ -3,15 +3,16 @@ class batman_adv (
   $bridge,
   $download_bandwidth = '10',
   $upload_bandwidth = '5',
+  $mesh_vpn_interface,
+  $gateway_number,
+  $vpn_routing_table_nr,
 ) {
   # default needed due to a kmod-bug which would be fixed with
   # https://github.com/camptocamp/puppet-kmod/pull/25.patch
-  include fastd
+  include fastd::service
   include gwlib
   class { 'batman_adv::module': }
 
-  $vpn_routing_table  = hiera('vpn_routing_table_nr')
-  $gateway_number     = hiera('gateway_number')
   $hex_gateway_number = int_to_hex( $gateway_number )
 
   if $::osfamily != 'Debian' {

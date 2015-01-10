@@ -1,11 +1,13 @@
 class iscdhcpd (
-  $subnet      = '10.80.0.0',
-  $netmask     = '255.255.0.0',
-  $range_start = $iscdhcpd::params::range_start,
-  $range_end   = $iscdhcpd::params::range_end,
-  $dns_servers = $iscdhcpd::params::dns_servers,
-  $routers     = $iscdhcpd::params::routers,
-) inherits iscdhcpd::params {
+  $subnet  = '10.80.0.0',
+  $netmask = '255.255.0.0',
+  $gateway_number,
+) {
+
+  $range_start = "10.80.${gateway_number}.1"
+  $range_end   = "10.80.${gateway_number}.254"
+  $dns_servers = [ "10.80.0.${gateway_number}" ]
+  $routers     = "10.80.0.${gateway_number}"
 
   file { '/etc/dhcp/dhcpd.conf':
     ensure  => file,
