@@ -4,6 +4,7 @@ Rake::Task['lint'].clear
 
 PuppetLint::RakeTask.new :lint do |config|
   config.pattern = ['manifests/**/*.pp', 'site/**/*.pp']
+  config.log_format = '%{path}:%{linenumber}:%{check}:%{KIND}:%{message}'
 end
 
 PuppetLint.configuration.send('disable_documentation')
