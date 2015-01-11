@@ -8,8 +8,6 @@ class batman_adv::module (
 
   include kmod
 
-  Exec { path => [ '/usr/local/sbin', '/usr/sbin',
-    '/sbin', '/usr/local/bin', '/usr/bin', '/bin' ] }
   Kmod::Load { notify => Service['fastd'] }
 
   case $::operatingsystem {
