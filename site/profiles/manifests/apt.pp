@@ -37,6 +37,7 @@ class profiles::apt {
       location    => 'http://de.archive.ubuntu.com/ubuntu/',
       release     => 'vivid',
       repos       => 'main universe',
+      include_src => true,
       include_deb => true
     }
   }
