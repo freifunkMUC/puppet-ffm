@@ -88,7 +88,7 @@ profiles::networking::default_gateway_ip: 'insert your gateway ip for the vm her
 - *profiles::networking::default_gateway_ip*:
   Perhaps you wont need this, but if you do, its there.
   Vagrant with the libvirt-provider could be a case where you would
-  like to have it.
+  like to have it. This exists because of some nat configurations.
 
 
 You should also have a look at "hieradata/common.yaml" which has
