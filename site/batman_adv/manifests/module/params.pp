@@ -26,6 +26,9 @@ class batman_adv::module::params {
               $batctl_version = '2014.3.0-2'
               $kernel_version = '3.16'
             }
+            default: {
+              fail("${batman_adv_version} on ${::operatingsystem} ${::operatingsystemmajrelease} is not yet supported!")
+            }
           }
         }
         default: {

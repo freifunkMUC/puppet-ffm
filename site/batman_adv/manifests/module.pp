@@ -43,8 +43,8 @@ class batman_adv::module (
         source => "puppet:///modules/batman_adv/batctl_${batctl_version}_amd64.deb",
       } ->
       package { 'batctl':
-        provider => 'dpkg',
         ensure   => latest,
+        provider => 'dpkg',
         source   => "/tmp/batctl_${$batctl_version}_amd64.deb",
       }
     }
