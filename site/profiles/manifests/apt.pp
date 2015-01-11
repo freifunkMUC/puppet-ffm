@@ -2,6 +2,8 @@ class profiles::apt {
 
   include ::apt
 
+  Exec['apt_update'] -> Package <||>
+
   ::apt::source { 'universe-factory':
     comment     => 'universe-factory repository for Freifunk',
     location    => 'http://repo.universe-factory.net/debian/',
@@ -25,6 +27,15 @@ class profiles::apt {
       comment     => 'ubuntu utopic',
       location    => 'http://de.archive.ubuntu.com/ubuntu/',
       release     => 'utopic',
+      repos       => 'main universe',
+      include_src => true,
+      include_deb => true
+    }
+
+    ::apt::source { 'vivid':
+      comment     => 'ubuntu vivid',
+      location    => 'http://de.archive.ubuntu.com/ubuntu/',
+      release     => 'vivid',
       repos       => 'main universe',
       include_src => true,
       include_deb => true

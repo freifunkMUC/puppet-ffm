@@ -7,6 +7,8 @@ class dnsmasq (
   $vpn_interface,
 ) {
 
+  include ::dnsmasq::service
+
   package { 'dnsmasq':
   } ->
   file { '/etc/dnsmasq.conf':
@@ -24,13 +26,7 @@ class dnsmasq (
     mode    => '0644',
     content => template('dnsmasq/rules.erb'),
     notify  => Service['dns'],
-  }
-
-  service { 'dns':
-    ensure     => running,
-    name       => 'dnsmasq',
-    hasrestart => true,
-    require    => Package['dnsmasq'],
-  }
+  } ->
+  Service['dns']
 
 }

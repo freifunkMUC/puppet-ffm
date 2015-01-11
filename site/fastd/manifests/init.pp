@@ -6,15 +6,15 @@ class fastd (
   $port = '10000',
   $server_peers,
   $mtu = '1426',
-  $interface = 'mesh-vpn',
+  $mesh_vpn_interface,
   $ciphers = [ 'salsa2012+umac', 'salsa2012+gmac', 'xsalsa20-poly1305' ],
   $fastd_connection_ip,
+  $community,
+  $gateway_number,
 ) {
-  include gwlib
+  include ::gwlib
+  include ::fastd::service
 
-  $community           = hiera('community')
-  $vpn_routing_table   = hiera('vpn_routing_table_nr')
-  $gateway_number      = hiera('gateway_number')
   $hex_gateway_number  = int_to_hex( $gateway_number )
   $interface_mac = "10:80:00:${hex_gateway_number}:66:66"
 
@@ -66,10 +66,7 @@ class fastd (
     content => template('fastd/fastd.conf.erb'),
     notify  => Service['fastd'],
   } ->
-  service { 'fastd':
-    ensure     => running,
-    hasrestart => true,
-  }
+  Service['fastd']
 
   class { 'fastd::gluonconfig':
     fastd_port             => $port,

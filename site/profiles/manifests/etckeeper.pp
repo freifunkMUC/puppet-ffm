@@ -2,7 +2,6 @@ class profiles::etckeeper {
 
   include ::apt
 
-  Exec['apt_update'] ->
   package { 'git': } ->
   package { 'etckeeper': } ->
 

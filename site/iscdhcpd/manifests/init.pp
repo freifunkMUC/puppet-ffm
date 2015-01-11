@@ -1,11 +1,15 @@
 class iscdhcpd (
-  $subnet      = '10.80.0.0',
-  $netmask     = '255.255.0.0',
-  $range_start = $iscdhcpd::params::range_start,
-  $range_end   = $iscdhcpd::params::range_end,
-  $dns_servers = $iscdhcpd::params::dns_servers,
-  $routers     = $iscdhcpd::params::routers,
-) inherits iscdhcpd::params {
+  $subnet  = '10.80.0.0',
+  $netmask = '255.255.0.0',
+  $gateway_number,
+) {
+
+  include ::iscdhcpd::service
+
+  $range_start = "10.80.${gateway_number}.1"
+  $range_end   = "10.80.${gateway_number}.254"
+  $dns_servers = [ "10.80.0.${gateway_number}" ]
+  $routers     = "10.80.0.${gateway_number}"
 
   file { '/etc/dhcp/dhcpd.conf':
     ensure  => file,
@@ -15,7 +19,8 @@ class iscdhcpd (
     content => template('iscdhcpd/dhcpd.conf.erb'),
   } ->
   package { 'isc-dhcp-server':
-  }
+  } ->
+  Service['isc-dhcp-server']
 
   # due to a bug of the isc-dhcp-server-package for debian jessie (4.3.1-1)
   # we need first to provide a configuration with a subnet first. therefore
@@ -24,10 +29,5 @@ class iscdhcpd (
     File['/etc/dhcp/dhcpd.conf'] ~> Service['isc-dhcp-server']
   }
 
-  service { 'isc-dhcp-server':
-    ensure     => running,
-    hasrestart => true,
-    require    => Package['isc-dhcp-server'],
-  }
 
 }

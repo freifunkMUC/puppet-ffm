@@ -1,9 +1,8 @@
 # vim: set sw=2 sts=2 et tw=80 :
 class vpntunnel (
   $vpn_provider = 'default',
+  $vpn_routing_table_nr,
 ) {
-
-  $vpn_routing_table = hiera('vpn_routing_table_nr')
 
 # file { "/etc/openvpn/${vpn_provider}/":
 #   ensure  => directory,
