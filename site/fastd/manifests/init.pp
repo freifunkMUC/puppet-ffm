@@ -4,7 +4,7 @@ class fastd (
   $secret_key,
   $client_pubkeys = [],
   $port = '10000',
-  $server_peers,
+  $server_peers = {},
   $mtu = '1426',
   $mesh_vpn_interface,
   $ciphers = [ 'salsa2012+umac', 'salsa2012+gmac', 'xsalsa20-poly1305' ],

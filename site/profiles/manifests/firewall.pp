@@ -1,5 +1,6 @@
 class profiles::firewall (
   $purge = false,
+  $batman_bridge,
   $route_traffic_through_vpn_tunnel = true,
   $fastd_connection_interface,
 ) {
@@ -11,8 +12,6 @@ class profiles::firewall (
   }
 
   class { '::firewall': }
-
-  $batman_bridge = hiera('batman_bridge')
 
   if $route_traffic_through_vpn_tunnel {
     firewall { '100 Mark Mesh VPN Traffic':

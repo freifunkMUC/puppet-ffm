@@ -1,9 +1,7 @@
 class batman_adv::module::params {
 
-  $batman_adv_version = hiera('batman_adv_version', '2014.3')
-
-  if $batman_adv_version == '2014.3' {
-    warning("You probably did not choose batman_adv_version = ${batman_adv_version} but this is the default.")
+  if $::batman_adv::version == '2014.3' {
+    warning("You probably did not choose batman-advanced-version = ${::batman_adv::version} but this is the default.")
   }
 
   case $::operatingsystem {
@@ -21,13 +19,13 @@ class batman_adv::module::params {
 
       case $::operatingsystemmajrelease {
         'jessie/sid', '8': {
-          case $batman_adv_version {
+          case $::batman_adv::version {
             '2014.3': {
               $batctl_version = '2014.3.0-2'
               $kernel_version = '3.16'
             }
             default: {
-              fail("${batman_adv_version} on ${::operatingsystem} ${::operatingsystemmajrelease} is not yet supported!")
+              fail("${::batman_adv::version} on ${::operatingsystem} ${::operatingsystemmajrelease} is not yet supported!")
             }
           }
         }
@@ -43,7 +41,7 @@ class batman_adv::module::params {
       if $::hardwaremodel == 'x86_64' {
         case $::operatingsystemmajrelease {
           '14.04': {
-            case $batman_adv_version {
+            case $::batman_adv::version {
               '2014.3': {
                 #$kernel_version = '3.16.0.23.24'
                 $kernel_version = '3.16'
@@ -54,7 +52,7 @@ class batman_adv::module::params {
                 $batctl_version = '2014.4.0-1'
               }
               default: {
-                fail("${batman_adv_version} is not yet supported on this system!")
+                fail("${::batman_adv::version} is not yet supported on this system!")
               }
             }
           }

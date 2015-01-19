@@ -23,11 +23,12 @@ Vagrant.configure( 2 ) do |config|
   end
 
   config.vm.provider configs['vagrant_provider'] do |domain|
-    domain.memory = 1024
+    domain.memory = configs['memory']
     domain.cpus = 1
   end
 
   config.vm.provision "puppet" do |puppet|
+    puppet.synced_folder_type = "nfs"
     puppet.manifests_path = puppet_folder + "/manifests"
     puppet.manifest_file = "site.pp"
     puppet.module_path = [ puppet_folder + "/site", puppet_folder + "/modules" ]

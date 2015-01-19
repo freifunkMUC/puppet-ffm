@@ -26,4 +26,5 @@ vpn_routing_table_nr: 42
 
 fastd::port: 10000
 
+# batman_adv::version: '2014.4'  # default is '2014.3'
 

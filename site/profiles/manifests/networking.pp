@@ -1,14 +1,11 @@
 class profiles::networking (
+  $batman_bridge,
   $fastd_connection_interface,
   $default_gateway_ip = undef,
   $gateway_number,
   $mesh_vpn_interface,
   $vpn_routing_table_nr,
 ) {
-
-  include profiles::dns
-
-  $batman_bridge = hiera('batman_bridge')
 
   class { 'batman_adv':
     bridge               => $batman_bridge,
@@ -27,7 +24,6 @@ class profiles::networking (
     group   => 'root',
     mode    => '0644',
     content => template('profiles/rc.local.erb'),
-    notify  => Service['dns'],
   }
 
   exec { '/bin/bash /etc/rc.local':

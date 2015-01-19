@@ -2,6 +2,7 @@
 # for a freifunk gateway (ffm config)
 
 class roles::freifunk_gateway {
+  include profiles::apt
   include profiles::etckeeper
 
   $fastd_connection_interface = hiera('fastd_connection_interface')
@@ -9,9 +10,12 @@ class roles::freifunk_gateway {
   $gateway_number             = hiera('gateway_number')
   $community                  = hiera('community')
   $vpn_routing_table_nr       = hiera('vpn_routing_table_nr')
+  $batman_bridge              = hiera('batman_bridge')
+  $vpn_interface              = hiera('vpn_interface')
 
   class { 'profiles::firewall':
     fastd_connection_interface => $fastd_connection_interface,
+    batman_bridge              => $batman_bridge,
   }
 
   class { 'profiles::dhcpd':
@@ -19,6 +23,7 @@ class roles::freifunk_gateway {
   }
 
   class { 'profiles::networking':
+    batman_bridge              => $batman_bridge,
     fastd_connection_interface => $fastd_connection_interface,
     mesh_vpn_interface         => $mesh_vpn_interface,
     gateway_number             => $gateway_number,
@@ -31,11 +36,12 @@ class roles::freifunk_gateway {
     gateway_number     => $gateway_number,
   }
 
-  include profiles::apt
-  include profiles::dhcpd
-  include profiles::dns
-  include gluonconfig
+  class { 'profiles::dns':
+    no_dhcp_interface => $batman_bridge,
+    vpn_interface     => $vpn_interface,
+  }
 
+  include gluonconfig
   include profiles::alfred
 }
 

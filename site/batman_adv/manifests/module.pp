@@ -1,12 +1,8 @@
 # vim: set sw=2 sts=2 et tw=80 :
-class batman_adv::module (
-  $kernel_version = $batman_adv::module::params::kernel_version,
-  $kernel_package = $batman_adv::module::params::kernel_package,
-  $batctl_version = $batman_adv::module::params::batctl_version,
-  $batctl_package = $batman_adv::module::params::batctl_package,
-) inherits batman_adv::module::params {
+class batman_adv::module {
 
   include kmod
+  include batman_adv::module::params
 
   Kmod::Load { notify => Service['fastd'] }
 
@@ -15,8 +11,8 @@ class batman_adv::module (
       case $::operatingsystemmajrelease {
         'jessie/sid', '8': {
           kmod::load { 'batman_adv': } ->
-          package { $batctl_package:
-            ensure => "${batctl_version}*",
+          package { $::batman_adv::module::params::batctl_package:
+            ensure => "${::batman_adv::module::params::batctl_version}*",
           }
         }
         default: {
@@ -25,12 +21,12 @@ class batman_adv::module (
       }
     }
     'Ubuntu': {
-      if $::kernelmajversion != $kernel_version {
-        package { 'linux-image-generic':
-          ensure => "${kernel_version}*",
+      if $::kernelmajversion != $::batman_adv::module::params::kernel_version {
+        package { $::batman_adv::module::params::kernel_package:
+          ensure => "${::batman_adv::module::params::kernel_version}*",
         } ->
         package { 'linux-image-extra-generic':
-          name => "linux-image-extra-${kernel_version}.*-generic",
+          name => "linux-image-extra-${::batman_adv::module::params::kernel_version}.*-generic",
         }
         warning('You need to reboot with your new kernel!')
       }
@@ -39,13 +35,13 @@ class batman_adv::module (
       } ->
       package { 'libnl-3-200':
       } ->
-      file { "/tmp/batctl_${batctl_version}_amd64.deb":
-        source => "puppet:///modules/batman_adv/batctl_${batctl_version}_amd64.deb",
+      file { "/tmp/batctl_${::batman_adv::module::params::batctl_version}_amd64.deb":
+        source => "puppet:///modules/batman_adv/batctl_${::batman_adv::module::params::batctl_version}_amd64.deb",
       } ->
       package { 'batctl':
-        ensure   => latest,
+        ensure   => latest, # if this is not here, we wont get an updated package
         provider => 'dpkg',
-        source   => "/tmp/batctl_${$batctl_version}_amd64.deb",
+        source   => "/tmp/batctl_${::batman_adv::module::params::batctl_version}_amd64.deb",
       }
     }
     default: {

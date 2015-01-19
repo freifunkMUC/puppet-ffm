@@ -6,12 +6,13 @@ class batman_adv (
   $mesh_vpn_interface,
   $gateway_number,
   $vpn_routing_table_nr,
+  $version = '2014.3',
 ) {
   # default needed due to a kmod-bug which would be fixed with
   # https://github.com/camptocamp/puppet-kmod/pull/25.patch
   include fastd::service
   include gwlib
-  class { 'batman_adv::module': }
+  include batman_adv::module
 
   $hex_gateway_number = int_to_hex( $gateway_number )
 

@@ -151,6 +151,20 @@ fastd::client_pubkeys:
 If you change the client-peers you should just run puppet again, either with
 `sudo ./apply.sh` or with `vagrant provision`.
 
+# fastd servers
+In the file "hieradata/server-peers.yaml" may a hash of fastd-data of other
+gateways exist.
+
+```
+---
+fastd::server_peers:
+  fastd.example.com:
+    public_key: '...'
+    fastd_port: 10000
+    contact: 'contact.example.com'
+    community: 'ffmuc'
+```
+
 # code checking & testing
 
 For syntax and lint checking install the ruby dependencies i.e. with `bundler`
