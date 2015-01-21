@@ -1,5 +1,7 @@
 ---
 
+role: gateway
+
 fastd_connection_interface: 'eth1'
 fastd::fastd_connection_ip: '192.168.178.100'
 fastd::port: 10002

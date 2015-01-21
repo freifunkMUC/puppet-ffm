@@ -2,8 +2,7 @@
 
 community: 'ffmuc'
 
-classes:
-  - roles::freifunk_gateway
+role: undefined
 
 profiles::firewall::route_traffic_through_vpn_tunnel: true
 profiles::firewall::purge: true

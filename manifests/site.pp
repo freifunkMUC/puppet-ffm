@@ -3,6 +3,8 @@ Exec{
 }
 
 node default {
-  hiera_include('classes')
+  $role = hiera('role', 'undefined')
+
+  contain "::roles::${role}"
 }
 

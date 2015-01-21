@@ -1,7 +1,7 @@
 # Installs and configures all services necessary
-# for a freifunk gateway (ffm config)
+# for a freifunk gateway
 
-class roles::freifunk_gateway {
+class roles::gateway {
   include profiles::apt
   include profiles::etckeeper
 
