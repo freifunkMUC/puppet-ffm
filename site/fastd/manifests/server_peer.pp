@@ -3,10 +3,9 @@ define fastd::server_peer (
   $public_key,
   $fastd_port,
   $contact,
-  $community,
 ) {
 
-  $community_folder = "/etc/fastd/${community}-mesh-vpn"
+  $community_folder = "/etc/fastd/${::fastd::community}-mesh-vpn"
 
   $fastd_connection_ip = hiera('fastd::fastd_connection_ip')
   if ($name != $::fqdn) and ($name != $fastd_connection_ip) {

@@ -162,7 +162,6 @@ fastd::server_peers:
     public_key: '...'
     fastd_port: 10000
     contact: 'contact.example.com'
-    community: 'ffmuc'
 ```
 
 # code checking & testing
