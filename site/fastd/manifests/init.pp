@@ -34,12 +34,12 @@ class fastd (
     group  => 'root',
     mode   => '0755',
   } ->
-  file { "${community_folder}/keys":
+  file { "${community_folder}/keys.yaml":
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
-    content => template('fastd/keys.erb'),
+    content => template('fastd/keys.yaml.erb'),
     notify  => Service['fastd'],
   } ->
   file { "${community_folder}/secret.conf":
