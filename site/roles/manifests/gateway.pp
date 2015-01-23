@@ -14,8 +14,8 @@ class roles::gateway {
   $vpn_interface              = hiera('vpn_interface')
 
   class { 'profiles::firewall':
-    fastd_connection_interface => $fastd_connection_interface,
-    batman_bridge              => $batman_bridge,
+    vpn_interface => $vpn_interface,
+    batman_bridge => $batman_bridge,
   }
 
   class { 'profiles::dhcpd':

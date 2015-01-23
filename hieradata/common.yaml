@@ -18,7 +18,7 @@ dnsmasq::listen_address: '127.0.0.1'    # if running another dns-server then 127
 batman_bridge: 'br-ff'
 fastd_connection_interface: 'eth0'
 mesh_vpn_interface: 'mesh-vpn'
-vpn_interface: 'eth0'
+vpn_interface: 'tun0'
 runs_on_box_behind_nat: false
 
 vpn_routing_table_nr: 42

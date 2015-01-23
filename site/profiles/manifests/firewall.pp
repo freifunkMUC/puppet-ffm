@@ -2,7 +2,7 @@ class profiles::firewall (
   $purge = false,
   $batman_bridge,
   $route_traffic_through_vpn_tunnel = true,
-  $fastd_connection_interface,
+  $vpn_interface,
 ) {
 
   if str2bool($purge) {
@@ -29,7 +29,7 @@ class profiles::firewall (
     provider => 'iptables',
     chain    => 'POSTROUTING',
     table    => 'nat',
-    outiface => $fastd_connection_interface,
+    outiface => $vpn_interface,
     proto    => 'all',
     jump     => 'MASQUERADE',
   }
