@@ -1,0 +1,4 @@
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main restricted universe
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-backports main restricted universe
+deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-security main restricted universe

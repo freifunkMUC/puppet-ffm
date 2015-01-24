@@ -12,7 +12,7 @@
   - 'common'
 
 :yaml:
-  :datadir: '/opt/puppet-ffm/hieradata'
+  :datadir: 'hieradata'
 
 :puppet:
   :datasource: data
