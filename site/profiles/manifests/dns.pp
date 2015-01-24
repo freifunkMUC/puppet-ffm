@@ -1,6 +1,6 @@
 class profiles::dns (
   $no_dhcp_interface,
-  $vpn_interface,
+  $forward_interface,
 ) {
 
   $dns_interfaces = [ $no_dhcp_interface ]
@@ -8,7 +8,7 @@ class profiles::dns (
   class { 'dnsmasq':
     dns_interfaces    => $dns_interfaces,
     no_dhcp_interface => $no_dhcp_interface,
-    vpn_interface     => $vpn_interface,
+    forward_interface => $forward_interface,
   }
 
 }

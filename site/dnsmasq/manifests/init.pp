@@ -4,7 +4,7 @@ class dnsmasq (
   $dns_interfaces,
   $no_dhcp_interface,
   $listen_address,
-  $vpn_interface,
+  $forward_interface,
 ) {
 
   include ::dnsmasq::service

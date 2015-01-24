@@ -1,7 +1,5 @@
 class profiles::networking (
   $batman_bridge,
-  $fastd_connection_interface,
-  $default_gateway_ip = undef,
   $gateway_number,
   $mesh_vpn_interface,
   $vpn_routing_table_nr,
@@ -37,21 +35,4 @@ class profiles::networking (
   sysctl {
     'net.ipv6.conf.all.forwarding': value => '1',
   }
-
-  # very hackish...
-  $runs_on_box_behind_nat = hiera('runs_on_box_behind_nat')
-  if str2bool($runs_on_box_behind_nat) {
-    $internal_fastd_connection_ip = inline_template(
-      "<%= scope.lookupvar('::ipaddress_${fastd_connection_interface}') -%>")
-
-    if $default_gateway_ip != undef {
-      exec { "ip route del default; ip route add default via ${default_gateway_ip} dev ${fastd_connection_interface}":
-        path    => '/usr/local/bin:/usr/bin:/bin:/usr/local/sbin/:/usr/sbin/:/sbin',
-        unless  => "ip route show | grep 'default via ${default_gateway_ip}'",
-        require => File['/etc/network/interfaces.d/batman.cfg'],
-      }
-    }
-
-  }
-
 }
