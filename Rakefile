@@ -20,4 +20,11 @@ task :validate do
   Rake::Task[:syntax].invoke
 end
 
+namespace :docker do
+  desc 'Build the docker image'
+  task :build do
+    sh "docker build -t ffmuc/vagrant util/docker"
+  end
+end
+
 task :default => [:validate, :lint]
