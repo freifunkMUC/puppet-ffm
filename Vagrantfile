@@ -20,22 +20,24 @@ Vagrant.configure( 2 ) do |config|
     d.vm.hostname = configs['hostname']
     d.vm.synced_folder hiera_folder, configs['hiera_folder_on_guest'], type: 'nfs', :nfs_version => configs['nfs_version'], :nfs_udp => configs['nfs_udp']
     d.vm.network :private_network, :ip => configs['ip']
+
+    d.vm.provider configs['vagrant_provider'] do |domain|
+      domain.memory = configs['memory']
+      domain.cpus = 1
+    end
+
+    d.vm.provision "puppet" do |puppet|
+      puppet.synced_folder_type = "nfs"
+      puppet.manifests_path = puppet_folder + "/manifests"
+      puppet.manifest_file = "site.pp"
+      puppet.module_path = [ puppet_folder + "/site", puppet_folder + "/modules" ]
+      puppet.hiera_config_path = puppet_folder + "/hiera.yaml"
+      puppet.working_directory = configs['hiera_folder_on_guest']
+      puppet.options = configs['puppet_options']
+    end
   end
 
-  config.vm.provider configs['vagrant_provider'] do |domain|
-    domain.memory = configs['memory']
-    domain.cpus = 1
-  end
 
-  config.vm.provision "puppet" do |puppet|
-    puppet.synced_folder_type = "nfs"
-    puppet.manifests_path = puppet_folder + "/manifests"
-    puppet.manifest_file = "site.pp"
-    puppet.module_path = [ puppet_folder + "/site", puppet_folder + "/modules" ]
-    puppet.hiera_config_path = puppet_folder + "/hiera.yaml"
-    puppet.working_directory = configs['hiera_folder_on_guest']
-    puppet.options = configs['puppet_options']
-  end
 
 end
 
