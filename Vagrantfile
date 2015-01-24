@@ -53,5 +53,10 @@ Vagrant.configure( 2 ) do |config|
       end
     end
   end
+
+  config.vm.provider 'docker' do |d|
+    d.image = 'ffmuc/vagrant'
+    d.has_ssh = true
+  end
 end
 
