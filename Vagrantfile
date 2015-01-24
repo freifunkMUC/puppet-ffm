@@ -10,6 +10,8 @@ configs       = YAML.load_file("#{current_dir}/configs.yaml")
 puppet_folder = configs['puppet_folder']
 hiera_folder  = puppet_folder + '/' + configs['hiera_folder']
 
+hiera_hosts = Dir.glob(current_dir + '/hieradata/hosts/*.yaml')
+  .map { |foo| File.basename(foo, '.yaml') }
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] ||= configs['vagrant_provider']
 
@@ -37,7 +39,19 @@ Vagrant.configure( 2 ) do |config|
     end
   end
 
+  hiera_hosts.sort.each do |host|
+    config.vm.define host do |h|
+      h.vm.hostname = host + '.localdomain'
 
-
+      h.vm.provision "puppet" do |p|
+        p.manifests_path = "manifests"
+        p.manifest_file = "site.pp"
+        p.module_path = [ "site", "modules" ]
+        p.hiera_config_path = "hiera.yaml"
+        p.working_directory = "/vagrant"
+        p.options = configs['puppet_options']
+      end
+    end
+  end
 end
 
