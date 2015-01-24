@@ -1,3 +1,3 @@
 class roles::undefined {
-  error('No role was defined for this host in hiera!')
+  fail('No role was defined for this host in hiera!')
 }
