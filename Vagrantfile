@@ -21,7 +21,6 @@ Vagrant.configure( 2 ) do |config|
     d.vm.box = configs['boxname']
     d.vm.hostname = configs['hostname']
     d.vm.synced_folder hiera_folder, configs['hiera_folder_on_guest'], type: 'nfs', :nfs_version => configs['nfs_version'], :nfs_udp => configs['nfs_udp']
-    d.vm.network :private_network, :ip => configs['ip']
 
     d.vm.provider configs['vagrant_provider'] do |domain|
       domain.memory = configs['memory']

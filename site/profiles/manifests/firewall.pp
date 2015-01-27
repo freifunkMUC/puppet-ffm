@@ -1,7 +1,6 @@
 class profiles::firewall (
   $purge = false,
   $batman_bridge,
-  $route_traffic_through_vpn_tunnel = true,
   $vpn_interface,
 ) {
 
@@ -12,18 +11,6 @@ class profiles::firewall (
   }
 
   class { '::firewall': }
-
-  if $route_traffic_through_vpn_tunnel {
-    firewall { '100 Mark Mesh VPN Traffic':
-      provider => 'iptables',
-      chain    => 'PREROUTING',
-      table    => 'mangle',
-      iniface  => $batman_bridge,
-      proto    => 'all',
-      jump     => 'MARK',
-      set_mark => '0x1/0xffffffff',
-    }
-  }
 
   firewall { '001 Masquerade VPN Traffic':
     provider => 'iptables',

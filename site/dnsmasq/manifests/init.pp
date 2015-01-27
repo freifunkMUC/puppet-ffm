@@ -4,10 +4,14 @@ class dnsmasq (
   $dns_interfaces,
   $no_dhcp_interface,
   $listen_address,
-  $vpn_interface,
+  $forward_interface,
+  $enable,
 ) {
 
-  include ::dnsmasq::service
+  class { '::dnsmasq::service':
+    enable => $enable,
+  }
+  contain ::dnsmasq::service
 
   package { 'dnsmasq':
   } ->
@@ -17,7 +21,6 @@ class dnsmasq (
     group   => 'root',
     mode    => '0644',
     content => template('dnsmasq/dnsmasq.conf.erb'),
-    notify  => Service['dns'],
   } ->
   file { '/etc/dnsmasq.d/rules':
     ensure  => file,
@@ -25,7 +28,6 @@ class dnsmasq (
     group   => 'root',
     mode    => '0644',
     content => template('dnsmasq/rules.erb'),
-    notify  => Service['dns'],
   } ->
   Service['dns']
 

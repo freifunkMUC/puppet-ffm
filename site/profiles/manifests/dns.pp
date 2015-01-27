@@ -1,15 +1,19 @@
 class profiles::dns (
   $no_dhcp_interface,
-  $vpn_interface,
+  $forward_interface,
+  $dns_service,
+  $enable,
 ) {
 
   $dns_interfaces = [ $no_dhcp_interface ]
 
-  class { 'dnsmasq':
+  class { "::${dns_service}":
     dns_interfaces    => $dns_interfaces,
     no_dhcp_interface => $no_dhcp_interface,
-    vpn_interface     => $vpn_interface,
+    forward_interface => $forward_interface,
+    enable            => $enable,
   }
+  contain "::${dns_service}"
 
 }
 

@@ -1,5 +1,0 @@
-#!/bin/sh
-# this file is managed by puppet
-ip route replace 0.0.0.0/1 via $5 table <%= @vpn_routing_table_nr %>
-ip route replace 128.0.0.0/1 via $5 table <%= @vpn_routing_table_nr %>
-exit 0

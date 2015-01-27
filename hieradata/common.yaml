@@ -4,7 +4,6 @@ community: 'ffmuc'
 
 role: undefined
 
-profiles::firewall::route_traffic_through_vpn_tunnel: true
 profiles::firewall::purge: true
 
 radvd::ipv6_prefix_wo_len: 'fdef:ffc0:4fff::'
@@ -16,12 +15,11 @@ dnsmasq::auth_servers:
 dnsmasq::listen_address: '127.0.0.1'    # if running another dns-server then 127.0.0.2 is appropriate
 
 batman_bridge: 'br-ff'
-fastd_connection_interface: 'eth0'
 mesh_vpn_interface: 'mesh-vpn'
-vpn_interface: 'tun0'
 runs_on_box_behind_nat: false
 
 vpn_routing_table_nr: 42
+vpn_routing_table_name: 'freifunk'
 
 fastd::port: 10000
 

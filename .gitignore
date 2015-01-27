@@ -5,3 +5,5 @@ vendor/
 .tmp/
 Puppetfile.lock
 *.swp
+site/profiles/files/mullvad/mullvadconfig.zip
+configs.yaml

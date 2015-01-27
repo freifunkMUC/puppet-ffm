@@ -2,8 +2,6 @@ class profiles::alfred (
   $alfred_json_version = '0.3.1-1',
 ) {
 
-  include ::batman_adv
-
   case $::operatingsystem {
     'Ubuntu': {
       package { 'libgps21':

@@ -1,7 +1,16 @@
-class dnsmasq::service {
+class dnsmasq::service (
+  $enable = false,
+) {
+  if $enable == false {
+    $ensure = 'stopped'
+  } else {
+    $ensure = 'running'
+  }
+
   service { 'dns':
-    ensure     => running,
+    ensure     => $ensure,
     name       => 'dnsmasq',
+    enable     => $enable,
     hasrestart => true,
   }
 }
