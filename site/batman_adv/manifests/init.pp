@@ -5,11 +5,9 @@ class batman_adv (
   $upload_bandwidth = '5',
   $mesh_vpn_interface,
   $gateway_number,
-  $vpn_routing_table_nr,
+  $vpn_routing_table,
   $version = '2014.3',
 ) {
-  # default needed due to a kmod-bug which would be fixed with
-  # https://github.com/camptocamp/puppet-kmod/pull/25.patch
   include fastd::service
   include gwlib
   include batman_adv::module

@@ -1,5 +1,7 @@
 # this file is managed by puppet
+<% if @listen_address != '127.0.0.1' -%>
 bind-interfaces
+<% end -%>
 except-interface=lo
 <% @dns_interfaces.each do |interface| -%>
 interface=<%= interface %>

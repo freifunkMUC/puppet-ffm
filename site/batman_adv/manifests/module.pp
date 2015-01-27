@@ -28,7 +28,7 @@ class batman_adv::module {
         package { 'linux-image-extra-generic':
           name => "linux-image-extra-${::batman_adv::module::params::kernel_version}.*-generic",
         }
-        warning('You need to reboot with your new kernel!')
+        warning('You will have to reboot with your new kernel!')
       }
 
       kmod::load { 'batman_adv':

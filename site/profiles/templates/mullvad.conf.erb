@@ -1,8 +1,5 @@
-
-
-#openVPN config from freifunk
+# this file is managed by puppet
 client
-#remote se.openvpn.cyberghostvpn.com 9081
 remote se.mullvad.net 1194
 
 dev-type tun
@@ -15,74 +12,20 @@ persist-key
 persist-tun
 nobind
 route-noexec
-#cipher AES-256-CBC
-#auth MD5
+
 ping 10
 ping-restart 60
-#explicit-exit-notify 2
+
 script-security 2
 remote-cert-tls server
-#route-delay 5
-#tun-mtu 1500
-#fragment 1300
-#mssfix 1300
 verb 4
 comp-lzo
-ca /etc/openvpn/ca.crt
-cert /etc/openvpn/mullvad.crt
-key /etc/openvpn/mullvad.key
-crl-verify /etc/openvpn/crl.pem
-up /etc/openvpn/mullvad/mullvad-up
 
-
-###################
-client 
-
-dev-type tun
-dev mullvad
-
-proto udp
-#proto tcp
-
-#remote openvpn.mullvad.net 1194
-#remote openvpn.mullvad.net 443
-#remote openvpn.mullvad.net 53
-#remote se.mullvad.net # Servers in Sweden
-remote nl.mullvad.net # Servers in the Netherlands
-
-# Keep trying indefinitely to resolve the
-# host name of the OpenVPN server.  Very useful
-# on machines which are not permanently connected
-# to the internet such as laptops.
-resolv-retry infinite
-
-# Most clients don't need to bind to
-# a specific local port number.
-nobind 
-  
-# Try to preserve some state across restarts.
-persist-key 
-persist-tun 
-
-# Enable compression on the VPN link.
-comp-lzo 
-
-# Set log file verbosity.
-verb 3
-
-remote-cert-tls server
-
-ping-restart 60
-
-# Allow calling of built-in executables and user-defined scripts.
-script-security 2
-
-# Parses DHCP options from openvpn to update resolv.conf
-route-noexec
-up    /etc/openvpn/mullvad/mullvad-up
-
-ping 10
-
-ca /etc/openvpn/mullvad/master.mullvad.net.crt
+ca /etc/openvpn/mullvad/ca.crt
 cert /etc/openvpn/mullvad/mullvad.crt
 key /etc/openvpn/mullvad/mullvad.key
+crl-verify /etc/openvpn/mullvad/crl.pem
+
+up /etc/openvpn/mullvad/mullvad-up
+down /etc/openvpn/mullvad/mullvad-down
+

@@ -1,6 +1,6 @@
 class openvpn {
 
-  include ::openvpn::service
+  contain ::openvpn::service
   include ::kmod
 
   kmod::load { 'tun':

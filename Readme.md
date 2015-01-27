@@ -134,6 +134,15 @@ It is possible, that fastd isn't correctly setting up the bat0 interface after
 a reboot. If this is the case, you need to restart fastd by hand.
 
 
+# using mullvad as vpn-service
+append to hieradata/hosts/$FQDN.yaml:
+vpn_service: mullvad
+
+
+copy your mullvadconfig.zip to puppet-ffm/site/profiles/files/mullvad/ before you are
+starting puppet
+
+
 # fastd clients
 In the file "hieradata/client-peers.yaml" exists an array of public keys of
 fastd clients.

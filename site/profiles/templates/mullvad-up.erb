@@ -1,4 +1,8 @@
 #!/bin/bash
-/sbin/ip route replace default dev $1 via $5 table <%= @vpn_routing_table_nr %>
-/usr/sbin/service <%= @dns_service %> restart
+set -e
+
+/sbin/ip route flush table <%= @vpn_routing_table %>
+/sbin/ip route add default via $route_vpn_gateway dev $1 table <%= @vpn_routing_table %>
+/usr/sbin/service dnsmasq start
+
 exit 0

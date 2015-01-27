@@ -8,7 +8,6 @@ class fastd (
   $mtu = '1426',
   $mesh_vpn_interface,
   $ciphers = [ 'salsa2012+umac', 'salsa2012+gmac', 'xsalsa20-poly1305' ],
-  $fastd_connection_ip,
   $community,
   $gateway_number,
 ) {
@@ -28,8 +27,16 @@ class fastd (
 
   package { 'fastd':
   } ->
-  file { [ '/etc/fastd/', $community_folder, "${community_folder}/peers/" ]:
+  file { [ '/etc/fastd/', $community_folder ]:
     ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  } ->
+  file { "$community_folder/peers/":
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
@@ -72,7 +79,6 @@ class fastd (
     fastd_port             => $port,
     fastd_public_key       => $public_key,
     fastd_community_folder => $community_folder,
-    fastd_connection_ip    => $fastd_connection_ip,
   }
   File[$community_folder] -> Class['fastd::gluonconfig']
 

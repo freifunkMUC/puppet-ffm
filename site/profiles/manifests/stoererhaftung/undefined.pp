@@ -1,6 +1,6 @@
 class profiles::stoererhaftung::undefined (
   $vpn_interface,
-  $vpn_routing_table_nr,
+  $vpn_routing_table,
   $dns_service,
 ) {
 
