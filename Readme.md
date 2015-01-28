@@ -51,44 +51,32 @@ If you are not on the system which should be changed, you need to
 use the fqdn of the corresponding virtual machine as the name of
 the yaml-file.
 
-**Attention:** The following config will not use a vpn tunnel!
-
 Example hieradata/hosts/$(facter fqdn).yaml file:
 ```
 ---
 
-community: 'ffmuc'
-batman_bridge: 'brffmuc'
+role: gateway
 
-profiles::firewall::route_traffic_through_vpn_tunnel: false
-runs_on_box_behind_nat: true
+community: ffmuc
+batman_bridge: brffmuc
 
-fastd_connection_interface: 'eth0'
-vpn_interface: 'eth0'
-fastd::fastd_connection_ip: '192.168.178.100'
-
+vpn_service: mullvad
 gateway_number: 100
+
 fastd::secret_key: 'INSERT SECRET KEY'
 fastd::public_key: 'INSERT PUBLIC KEY'
 
-profiles::networking::default_gateway_ip: 'insert your gateway ip for the vm here'
+batman_adv::version: '2014.4'
 
 ```
 
-- *fastd::fastd_connection_ip*:
-  This is the IP which will be configured on the freifunk-routers and
-  which is available to them. At the moment we are using IPv4 for that.
-  It is also used to skip the server from the fastd::server_peers
-  in "hieradata/server-peers.yaml".
 - *gateway_number*: anything from 1 to 255
 - *fastd::secret_key*: you need to provide this key by yourself by using
   the command "fastd --generate-key"
 - *fastd::public_key*: you need to provide this key by yourself by using
   the command "fastd --generate-key"
-- *profiles::networking::default_gateway_ip*:
-  Perhaps you wont need this, but if you do, its there.
-  Vagrant with the libvirt-provider could be a case where you would
-  like to have it. This exists because of some nat configurations.
+- vpn_service: which vpn-provider do you use? right now it is only mullvad
+               supported but it should be rather easy to adjust to others
 
 
 You should also have a look at "hieradata/common.yaml" which has
@@ -96,7 +84,7 @@ several default parameters set. This data however gets overwritten
 by the more specific file "hieradata/$( facter fqdn ).yaml".
 
 If you would like to use Vagrant for setting up a Virtual Machine
-you will need to change "configs.yaml" as well.
+you will need to create and change "configs.yaml" as well.
 
 In the configs.yaml which comes with the code you can see a working
 example. The one thing you need to change for sure is "boxname".

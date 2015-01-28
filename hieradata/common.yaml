@@ -16,7 +16,6 @@ dnsmasq::listen_address: '127.0.0.1'    # if running another dns-server then 127
 
 batman_bridge: 'br-ff'
 mesh_vpn_interface: 'mesh-vpn'
-runs_on_box_behind_nat: false
 
 vpn_routing_table_nr: 42
 vpn_routing_table_name: 'freifunk'
