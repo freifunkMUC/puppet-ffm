@@ -33,7 +33,7 @@ class profiles::stoererhaftung::mullvad (
     owner   => 'root',
     group   => 'root',
     mode    => '0754',
-    content => template('profiles/mullvad-up.erb'), 
+    content => template('profiles/mullvad-up.erb'),
     notify  => Service['openvpn'],
   } ->
   file { "${mullvad_path}/mullvad-down":
@@ -41,7 +41,7 @@ class profiles::stoererhaftung::mullvad (
     owner   => 'root',
     group   => 'root',
     mode    => '0754',
-    content => template('profiles/mullvad-down.erb'), 
+    content => template('profiles/mullvad-down.erb'),
     notify  => Service['openvpn'],
   } ->
   package { 'unzip':
