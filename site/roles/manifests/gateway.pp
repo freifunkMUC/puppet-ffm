@@ -8,6 +8,9 @@ class roles::gateway {
 
   $mesh_vpn_interface     = hiera('mesh_vpn_interface')
   $gateway_number         = hiera('gateway_number')
+  $gateway_ip             = hiera('gateway_ip')
+  $netmask                = hiera('netmask')
+  $subnet                 = hiera('subnet')
   $community              = hiera('community')
   $vpn_routing_table_nr   = hiera('vpn_routing_table_nr')
   $vpn_routing_table_name = hiera('vpn_routing_table_name')
@@ -17,13 +20,19 @@ class roles::gateway {
   $dns_service            = 'dnsmasq'
 
   class { 'profiles::dhcpd':
-    gateway_number => $gateway_number,
+    gateway_ip  => $gateway_ip,
+    netmask     => $netmask,
+    subnet      => $subnet,
+    range_start => $range_start,
+    range_end   => $range_end,
   }
 
   class { 'profiles::networking':
     batman_bridge          => $batman_bridge,
     mesh_vpn_interface     => $mesh_vpn_interface,
     gateway_number         => $gateway_number,
+    gateway_ip             => $gateway_ip,
+    netmask                => $netmask,
     vpn_routing_table_nr   => $vpn_routing_table_nr,
     vpn_routing_table_name => $vpn_routing_table_name,
   } ->

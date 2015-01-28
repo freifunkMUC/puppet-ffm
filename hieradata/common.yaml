@@ -5,9 +5,8 @@ community: 'ffmuc'
 role: undefined
 
 profiles::firewall::purge: true
-
-radvd::ipv6_prefix_wo_len: 'fdef:ffc0:4fff::'
-radvd::ipv6_prefix_length: 64
+profiles::networking::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
+profiles::networking::ipv6_prefix_length: 64
 
 dnsmasq::auth_servers:
   - '85.214.20.141'  # FoeBud
@@ -23,4 +22,11 @@ vpn_routing_table_name: 'freifunk'
 fastd::port: 10000
 
 # batman_adv::version: '2014.4'  # default is '2014.3'
+
+
+# fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
+# hey_gateway_number is gateway_number automatically converted into hex
+# therefor we only have at the moment the possibility of 0xff gateways
+fastd::mac_prefix: '10:80:00'
+fastd::mac_suffix: '23:42'
 

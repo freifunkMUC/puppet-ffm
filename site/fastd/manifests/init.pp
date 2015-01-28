@@ -10,12 +10,14 @@ class fastd (
   $ciphers = [ 'salsa2012+umac', 'salsa2012+gmac', 'xsalsa20-poly1305' ],
   $community,
   $gateway_number,
+  $mac_prefix,
+  $mac_suffix,
 ) {
   include ::gwlib
   include ::fastd::service
 
   $hex_gateway_number  = int_to_hex( $gateway_number )
-  $interface_mac = "10:80:00:${hex_gateway_number}:66:66"
+  $interface_mac = "${mac_prefix}:${hex_gateway_number}:${mac_suffix}"
 
   $community_folder = "/etc/fastd/${community}-mesh-vpn"
 

@@ -1,6 +1,6 @@
 class radvd (
   $batman_bridge,
-  $ipv6_prefix_wo_len,
+  $ipv6_prefix_without_length,
   $ipv6_prefix_length,
   $gateway_number,
 ) {
@@ -8,7 +8,7 @@ class radvd (
   include ::radvd::service
 
   $hex_gateway_number = int_to_hex( $gateway_number )
-  $RDNSS              = "${ipv6_prefix_wo_len}${hex_gateway_number}"
+  $RDNSS              = "${ipv6_prefix_without_length}${hex_gateway_number}"
 
   package { 'radvd':
   } ->

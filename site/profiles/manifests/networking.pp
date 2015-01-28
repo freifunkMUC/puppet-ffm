@@ -1,20 +1,29 @@
 class profiles::networking (
   $batman_bridge,
   $gateway_number,
+  $gateway_ip,
+  $netmask,
   $mesh_vpn_interface,
   $vpn_routing_table_nr,
   $vpn_routing_table_name,
+  $ipv6_prefix_without_length,
+  $ipv6_prefix_length,
 ) {
 
   class { 'batman_adv':
-    bridge             => $batman_bridge,
-    mesh_vpn_interface => $mesh_vpn_interface,
-    gateway_number     => $gateway_number,
-    vpn_routing_table  => $vpn_routing_table_name,
+    bridge                     => $batman_bridge,
+    mesh_vpn_interface         => $mesh_vpn_interface,
+    gateway_number             => $gateway_number,
+    gateway_ip                 => $gateway_ip,
+    netmask                    => $netmask,
+    vpn_routing_table          => $vpn_routing_table_name,
+    ipv6_prefix_without_length => $ipv6_prefix_without_length,
   } ->
   class { 'radvd':
-    batman_bridge  => $batman_bridge,
-    gateway_number => $gateway_number,
+    batman_bridge              => $batman_bridge,
+    gateway_number             => $gateway_number,
+    ipv6_prefix_without_length => $ipv6_prefix_without_length,
+    ipv6_prefix_length         => $ipv6_prefix_length,
   }
 
   sysctl {

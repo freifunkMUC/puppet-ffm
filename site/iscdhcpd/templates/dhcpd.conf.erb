@@ -2,8 +2,8 @@
 
 ddns-update-style none;
 
-default-lease-time 600;
-max-lease-time 7200;
+default-lease-time <%= @default_lease_time %>;
+max-lease-time <%= @max_lease_time %>;
 
 log-facility local7;
 
@@ -11,5 +11,5 @@ subnet <%= @subnet %> netmask <%= @netmask %> {
   authoritative;
   range <%= @range_start %> <%= @range_end %>;
   option domain-name-servers <%= @dns_servers.join(', ') %>;
-  option routers <%= @routers %>;
+  option routers <%= @routers.join(', ') %>;
 }
