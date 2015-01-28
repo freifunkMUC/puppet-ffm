@@ -1,6 +1,9 @@
 forge 'https://forgeapi.puppetlabs.com'
 
-mod 'puppetlabs/apt', '1.7.0'
+mod 'puppetlabs-apt',
+  :git => "git://github.com/puppetlabs/puppetlabs-apt.git",
+  :ref => 'e7fee16589fc478f4d73ea0782df975b03e4478b'
+
 mod 'thias/sysctl', '1.0.0'
 
 mod 'puppetlabs/firewall', '1.4.0'
