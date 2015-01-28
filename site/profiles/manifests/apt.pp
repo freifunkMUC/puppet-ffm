@@ -25,7 +25,8 @@ class profiles::apt {
 
     ::apt::source { 'utopic':
       comment     => 'ubuntu utopic',
-      location    => 'http://de.archive.ubuntu.com/ubuntu/',
+      #location    => 'http://de.archive.ubuntu.com/ubuntu/',
+      location    => 'http://archive.ubuntu.com/ubuntu/',
       release     => 'utopic',
       repos       => 'main universe',
       include_src => true,
@@ -34,7 +35,8 @@ class profiles::apt {
 
     ::apt::source { 'vivid':
       comment     => 'ubuntu vivid',
-      location    => 'http://de.archive.ubuntu.com/ubuntu/',
+      #location    => 'http://de.archive.ubuntu.com/ubuntu/',
+      location    => 'http://archive.ubuntu.com/ubuntu/',
       release     => 'vivid',
       repos       => 'main universe',
       include_src => true,

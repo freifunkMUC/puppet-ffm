@@ -2,11 +2,11 @@
 auto <%= @bridge %>
 iface <%= @bridge %> inet6 static
         bridge-ports none
-        address fdef:ffc0:4fff::<%= @hex_gateway_number %>
+        address <%= @ipv6_prefix_without_length %><%= @hex_gateway_number %>
         netmask 64
 iface <%= @bridge %> inet static
-        address 10.80.0.<%= @gateway_number %>
-        netmask 255.255.0.0
+        address <%= @gateway_ip %>
+        netmask <%= @netmask %>
 
 allow-hotplug bat0
 iface bat0 inet6 manual

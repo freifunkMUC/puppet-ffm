@@ -5,8 +5,11 @@ class batman_adv (
   $upload_bandwidth = '5',
   $mesh_vpn_interface,
   $gateway_number,
+  $gateway_ip,
   $vpn_routing_table,
   $version = '2014.3',
+  $netmask,
+  $ipv6_prefix_without_length,
 ) {
   include fastd::service
   include gwlib
