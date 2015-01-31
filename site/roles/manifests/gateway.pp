@@ -19,14 +19,6 @@ class roles::gateway {
   $no_vpn_interface       = hiera('no_vpn_interface', undef)
   $dns_service            = 'dnsmasq'
 
-  class { 'profiles::dhcpd':
-    gateway_ip  => $gateway_ip,
-    netmask     => $netmask,
-    subnet      => $subnet,
-    range_start => $range_start,
-    range_end   => $range_end,
-  }
-
   class { 'profiles::networking':
     batman_bridge          => $batman_bridge,
     mesh_vpn_interface     => $mesh_vpn_interface,
@@ -35,7 +27,8 @@ class roles::gateway {
     netmask                => $netmask,
     vpn_routing_table_nr   => $vpn_routing_table_nr,
     vpn_routing_table_name => $vpn_routing_table_name,
-  } ->
+  }
+
   class { 'profiles::alfred':
   }
 
@@ -43,6 +36,15 @@ class roles::gateway {
     mesh_vpn_interface => $mesh_vpn_interface,
     community          => $community,
     gateway_number     => $gateway_number,
+  }
+
+  Class['batman_adv'] ->
+  class { 'profiles::dhcpd':
+    gateway_ip  => $gateway_ip,
+    netmask     => $netmask,
+    subnet      => $subnet,
+    range_start => $range_start,
+    range_end   => $range_end,
   }
 
 
