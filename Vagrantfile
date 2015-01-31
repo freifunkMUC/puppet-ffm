@@ -26,6 +26,8 @@ Vagrant.configure( 2 ) do |config|
           domain.memory = configs['memory']
           domain.cpus = 1
         end
+
+        h.vm.synced_folder 'hieradata', '/vagrant/hieradata', type: 'nfs'
       end
 
       h.vm.hostname = host + '.localdomain'
@@ -36,7 +38,6 @@ Vagrant.configure( 2 ) do |config|
         p.manifest_file = "site.pp"
         p.module_path = [ "site", "modules" ]
         p.hiera_config_path = "hiera.yaml"
-        #p.hiera_datadir_path = "hieradata" # only with patch for puppet-provider available
         p.working_directory = "/vagrant"
         p.options = configs['puppet_options']
       end
