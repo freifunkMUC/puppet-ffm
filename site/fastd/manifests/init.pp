@@ -14,6 +14,7 @@ class fastd (
   $mac_suffix,
   $version = 'latest',
   $purge_peers = false,
+  $connection_ip = $::ipaddress_eth0,
 ) {
   include ::gwlib
   include ::fastd::service

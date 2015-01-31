@@ -5,7 +5,6 @@ class fastd::gluonconfig (
   $fastd_community_folder,
 ) {
 
-  $fastd_connection_ip = hiera('fastd::fastd_connection_ip', $::ipaddress_eth0)
   # in the future we will manage that with puppetdb
   file { "${fastd_community_folder}/fastd-router-snippet":
     ensure  => 'file',
