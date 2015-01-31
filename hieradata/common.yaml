@@ -30,4 +30,5 @@ fastd::port: 10000
 fastd::mac_prefix: '10:80:00'
 fastd::mac_suffix: '23:42'
 fastd::version: latest
+fastd::purge_peers: false
 

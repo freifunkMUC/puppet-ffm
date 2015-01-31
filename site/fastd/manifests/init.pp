@@ -13,6 +13,7 @@ class fastd (
   $mac_prefix,
   $mac_suffix,
   $version = 'latest',
+  $purge_peers = false,
 ) {
   include ::gwlib
   include ::fastd::service
@@ -39,8 +40,8 @@ class fastd (
   } ->
   file { "$community_folder/peers/":
     ensure  => directory,
-    recurse => true,
-    purge   => true,
+    recurse => $purge_peers,
+    purge   => $purge_peers,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
