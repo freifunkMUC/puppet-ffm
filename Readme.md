@@ -61,12 +61,20 @@ community: ffmuc
 batman_bridge: brffmuc
 
 vpn_service: mullvad
-gateway_number: 100
 
 fastd::secret_key: 'INSERT SECRET KEY'
 fastd::public_key: 'INSERT PUBLIC KEY'
 
 batman_adv::version: '2014.4'
+
+gateway_number: 4
+
+profiles::dhcpd::range_start: '10.80.4.1'
+profiles::dhcpd::range_end: '10.80.4.254'
+
+subnet: '10.80.0.0'
+netmask: '255.255.0.0'
+gateway_ip: '10.80.0.4'
 
 ```
 
