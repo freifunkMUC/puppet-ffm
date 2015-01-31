@@ -14,16 +14,18 @@ class profiles::dhcpd (
   $range_end,
   $dns_servers = [ $gateway_ip ],
   $routers = [ $gateway_ip ],
+  $interface,
 ) {
 
   class { '::iscdhcpd':
-    gateway_ip     => $gateway_ip,
-    netmask        => $netmask,
-    subnet         => $subnet,
-    range_start    => $range_start,
-    range_end      => $range_end,
-    dns_servers    => $dns_servers,
-    routers        => $routers,
+    gateway_ip  => $gateway_ip,
+    netmask     => $netmask,
+    subnet      => $subnet,
+    range_start => $range_start,
+    range_end   => $range_end,
+    dns_servers => $dns_servers,
+    routers     => $routers,
+    interface   => $interface,
   }
 
 }

@@ -45,8 +45,8 @@ class roles::gateway {
     subnet      => $subnet,
     range_start => $range_start,
     range_end   => $range_end,
+    interface   => $batman_bridge,
   }
-
 
   if $vpn_service != 'undefined' {
     $traffic_interface = $vpn_service

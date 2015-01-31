@@ -8,6 +8,7 @@ class iscdhcpd (
   $routers = [ $gateway_ip ],
   $default_lease_time = 600,
   $max_lease_time = 7200,
+  $interface,
 ) {
 
   include ::iscdhcpd::service
