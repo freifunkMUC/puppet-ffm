@@ -12,6 +12,7 @@ class fastd (
   $gateway_number,
   $mac_prefix,
   $mac_suffix,
+  $version = 'latest',
 ) {
   include ::gwlib
   include ::fastd::service
@@ -28,6 +29,7 @@ class fastd (
   }
 
   package { 'fastd':
+    ensure => $version,
   } ->
   file { [ '/etc/fastd/', $community_folder ]:
     ensure => 'directory',

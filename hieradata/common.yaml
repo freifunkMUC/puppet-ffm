@@ -29,4 +29,5 @@ fastd::port: 10000
 # therefor we only have at the moment the possibility of 0xff gateways
 fastd::mac_prefix: '10:80:00'
 fastd::mac_suffix: '23:42'
+fastd::version: latest
 
