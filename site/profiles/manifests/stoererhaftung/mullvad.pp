@@ -56,11 +56,19 @@ class profiles::stoererhaftung::mullvad (
   file { '/tmp/mullvad/mullvadconfig.zip':
     ensure => file,
     source => 'puppet:///modules/profiles/mullvad/mullvadconfig.zip',
-  } ->
-  exec { 'unzip -u /tmp/mullvad/mullvadconfig.zip -d /tmp/mullvad/':
-  } ->
-  exec { "mv [0-9]*/ca.crt [0-9]*/crl.pem [0-9]*/mullvad.crt [0-9]*/mullvad.key ${mullvad_path}":
-    cwd => '/tmp/mullvad/',
+    notify => Exec['unzip mullvadconfig'],
+  }
+
+  exec { 'unzip mullvadconfig':
+    command     => 'unzip -u /tmp/mullvad/mullvadconfig.zip -d /tmp/mullvad/',
+    refreshonly => true,
+    notify      => Exec["move openvpn-config-files to ${mullvad_path}"],
+  }
+
+  exec { "move openvpn-config-files to ${mullvad_path}":
+    command     => "mv [0-9]*/ca.crt [0-9]*/crl.pem [0-9]*/mullvad.crt [0-9]*/mullvad.key ${mullvad_path}",
+    cwd         => '/tmp/mullvad/',
+    refreshonly => true,
   } ->
   file { [ "${mullvad_path}/ca.crt", "${mullvad_path}/ca.pem", "${mullvad_path}/mullvad.crt", "${mullvad_path}/mullvad.key"]:
     owner  => 'root',
