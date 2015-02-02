@@ -4,6 +4,8 @@ class profiles::alfred (
 
   Group <| title == 'alfred' |> User <| title == 'alfred' |>
 
+  include ::fastd::service
+
   case $::operatingsystem {
     'Ubuntu': {
       package { 'libgps21':
@@ -16,7 +18,9 @@ class profiles::alfred (
         ensure   => latest, # if this is not here, we wont get an updated package
         provider => 'dpkg',
         source   => "/tmp/alfred_${::batman_adv::version}_amd64.deb",
-      } ->
+        notify   => Service['fastd'],
+      }
+
       package { 'zlib1g':
         ensure => installed,
       } ->
