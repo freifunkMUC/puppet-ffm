@@ -17,6 +17,10 @@ iface bat0 inet6 manual
         post-up /sbin/brctl addif <%= @bridge %> $IFACE
         post-up batctl it 10000
         post-up /sbin/ip rule add iif <%= @bridge %> table <%= @vpn_routing_table %>
+        post-up start-stop-daemon -b --start --exec /usr/local/sbin/alfred -- -i <%= @bridge %> -b bat0 -u /var/run/alfred.sock -m
+        post-up start-stop-daemon -b --start --exec /usr/local/sbin/batadv-vis -- -i bat0 /var/run/alfred.sock -s
         post-down /sbin/ip rule del iif <%= @bridge %> table <%= @vpn_routing_table %>
         pre-down /sbin/brctl delif <%= @bridge %> $IFACE || true
+        down start-stop-daemon --stop --oknodo --name alfred --retry 5 
+        down start-stop-daemon --stop --oknodo --name batadv-vis --retry 5
         down /sbin/ip link set $IFACE down

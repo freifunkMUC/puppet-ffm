@@ -5,6 +5,7 @@ class roles::gateway {
   include profiles::apt
   include profiles::etckeeper
   include gluonconfig
+  include user::virtual
 
   $mesh_vpn_interface     = hiera('mesh_vpn_interface')
   $gateway_number         = hiera('gateway_number')
@@ -27,11 +28,9 @@ class roles::gateway {
     netmask                => $netmask,
     vpn_routing_table_nr   => $vpn_routing_table_nr,
     vpn_routing_table_name => $vpn_routing_table_name,
-  }
-
+  } ->
   class { 'profiles::alfred':
-  }
-
+  } ->
   class { 'profiles::fastd':
     mesh_vpn_interface => $mesh_vpn_interface,
     community          => $community,

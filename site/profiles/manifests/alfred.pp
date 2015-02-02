@@ -2,6 +2,8 @@ class profiles::alfred (
   $alfred_json_version = '0.3.1-1',
 ) {
 
+  Group <| title == 'alfred' |> User <| title == 'alfred' |>
+
   case $::operatingsystem {
     'Ubuntu': {
       package { 'libgps21':

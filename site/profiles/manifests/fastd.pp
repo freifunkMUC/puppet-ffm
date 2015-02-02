@@ -23,5 +23,6 @@ class profiles::fastd (
     community          => $community,
     gateway_number     => $gateway_number,
   }
+  contain ::fastd
 
 }

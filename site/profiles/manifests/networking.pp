@@ -25,6 +25,8 @@ class profiles::networking (
     ipv6_prefix_without_length => $ipv6_prefix_without_length,
     ipv6_prefix_length         => $ipv6_prefix_length,
   }
+  contain ::batman_adv
+  contain ::radvd
 
   sysctl {
     'net.ipv4.ip_forward': value => '1',
