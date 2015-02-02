@@ -20,6 +20,7 @@ class dnsmasq (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    notify  => Service['dns'],
     content => template('dnsmasq/dnsmasq.conf.erb'),
   } ->
   file { '/etc/dnsmasq.d/rules':
@@ -27,6 +28,7 @@ class dnsmasq (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
+    notify  => Service['dns'],
     content => template('dnsmasq/rules.erb'),
   } ->
   Service['dns']
