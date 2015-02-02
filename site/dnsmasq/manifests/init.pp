@@ -5,11 +5,11 @@ class dnsmasq (
   $no_dhcp_interface,
   $listen_address,
   $forward_interface,
-  $enable,
+  $manage_service,
 ) {
 
   class { '::dnsmasq::service':
-    enable => $enable,
+    manage_service => $manage_service,
   }
   contain ::dnsmasq::service
 
@@ -20,7 +20,6 @@ class dnsmasq (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['dns'],
     content => template('dnsmasq/dnsmasq.conf.erb'),
   } ->
   file { '/etc/dnsmasq.d/rules':
@@ -28,9 +27,11 @@ class dnsmasq (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    notify  => Service['dns'],
     content => template('dnsmasq/rules.erb'),
-  } ->
-  Service['dns']
+  }
 
+  if $manage_service {
+    File['/etc/dnsmasq.conf'] ~> Service['dns']
+    File['/etc/dnsmasq.d/rules'] ~> Service['dns']
+  }
 }

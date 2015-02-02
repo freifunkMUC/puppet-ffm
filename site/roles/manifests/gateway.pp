@@ -52,11 +52,11 @@ class roles::gateway {
 
     # our dnsmasq should be stopped and not startet on reboot by puppet beause
     # the vpn_service-up script for openvpn will start it when the tunnel is ready
-    $enable_dns = false
+    $manage_dns_service = false
   } elsif $no_vpn_interface != undef {
     $traffic_interface = $no_vpn_interface
 
-    $enable_dns = true
+    $manage_dns_service = true
   } else {
     fail('vpn_interface could not be derived from vpn_service. Also there was no alternative with no_vpn_interface provided.')
   }
@@ -70,7 +70,7 @@ class roles::gateway {
     dns_service       => $dns_service,
     no_dhcp_interface => $batman_bridge,
     forward_interface => $traffic_interface,
-    enable            => $enable_dns,
+    manage_service    => $manage_dns_service,
   } ->
   class { "::profiles::stoererhaftung::${vpn_service}":
     vpn_interface     => $traffic_interface,

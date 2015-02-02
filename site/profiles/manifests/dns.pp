@@ -2,7 +2,7 @@ class profiles::dns (
   $no_dhcp_interface,
   $forward_interface,
   $dns_service,
-  $enable,
+  $manage_service,
 ) {
 
   $dns_interfaces = [ $no_dhcp_interface ]
@@ -11,7 +11,7 @@ class profiles::dns (
     dns_interfaces    => $dns_interfaces,
     no_dhcp_interface => $no_dhcp_interface,
     forward_interface => $forward_interface,
-    enable            => $enable,
+    manage_service    => $manage_service,
   }
   contain "::${dns_service}"
 
