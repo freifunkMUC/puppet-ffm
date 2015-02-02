@@ -1,0 +1,41 @@
+# this file is managed by puppet
+
+log_level 4
+log_file /var/log/munin/munin-node.log
+pid_file /var/run/munin/munin-node.pid
+
+background 1
+setsid 1
+
+user root
+group root
+
+# This is the timeout for the whole transaction.
+global_timeout 900
+
+# This is the timeout for each plugin.
+timeout 60
+
+# Regexps for files to ignore
+ignore_file [\#~]$
+ignore_file DEADJOE$
+ignore_file \.bak$
+ignore_file %$
+ignore_file \.dpkg-(tmp|new|old|dist)$
+ignore_file \.rpm(save|new)$
+ignore_file \.pod$
+
+# Set this if the client doesn't report the correct hostname when
+# telnetting to localhost, port 4949
+#
+#host_name localhost.localdomain
+
+allow ^<%= @munin_master_ipv4_regex -%>$
+allow ^<%= @munin_master_ipv6_regex -%>$
+
+# Which address to bind to;
+host <%= @bind_address %>
+
+# And which port
+port 4949
+

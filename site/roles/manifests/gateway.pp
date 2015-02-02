@@ -4,6 +4,7 @@
 class roles::gateway {
   include profiles::apt
   include profiles::etckeeper
+  include profiles::monitoring
   include gluonconfig
   include user::virtual
 
