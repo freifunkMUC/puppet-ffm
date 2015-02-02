@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 /sbin/ip route flush table <%= @vpn_routing_table %>
 /sbin/ip route add unreachable default table <%= @vpn_routing_table %>
