@@ -4,7 +4,7 @@ class munin (
   $bind_interface = 'lo',
 ) {
   $bind_address = inline_template(
-                    "<%= scope.lookupvar('::ipaddress_${bind_interface}') -%>"
+                    "<%= scope['::ipaddress_${bind_interface}'] -%>"
                   )
 
   include ::munin::params

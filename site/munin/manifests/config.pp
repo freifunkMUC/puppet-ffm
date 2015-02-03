@@ -7,7 +7,7 @@ class munin::config {
     mode    => '0644',
     content => template('munin/munin-node.conf.erb'),
     notify  => Service['munin-node'],
-    require => Package["$::munin::params::node_package"],
+    require => Package[$::munin::params::node_package],
   }
 
 }
