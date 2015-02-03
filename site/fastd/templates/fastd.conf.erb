@@ -1,13 +1,13 @@
 log level debug2;
 log to syslog level debug2;
-interface "<%= @mesh_vpn_interface %>";
-<% @ciphers.each do |cipher| -%>
+interface "<%= scope['::fastd::mesh_vpn_interface'] %>";
+<% scope['::fastd::ciphers'].each do |cipher| -%>
 method "<%= cipher %>";
 <% end -%>
-bind any:<%= @port %>;
+bind any:<%= scope['::fastd::port'] %>;
 include "secret.conf";
 secure handshakes yes;
-mtu <%= @mtu %>;
+mtu <%= scope['::fastd::mtu'] %>;
 include peers from "peers";
 on up "./fastd-up";
 status socket "/var/run/fastd.sock";

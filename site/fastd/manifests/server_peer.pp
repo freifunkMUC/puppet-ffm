@@ -5,16 +5,16 @@ define fastd::server_peer (
   $contact,
 ) {
 
-  $community_folder = "/etc/fastd/${::fastd::community}-mesh-vpn"
+  include ::fastd::params
 
   if ($name != $::fqdn) and ($name != $::fastd::connection_ip) {
-    file {"${community_folder}/peers/${name}":
+    file {"${::fastd::params::community_folder}/peers/${name}":
       ensure  => file,
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
       content => template('fastd/fastd-server-peer.erb'),
-      require => [ Package['fastd'], File["${community_folder}/peers/"] ],
+      require => [ Package['fastd'], File["${::fastd::params::community_folder}/peers/"] ],
       notify  => Service['fastd'],
     }
   }
