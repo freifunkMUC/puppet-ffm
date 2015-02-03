@@ -8,9 +8,6 @@ class dnsmasq (
   $manage_service,
 ) {
 
-  class { '::dnsmasq::service':
-    manage_service => $manage_service,
-  }
   contain ::dnsmasq::service
 
   package { 'dnsmasq':
@@ -30,8 +27,6 @@ class dnsmasq (
     content => template('dnsmasq/rules.erb'),
   }
 
-  if $manage_service {
-    File['/etc/dnsmasq.conf'] ~> Service['dns']
-    File['/etc/dnsmasq.d/rules'] ~> Service['dns']
-  }
+  File['/etc/dnsmasq.conf'] ~> Service['dns']
+  File['/etc/dnsmasq.d/rules'] ~> Service['dns']
 }

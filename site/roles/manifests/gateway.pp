@@ -40,12 +40,10 @@ class roles::gateway {
 
   Class['batman_adv'] ->
   class { 'profiles::dhcpd':
-    gateway_ip  => $gateway_ip,
-    netmask     => $netmask,
-    subnet      => $subnet,
-    range_start => $range_start,
-    range_end   => $range_end,
-    interface   => $batman_bridge,
+    gateway_ip => $gateway_ip,
+    netmask    => $netmask,
+    subnet     => $subnet,
+    interface  => $batman_bridge,
   }
 
   if $vpn_service != 'undefined' {
@@ -72,11 +70,14 @@ class roles::gateway {
     no_dhcp_interface => $batman_bridge,
     forward_interface => $traffic_interface,
     manage_service    => $manage_dns_service,
-  } ->
+  }
+
   class { "::profiles::stoererhaftung::${vpn_service}":
     vpn_interface     => $traffic_interface,
     vpn_routing_table => $vpn_routing_table_name,
     dns_service       => $dns_service,
   }
+
+  Service['dns'] -> Service['openvpn']
 
 }

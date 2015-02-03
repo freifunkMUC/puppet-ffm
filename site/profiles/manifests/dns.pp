@@ -15,5 +15,7 @@ class profiles::dns (
   }
   contain "::${dns_service}"
 
+  Package <||> -> Service['dns']
+
 }
 

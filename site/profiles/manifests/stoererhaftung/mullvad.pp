@@ -4,7 +4,19 @@ class profiles::stoererhaftung::mullvad (
   $dns_service,
 ) {
 
+  class { '::openvpn':
+    notify_exec => "stop ${dns_service}",
+  }
   contain ::openvpn
+
+  # this is needed because openvpn cannot connect unless it has
+  # already dns. since our ${dns_service} will tunnel requests
+  # through mullvad, we need to stop it.
+  exec { "stop ${dns_service}":
+    command     => "service ${dns_service} stop",
+    refreshonly => true,
+    onlyif      => "service ${dns_service} status",
+  }
 
   $mullvad_path = '/etc/openvpn/mullvad'
 
@@ -43,7 +55,8 @@ class profiles::stoererhaftung::mullvad (
     mode    => '0754',
     content => template('profiles/mullvad-down.erb'),
     notify  => Service['openvpn'],
-  } ->
+  }
+
   package { 'unzip':
     ensure => installed,
   } ->
@@ -69,6 +82,7 @@ class profiles::stoererhaftung::mullvad (
     command     => "mv [0-9]*/ca.crt [0-9]*/crl.pem [0-9]*/mullvad.crt [0-9]*/mullvad.key ${mullvad_path}",
     cwd         => '/tmp/mullvad/',
     refreshonly => true,
+    require     => File[$mullvad_path],
   } ->
   file { [ "${mullvad_path}/ca.crt", "${mullvad_path}/ca.pem", "${mullvad_path}/mullvad.crt", "${mullvad_path}/mullvad.key"]:
     owner  => 'root',
@@ -79,7 +93,7 @@ class profiles::stoererhaftung::mullvad (
   Service['openvpn']
 
   exec { "check for ${vpn_interface}":
-    command => 'true',
+    command => true,
     unless  => "ifconfig | grep ${vpn_interface}",
     notify  => Service['openvpn'],
   }

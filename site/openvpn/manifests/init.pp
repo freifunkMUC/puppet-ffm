@@ -1,4 +1,6 @@
-class openvpn {
+class openvpn (
+  $notify_exec,
+) {
 
   contain ::openvpn::service
   include ::kmod
