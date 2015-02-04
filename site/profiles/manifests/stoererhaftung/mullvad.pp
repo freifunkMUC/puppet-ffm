@@ -93,7 +93,7 @@ class profiles::stoererhaftung::mullvad (
   Service['openvpn']
 
   exec { "check for ${vpn_interface}":
-    command => true,
+    command => "true",
     unless  => "ifconfig | grep ${vpn_interface}",
     notify  => Service['openvpn'],
   }
