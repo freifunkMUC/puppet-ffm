@@ -3,23 +3,16 @@ class radvd (
   $ipv6_prefix_without_length,
   $ipv6_prefix_length,
   $gateway_number,
+  $ensure = 'installed',
 ) {
-  include ::gwlib
+  include ::radvd::install
+  include ::radvd::config
   include ::radvd::service
 
-  $hex_gateway_number = int_to_hex( $gateway_number )
-  $RDNSS              = "${ipv6_prefix_without_length}${hex_gateway_number}"
-
-  package { 'radvd':
-  } ->
-  file { '/etc/radvd.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('radvd/radvd.conf.erb'),
-    notify  => Service['radvd'],
-  } ->
-  Service['radvd']
+  if ! is_integer($gateway_number) {
+    fail('gateway_number is not an integer!')
+  } elsif $gateway_number < 0 or $gateway_number > 255 {
+    fail('gateway_number is either < 0 or > 255 which is not supported right now!')
+  }
 
 }

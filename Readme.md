@@ -7,11 +7,6 @@ configurable as possible to be used in other communities.
 Status: *very experimental*
 
 # what's missing right now
-- There is no configuration of a vpn for the user-traffic from the routers.
-  Therefor the traffic is either directly going into the internet or cannot
-  be delivered at all.
-  (`profiles::firewall::route_traffic_through_vpn_tunnel`)
-- No Alfred is being configured.
 - no intercity-vpn yet
 
 ## warning
@@ -22,7 +17,6 @@ Until that you should probably stop fastd with "service fastd stop".
 # base system
 
 As a first step you should install ubuntu 14.04 lts on your machine.
-Debian Jessie should also work.
 
 
 # bootstrapping the installation
@@ -57,28 +51,34 @@ Example hieradata/hosts/$(facter fqdn).yaml file:
 
 role: gateway
 
-community: ffmuc
-batman_bridge: brffmuc
+profile::fastd::community: ffmuc
+profile::batman_adv::bridge: brffmuc
+profile::batman_adv::version: '2014.4'
 
-vpn_service: mullvad
+profile::dhcpd::range_start: '10.80.4.1'
+profile::dhcpd::range_end: '10.80.4.254'
+profile::dhcpd::subnet: '10.80.0.0'
+
+profile::batman_adv::netmask: '255.255.0.0'
+profile::batman_adv::gateway_ip: '10.80.0.4'
+profile::batman_adv::gateway_number: 4
 
 fastd::secret_key: 'INSERT SECRET KEY'
 fastd::public_key: 'INSERT PUBLIC KEY'
 
-batman_adv::version: '2014.4'
+profile::openvpn::configs:
+  mullvad1:
+    vpn_routing_table: 'freifunk'
+    dependent_services:
+      - 'dnsmasq'
+    provider_fqdn: 'se.mullvad.net'
+    port: 1194
+    provider: 'mullvad'
 
-gateway_number: 4
-
-profiles::dhcpd::range_start: '10.80.4.1'
-profiles::dhcpd::range_end: '10.80.4.254'
-
-subnet: '10.80.0.0'
-netmask: '255.255.0.0'
-gateway_ip: '10.80.0.4'
 
 ```
 
-- *gateway_number*: anything from 1 to 255
+- *profile::batman_adv::gateway_number*: anything from 1 to 255
 - *fastd::secret_key*: you need to provide this key by yourself by using
   the command "fastd --generate-key"
 - *fastd::public_key*: you need to provide this key by yourself by using
@@ -104,13 +104,14 @@ install with "vagrant plugin install vagrant-libvirt".
 
 #### box behind nat
 Please look up how to set up the right firewall-rules for your operating
-system to forward the port to your Virtual Machine if you want to use this
-kind of setup.
+system to forward the fastd-port to your Virtual Machine if you want to
+use this kind of setup.
 
 
 #### With Vagrant
-After you modified "configs.yaml" to your needs, you may hit "vagrant up"
-into your terminal.
+After you modified "configs.yaml" to your needs, you may type
+"vagrant up hostname" into your terminal.
+Have a look at "Vagrantfile" to see what will be used.
 Make sure, that your Operating System is allowing you to add the NFS-folders
 and that the firewall is not blocking nfs.
 
@@ -132,11 +133,20 @@ a reboot. If this is the case, you need to restart fastd by hand.
 
 # using mullvad as vpn-service
 append to hieradata/hosts/$FQDN.yaml:
-vpn_service: mullvad
+profile::openvpn::configs:
+  mullvad1:
+    vpn_routing_table: 'freifunk'
+    dependent_services:
+      - 'dnsmasq'
+    provider_fqdn: 'se.mullvad.net'
+    port: 1194
+    provider: 'mullvad'
 
 
-copy your mullvadconfig.zip to puppet-ffm/site/profiles/files/mullvad/ before you are
-starting puppet
+copy your mullvadconfig.zip to puppet-ffm/site/openvpn/files/config/mullvad1_config.zip
+before you are starting puppet. Keep in mind, that the first part of the file name
+will be the name of the config. As you can see in the example above, mullvad1 is the
+name of the first key of the openvpn::configs-hash.
 
 
 # fastd clients
@@ -166,7 +176,7 @@ fastd::server_peers:
   fastd.example.com:
     public_key: '...'
     fastd_port: 10000
-    contact: 'contact.example.com'
+    contact: 'contact@example.com'
 ```
 
 # code checking & testing

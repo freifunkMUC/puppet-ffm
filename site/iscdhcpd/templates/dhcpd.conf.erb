@@ -2,15 +2,15 @@
 
 ddns-update-style none;
 
-default-lease-time <%= @default_lease_time %>;
-max-lease-time <%= @max_lease_time %>;
+default-lease-time <%= scope['::iscdhcpd::default_lease_time'] %>;
+max-lease-time <%= scope['::iscdhcpd::max_lease_time'] %>;
 
 log-facility local7;
 
-subnet <%= @subnet %> netmask <%= @netmask %> {
+subnet <%= scope['::iscdhcpd::subnet'] %> netmask <%= scope['::iscdhcpd::netmask'] %> {
   authoritative;
-  range <%= @range_start %> <%= @range_end %>;
-  option domain-name-servers <%= @dns_servers.join(', ') %>;
-  option routers <%= @routers.join(', ') %>;
-  interface <%= @interface %>;
+  range <%= scope['::iscdhcpd::range_start'] %> <%= scope['::iscdhcpd::range_end'] %>;
+  option domain-name-servers <%= scope['::iscdhcpd::dns_servers'].join(', ') %>;
+  option routers <%= scope['::iscdhcpd::routers'].join(', ') %>;
+  interface <%= scope['::iscdhcpd::interface'] %>;
 }

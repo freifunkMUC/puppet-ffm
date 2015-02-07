@@ -1,0 +1,32 @@
+# this file is managed by puppet
+client
+remote <%= @provider_fqdn -%> <%= @port %>
+
+dev-type tun
+dev <%= @interface %>
+
+proto udp
+
+resolv-retry infinite
+persist-key
+persist-tun
+nobind
+route-noexec
+
+ping 10
+ping-restart 60
+
+script-security 2
+remote-cert-tls server
+verb 4
+comp-lzo
+
+ca /etc/openvpn/<%= @name %>/ca.crt
+cert /etc/openvpn/<%= @name %>/<%= @name %>.crt
+key /etc/openvpn/<%= @name %>/<%= @name %>.key
+crl-verify /etc/openvpn/<%= @name %>/crl.pem
+
+up-restart
+up /etc/openvpn/<%= @name %>/<%= @name %>-up
+down /etc/openvpn/<%= @name %>/<%= @name %>-down
+

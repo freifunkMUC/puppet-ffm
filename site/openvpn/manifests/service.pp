@@ -1,8 +1,11 @@
 class openvpn::service {
 
+  include ::kmod
+
+  kmod::load { 'tun':
+  } ->
   service { 'openvpn':
     ensure => running,
-    notify => Exec[$::openvpn::notify_exec],
   }
 
 }

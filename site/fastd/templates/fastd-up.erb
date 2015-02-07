@@ -1,4 +1,6 @@
 #!/bin/sh
 # this file is managed by puppet
 ip link set address <%= @interface_mac %> up dev <%= scope['::fastd::mesh_vpn_interface'] %>
-batctl if add <%= scope['::fastd::mesh_vpn_interface'] %>
+<% if scope['::fastd::routing_type'] == 'batman' then -%>
+batctl -m <%= scope['::fastd::routing_interface'] -%> if add <%= scope['::fastd::mesh_vpn_interface'] %>
+<% end -%>

@@ -1,15 +1,11 @@
 class openvpn (
-  $notify_exec,
+  $configs = {},
+  $ensure = 'installed',
 ) {
 
-  contain ::openvpn::service
-  include ::kmod
+  include ::openvpn::install
+  include ::openvpn::service
 
-  kmod::load { 'tun':
-  } ->
-  package { 'openvpn':
-    ensure => installed,
-  } ->
-  Service['openvpn']
+  create_resources( ::openvpn::provider, $configs )
 
 }

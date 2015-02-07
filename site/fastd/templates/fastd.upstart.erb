@@ -6,7 +6,7 @@ author "Hubert Mühlhans <muehlhans.hubert@ekodia.de>"
 start on started networking
 stop on stopped networking
 
-env CONFIG_FILE=<%= scope['::fastd::params::community_folder'] -%>/fastd.conf
+env CONFIG_FILE=<%= scope['::fastd::config_path'] -%>/fastd.conf
 
 pre-start script
   if [ ! -f /etc/default/fastd ]; then
@@ -19,6 +19,12 @@ pre-start script
   if [ ! -f $CONFIG_FILE ]; then
     echo "$CONFIG_FILE does not exist! - Aborting..."
     echo "Please create and configure $CONFIG_FILE to fix the problem."
+    stop
+    exit 0
+  fi
+
+  if ! fastd --verify-config --config $CONFIG_FILE; then
+    echo "$CONFIG_FILE is not valid! - Aborting..."
     stop
     exit 0
   fi

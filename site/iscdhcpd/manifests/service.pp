@@ -1,6 +1,7 @@
 class iscdhcpd::service {
-  service { 'isc-dhcp-server':
+  service { 'dhcpd':
     ensure     => running,
+    name       => $::iscdhcpd::params::service_name,
     hasrestart => true,
   }
 }

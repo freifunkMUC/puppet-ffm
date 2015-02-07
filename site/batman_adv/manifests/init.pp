@@ -1,60 +1,37 @@
 # vim: set sw=2 sts=2 et tw=80 :
 class batman_adv (
   $bridge,
-  $download_bandwidth = '10',
-  $upload_bandwidth = '5',
-  $mesh_vpn_interface,
   $gateway_number,
   $gateway_ip,
   $vpn_routing_table,
-  $version = '2014.3',
   $netmask,
+  $version,
   $ipv6_prefix_without_length,
+  $download_bandwidth = 10,
+  $upload_bandwidth = 5,
 ) {
-  include fastd::service
-  include gwlib
-  include batman_adv::module
+  contain ::batman_adv::install
+  contain ::batman_adv::config
 
-  $hex_gateway_number = int_to_hex( $gateway_number )
-
-  if $::osfamily != 'Debian' {
-    fail('Only Debian is supported right now.')
+  if ! is_integer($gateway_number) {
+    fail('gateway_number is not an integer!')
+  } elsif $gateway_number < 0 or $gateway_number > 255 {
+    fail('gateway_number is either < 0 or > 255 which is not supported right now!')
   }
 
-  package { 'bridge-utils':
-  } ->
-  file { '/etc/network/interfaces.d/':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-  } ->
-  file { '/etc/network/interfaces.d/batman.cfg':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('batman_adv/batman.cfg.erb'),
-    notify  => Service['fastd'],
+  validate_ipv4_address($gateway_ip)
+  validate_ipv4_address($netmask)
+
+  if ! is_integer($download_bandwidth) {
+    fail('download_bandwidth is not an integer!')
+  } elsif $download_bandwidth < 0 {
+    fail('download_bandwidth cannot be < 0!')
   }
 
-  exec { "/sbin/ifup ${bridge}":
-    notify  => Service['fastd'],
-    unless  => "/sbin/ifconfig | grep ${bridge}",
-    require => File['/etc/network/interfaces.d/batman.cfg'],
+  if ! is_integer($upload_bandwidth) {
+    fail('upload_bandwidth is not an integer!')
+  } elsif $upload_bandwidth < 0 {
+    fail('upload_bandwidth cannot be < 0!')
   }
 
-  # source may include any filenames
-  # files for source-directory need to match ^[a-zA-Z0-9_-]+$
-  # for this reason, the following snippet is correct
-  augeas { 'source batman.cfg':
-    context => '/files/etc/network/interfaces',
-    changes => 'set source[last()+1] interfaces.d/batman.cfg',
-    onlyif  => "match source[. = 'interfaces.d/batman.cfg'] size == 0",
-    incl    => '/etc/network/interfaces',
-    lens    => 'Interfaces.lns',
-  }
-
-  File['/etc/network/interfaces.d/batman.cfg'] -> Augeas['source batman.cfg']
-  Augeas['source batman.cfg'] -> Exec["/sbin/ifup ${bridge}"]
 }

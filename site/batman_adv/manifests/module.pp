@@ -4,8 +4,6 @@ class batman_adv::module {
   include kmod
   include batman_adv::module::params
 
-  Kmod::Load { notify => Service['fastd'] }
-
   case $::operatingsystem {
     'Debian': {
       case $::operatingsystemmajrelease {

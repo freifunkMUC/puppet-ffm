@@ -1,15 +1,13 @@
 class dnsmasq::service  {
 
-  if $::dnsmasq::manage_service == true {
-    $enable = true
-  } else {
-    $enable = false
-  }
-
   service { 'dns':
     ensure     => 'running',
     name       => 'dnsmasq',
-    enable     => $enable,
+    enable     => true,
     hasrestart => true,
   }
+
+  # to prevent resolving-issues
+  Package <||> -> Service['dns']
+
 }

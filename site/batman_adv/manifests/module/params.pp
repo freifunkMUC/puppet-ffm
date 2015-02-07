@@ -1,9 +1,5 @@
 class batman_adv::module::params {
 
-  if $::batman_adv::version == '2014.3' {
-    warning("You probably did not choose batman-advanced-version = ${::batman_adv::version} but this is the default.")
-  }
-
   case $::operatingsystem {
     'Debian': {
       $batctl_package = 'batctl'
@@ -43,7 +39,6 @@ class batman_adv::module::params {
           '14.04': {
             case $::batman_adv::version {
               '2014.3': {
-                #$kernel_version = '3.16.0.23.24'
                 $kernel_version = '3.16'
                 $batctl_version = '2014.3.0-1'
               }

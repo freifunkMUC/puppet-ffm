@@ -1,7 +1,5 @@
 class fastd::params {
 
-  $community_folder = "/etc/fastd/${::fastd::community}-mesh-vpn"
-
   case $::operatingsystem {
     'Ubuntu': {
     }

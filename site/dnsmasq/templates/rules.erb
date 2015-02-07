@@ -1,5 +1,7 @@
 # this file is managed by puppet
 # Forward DNS requests via interface
-<% @auth_servers.each do |server| -%>
-server=<%= server %>@<%= @forward_interface %>
+<% scope['::dnsmasq::forward_interfaces'].each do |interface| -%>
+<% scope['::dnsmasq::upstream_servers'].each do |server| -%>
+server=<%= server %>@<%= interface %>
+<% end -%>
 <% end -%>

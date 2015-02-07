@@ -12,3 +12,5 @@ mod 'camptocamp-kmod',
   :git => "https://github.com/camptocamp/puppet-kmod.git",
   :ref => '1.0.0'
 
+mod 'puppetlabs/concat', '1.1.2'
+

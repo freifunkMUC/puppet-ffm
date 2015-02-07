@@ -1,0 +1,10 @@
+#!/bin/bash
+
+/sbin/ip route flush table <%= @vpn_routing_table %>
+/sbin/ip route add unreachable default table <%= @vpn_routing_table %>
+
+<% @dependent_services.each do |service| -%>
+service <%= service -%> restart
+<% end -%>
+
+exit 0

@@ -1,13 +1,13 @@
 # this file is managed by puppet
-<% if @listen_address != '127.0.0.1' -%>
+<% if scope['::dnsmasq::listen_address'] != '127.0.0.1' -%>
 bind-interfaces
 <% end -%>
 except-interface=lo
-<% @dns_interfaces.each do |interface| -%>
+<% scope['::dnsmasq::dns_interfaces'].each do |interface| -%>
 interface=<%= interface %>
 <% end -%>
-listen-address=<%= @listen_address %>
-no-dhcp-interface=<%= @no_dhcp_interface %>
+listen-address=<%= scope['::dnsmasq::listen_address'] %>
+no-dhcp-interface=<%= scope['::dnsmasq::no_dhcp_interface'] %>
 domain-needed
 no-resolv
 no-hosts

@@ -1,26 +1,28 @@
 # this file is managed by puppet
-auto <%= @bridge %>
-iface <%= @bridge %> inet6 static
+auto <%= scope['::batman_adv::bridge'] %>
+iface <%= scope['::batman_adv::bridge'] %> inet6 static
         bridge-ports none
-        address <%= @ipv6_prefix_without_length %><%= @hex_gateway_number %>
+        address <%= scope['::batman_adv::ipv6_prefix_without_length'] %><%= scope['::batman_adv::hex_gateway_number'] %>
         netmask 64
-iface <%= @bridge %> inet static
-        address <%= @gateway_ip %>
-        netmask <%= @netmask %>
+iface <%= scope['::batman_adv::bridge'] %> inet static
+        address <%= scope['::batman_adv::gateway_ip'] %>
+        netmask <%= scope['::batman_adv::netmask'] %>
 
 allow-hotplug bat0
 iface bat0 inet6 manual
         pre-up /sbin/modprobe batman-adv
-        pre-up batctl gw server <%= @download_bandwidth %>mbit/<%= @upload_bandwidth %>mbit
-        pre-up batctl if add <%= @mesh_vpn_interface %>
+        pre-up batctl -m $IFACE gw server <%= scope['::batman_adv::download_bandwidth'] %>mbit/ <%= scope['::batman_adv::upload_bandwidth'] %>mbit
         up /sbin/ip link set $IFACE up
-        post-up /sbin/brctl addif <%= @bridge %> $IFACE
-        post-up batctl it 10000
+        post-up /sbin/brctl addif <%= scope['::batman_adv::bridge'] %> $IFACE
+        post-up batctl -m $IFACE it 10000
         post-up /sbin/ip rule add iif <%= @bridge %> table <%= @vpn_routing_table %>
-        post-up start-stop-daemon -b --start --exec /usr/local/sbin/alfred -- -i <%= @bridge %> -b bat0 -u /var/run/alfred.sock -m
-        post-up start-stop-daemon -b --start --exec /usr/local/sbin/batadv-vis -- -i bat0 /var/run/alfred.sock -s
+        post-up /sbin/ip rule add iif <%= scope['::batman_adv::bridge'] %> table <%= scope['::batman_adv::vpn_routing_table'] %>
+        post-up start-stop-daemon -b --start --exec /usr/local/sbin/alfred -- -i <%= @bridge %> -b $IFACE -u /var/run/alfred.sock -m
+        post-up start-stop-daemon -b --start --exec /usr/local/sbin/alfred -- -i <%= scope['::batman_adv::bridge'] %> -b $IFACE -u /var/run/alfred.sock -m
+        post-up start-stop-daemon -b --start --exec /usr/local/sbin/batadv-vis -- -i $IFACE /var/run/alfred.sock -s
         post-down /sbin/ip rule del iif <%= @bridge %> table <%= @vpn_routing_table %>
-        pre-down /sbin/brctl delif <%= @bridge %> $IFACE || true
+        post-down /sbin/ip rule del iif <%= scope['::batman_adv::bridge'] %> table <%= scope['::batman_adv::vpn_routing_table'] %>
+        pre-down /sbin/brctl delif <%= scope['::batman_adv::bridge'] %> $IFACE || true
         down start-stop-daemon --stop --oknodo --name alfred --retry 5 
         down start-stop-daemon --stop --oknodo --name batadv-vis --retry 5
         down /sbin/ip link set $IFACE down

@@ -1,0 +1,4 @@
+# this part is managed by puppet
+<% scope['::resolvconf::lo_nameservers'].each do |nameserver| -%>
+nameserver <%= nameserver %>
+<% end -%>

@@ -3,32 +3,36 @@ class iscdhcpd (
   $netmask,
   $range_start,
   $range_end,
+  $interface,
   $gateway_ip,
+  $ensure = 'installed',
   $dns_servers = [ $gateway_ip ],
   $routers = [ $gateway_ip ],
   $default_lease_time = 600,
   $max_lease_time = 7200,
-  $interface,
 ) {
 
+  include ::iscdhcpd::params
+  include ::iscdhcpd::install
+  include ::iscdhcpd::config
   include ::iscdhcpd::service
 
-  file { '/etc/dhcp/dhcpd.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('iscdhcpd/dhcpd.conf.erb'),
-  } ->
-  package { 'isc-dhcp-server':
-  } ->
-  Service['isc-dhcp-server']
+  validate_ipv4_address($subnet)
+  validate_ipv4_address($netmask)
+  validate_ipv4_address($range_start)
+  validate_ipv4_address($range_end)
+  validate_ipv4_address($gateway_ip)
 
-  # due to a bug of the isc-dhcp-server-package for debian jessie (4.3.1-1)
-  # we need first to provide a configuration with a subnet first. therefore
-  # we cannot notify the service on the first puppet run
-  if $::lsbdistdescription != 'Debian GNU/Linux testing (jessie)' {
-    File['/etc/dhcp/dhcpd.conf'] ~> Service['isc-dhcp-server']
+  if ! is_integer($default_lease_time) {
+    fail('default_lease_time is not an integer!')
+  } elsif $default_lease_time < 0 {
+    fail('default_lease_time cannot be < 0!')
+  }
+
+  if ! is_integer($max_lease_time) {
+    fail('max_lease_time is not an integer!')
+  } elsif $max_lease_time < 0 {
+    fail('max_lease_time cannot be < 0!')
   }
 
 }

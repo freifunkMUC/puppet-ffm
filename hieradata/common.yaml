@@ -1,31 +1,23 @@
 ---
 
-community: 'ffmuc'
-
 role: undefined
 
-profiles::firewall::purge: true
-profiles::networking::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
-profiles::networking::ipv6_prefix_length: 64
+profile::fastd::mesh_vpn_interface: 'mesh-vpn'
+profile::fastd::community: 'ff'
+profile::batman_adv::bridge: 'brff'
+profile::firewall::purge: true
+profile::radvd::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
+profile::radvd::ipv6_prefix_length: 64
 
-dnsmasq::auth_servers:
+profile::dns::listen_address: '127.0.0.1'
+profile::dns::upstream_servers:
   - '85.214.20.141'  # FoeBud
   - '213.73.91.35'   # dnscache.berlin.ccc.d
-dnsmasq::listen_address: '127.0.0.1'    # if running another dns-server then 127.0.0.2 is appropriate
-
-batman_bridge: 'br-ff'
-mesh_vpn_interface: 'mesh-vpn'
-
-vpn_routing_table_nr: 42
-vpn_routing_table_name: 'freifunk'
 
 fastd::port: 10000
 
-# batman_adv::version: '2014.4'  # default is '2014.3'
-
-
 # fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
-# hey_gateway_number is gateway_number automatically converted into hex
+# hex_gateway_number is gateway_number automatically converted into hex
 # therefor we only have at the moment the possibility of 0xff gateways
 fastd::mac_prefix: '10:80:00'
 fastd::mac_suffix: '23:42'
