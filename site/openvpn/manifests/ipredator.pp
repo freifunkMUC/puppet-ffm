@@ -57,7 +57,7 @@ define openvpn::ipredator (
   }
 
   exec { "check for ${interface}":
-    command => 'true', # please keep it there as a command, not as a bool
+    command => 'true ', # please keep it there as a command, not as a bool
     unless  => "ifconfig | grep ${interface}",
     notify  => Service['openvpn'],
   }

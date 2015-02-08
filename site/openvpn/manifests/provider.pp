@@ -26,8 +26,8 @@ define openvpn::provider (
       openvpn::ipredator { $name:
         vpn_routing_table  => $vpn_routing_table,
         dependent_services => $dependent_services,
-	username 	   => $username,
-	password 	   => $password,
+        username           => $username,
+        password           => $password,
       }
     }
     default: {
