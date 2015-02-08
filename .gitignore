@@ -7,3 +7,5 @@ Puppetfile.lock
 *.swp
 configs.yaml
 site/openvpn/files/configs/*zip
+hieradata/client-peers.yaml
+hieradata/server-peers.yaml
