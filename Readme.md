@@ -78,28 +78,28 @@ profile::openvpn::configs:
 
 ```
 
-- *profile::batman_adv::gateway_number*: anything from 1 to 255
-- *fastd::secret_key*: you need to provide this key by yourself by using
-  the command "fastd --generate-key"
-- *fastd::public_key*: you need to provide this key by yourself by using
-  the command "fastd --generate-key"
+- `profile::batman_adv::gateway_number`: anything from 1 to 255
+- `fastd::secret_key`: you need to provide this key by yourself by using
+  the command `fastd --generate-key`
+- `fastd::public_key`: you need to provide this key by yourself by using
+  the command `fastd --generate-key`
 - vpn_service: which vpn-provider do you use? right now it is only mullvad
                supported but it should be rather easy to adjust to others
 
 
-You should also have a look at "hieradata/common.yaml" which has
+You should also have a look at `hieradata/common.yaml` which has
 several default parameters set. This data however gets overwritten
-by the more specific file "hieradata/$( facter fqdn ).yaml".
+by the more specific file `hieradata/$( facter fqdn ).yaml`.
 
 If you would like to use Vagrant for setting up a Virtual Machine
-you will need to create and change "configs.yaml" as well.
+you will need to create and change `configs.yaml` as well.
 
 In the configs.yaml which comes with the code you can see a working
-example. The one thing you need to change for sure is "boxname".
+example. The one thing you need to change for sure is `boxname`.
 Use the name of a ubuntu 14.04.1_lts vagrant-box you prepared or
 downloaded for this purpose.
-The example-file also refers to a provider 'libvirt' which you may
-install with "vagrant plugin install vagrant-libvirt".
+The example-file also refers to a provider `libvirt` which you may
+install with `vagrant plugin install vagrant-libvirt`.
 
 
 #### box behind nat
@@ -109,9 +109,9 @@ use this kind of setup.
 
 
 #### With Vagrant
-After you modified "configs.yaml" to your needs, you may type
-"vagrant up hostname" into your terminal.
-Have a look at "Vagrantfile" to see what will be used.
+After you modified `configs.yaml` to your needs, you may type
+`vagrant up hostname` into your terminal.
+Have a look at `Vagrantfile` to see what will be used.
 Make sure, that your Operating System is allowing you to add the NFS-folders
 and that the firewall is not blocking nfs.
 
@@ -127,12 +127,11 @@ sudo ./apply.sh
 
 #### A new Kernel for Ubuntu 14.04. LTS
 Because puppet installed you a new kernel, you need to reboot your machine.
-It is possible, that fastd isn't correctly setting up the bat0 interface after
-a reboot. If this is the case, you need to restart fastd by hand.
 
 
 # using mullvad as vpn-service
 append to hieradata/hosts/$FQDN.yaml:
+```
 profile::openvpn::configs:
   mullvad1:
     vpn_routing_table: 'freifunk'
@@ -141,16 +140,16 @@ profile::openvpn::configs:
     provider_fqdn: 'se.mullvad.net'
     port: 1194
     provider: 'mullvad'
+```
 
-
-copy your mullvadconfig.zip to puppet-ffm/site/openvpn/files/config/mullvad1_config.zip
+copy your `mullvadconfig.zip` to `puppet-ffm/site/openvpn/files/configs/mullvad1_config.zip`
 before you are starting puppet. Keep in mind, that the first part of the file name
-will be the name of the config. As you can see in the example above, mullvad1 is the
-name of the first key of the openvpn::configs-hash.
+will be the name of the config. As you can see in the example above, `mullvad1` is the
+name of the first key of the `openvpn::configs-hash`.
 
 
 # fastd clients
-In the file "hieradata/client-peers.yaml" exists an array of public keys of
+In the file `hieradata/client-peers.yaml` exists an array of public keys of
 fastd clients.
 
 ```
@@ -167,7 +166,7 @@ If you change the client-peers you should just run puppet again, either with
 `sudo ./apply.sh` or with `vagrant provision`.
 
 # fastd servers
-In the file "hieradata/server-peers.yaml" may a hash of fastd-data of other
+In the file `hieradata/server-peers.yaml` may a hash of fastd-data of other
 gateways exist.
 
 ```
