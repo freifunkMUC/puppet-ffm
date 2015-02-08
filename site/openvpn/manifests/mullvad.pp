@@ -1,13 +1,11 @@
 define openvpn::mullvad (
   $vpn_routing_table,
   $dependent_services,
-  $provider_fqdn,
+  $provider_fqdns,
   $port,
 ) {
   include ::openvpn
   include ::package::unzip
-
-  validate_array($dependent_services)
 
   $interface   = $name
   $provider    = 'mullvad'

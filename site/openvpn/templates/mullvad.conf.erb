@@ -1,6 +1,8 @@
 # this file is managed by puppet
 client
-remote <%= @provider_fqdn -%> <%= @port %>
+<% @provider_fqdns.each do |fqdn| -%>
+remote <%= fqdn -%> <%= @port %>
+<% end -%>
 
 dev-type tun
 dev <%= @interface %>

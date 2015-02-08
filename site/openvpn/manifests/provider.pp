@@ -1,19 +1,22 @@
 define openvpn::provider (
   $vpn_routing_table,
   $dependent_services,
-  $provider_fqdn,
+  $provider_fqdns,
   $port,
   $provider,
 ) {
 
   include ::firewall
 
+  validate_array($dependent_services)
+  validate_array($provider_fqdns)
+
   case $provider {
-    mullvad: {
+    'mullvad': {
       openvpn::mullvad { $name:
         vpn_routing_table  => $vpn_routing_table,
         dependent_services => $dependent_services,
-        provider_fqdn      => $provider_fqdn,
+        provider_fqdns     => $provider_fqdns,
         port               => $port,
       }
     }

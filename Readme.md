@@ -71,7 +71,8 @@ profile::openvpn::configs:
     vpn_routing_table: 'freifunk'
     dependent_services:
       - 'dnsmasq'
-    provider_fqdn: 'se.mullvad.net'
+    provider_fqdns:
+      - 'se.mullvad.net'
     port: 1194
     provider: 'mullvad'
 
@@ -137,7 +138,8 @@ profile::openvpn::configs:
     vpn_routing_table: 'freifunk'
     dependent_services:
       - 'dnsmasq'
-    provider_fqdn: 'se.mullvad.net'
+    provider_fqdns:
+      - 'se.mullvad.net'
     port: 1194
     provider: 'mullvad'
 ```
