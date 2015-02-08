@@ -1,9 +1,11 @@
 define openvpn::provider (
   $vpn_routing_table,
   $dependent_services,
-  $provider_fqdns,
-  $port,
+  $provider_fqdns = [],
+  $port = 1194,
   $provider,
+  $username,
+  $password
 ) {
 
   include ::firewall
@@ -18,6 +20,14 @@ define openvpn::provider (
         dependent_services => $dependent_services,
         provider_fqdns     => $provider_fqdns,
         port               => $port,
+      }
+    }
+    'ipredator': {
+      openvpn::ipredator { $name:
+        vpn_routing_table  => $vpn_routing_table,
+        dependent_services => $dependent_services,
+	username => $username,
+	password => $password,
       }
     }
     default: {
