@@ -19,7 +19,7 @@ fastd::port: 10000
 # fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
 # hex_gateway_number is gateway_number automatically converted into hex
 # therefor we only have at the moment the possibility of 0xff gateways
-fastd::mac_prefix: '10:80:00'
+fastd::mac_prefix: 'f2:80:00'
 fastd::mac_suffix: '23:42'
 fastd::version: latest
 fastd::purge_peers: false
