@@ -33,6 +33,10 @@ ifconfig-nowarn
 auth-retry nointeract
 route-nopull
 
+up-restart
+up /etc/openvpn/<%= @name %>/<%= @name %>-up
+down /etc/openvpn/<%= @name %>/<%= @name %>-down
+
 # Disable this if your system does no support it!
 #tls-version-min 1.2
 
