@@ -76,6 +76,15 @@ profile::openvpn::configs:
     port: 1194
     provider: 'mullvad'
 
+profile::openvpn::configs:
+  ipred1:
+    vpn_routing_table: '123'
+    username: 'testsepp'
+    password: 'testpass'
+    dependent_services:
+      - 'dnsmasq'
+    provider: 'ipredator'
+
 
 ```
 
