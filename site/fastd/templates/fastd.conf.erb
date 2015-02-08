@@ -1,5 +1,5 @@
-log level debug2;
-log to syslog level debug2;
+log level <%= scope['::fastd::log_level'] %>;
+log to syslog level <%= scope['::fastd::log_level'] %>;
 interface "<%= scope['::fastd::mesh_vpn_interface'] %>";
 <% scope['::fastd::ciphers'].each do |cipher| -%>
 method "<%= cipher %>";

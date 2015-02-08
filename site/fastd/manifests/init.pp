@@ -17,6 +17,7 @@ class fastd (
   $connection_ip = $::ipaddress,
   $routing_type = 'batman',
   $routing_interface = 'bat0',
+  $log_level = 'warn',
 ) {
   include ::fastd::params
   include ::fastd::install
@@ -24,6 +25,11 @@ class fastd (
   include ::fastd::service
   include ::fastd::status
   include ::fastd::gluonconfig
+
+  $log_level_array = ['error', 'warn', 'info', 'verbose', 'debug', 'debug2']
+  if !($log_level in $log_level_array) {
+    fail("${log_level} is not a valid log-level for fastd!")
+  }
 
   validate_re($public_key, '^.{64}$', 'public_key is not 64 characters long!')
   validate_re($secret_key, '^.{64}$', 'secret_key is not 64 characters long!')
