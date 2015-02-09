@@ -8,7 +8,7 @@ remote ipv6.openvpn.ipredator.es 1194
 resolv-retry infinite
 nobind
 
-auth-user-pass /etc/openvpn/<%= @name %>.auth
+auth-user-pass /etc/openvpn/<%= @name %>/<%= @name %>.auth
 auth-retry nointeract
 
 ca [inline]
