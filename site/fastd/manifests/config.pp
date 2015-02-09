@@ -19,6 +19,7 @@ class fastd::config {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
+    notify  => Service['fastd'],
   } ->
   file { "${::fastd::config_path}/keys.yaml":
     ensure  => 'file',

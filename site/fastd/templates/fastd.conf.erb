@@ -1,13 +1,20 @@
 log level <%= scope['::fastd::log_level'] %>;
 log to syslog level <%= scope['::fastd::log_level'] %>;
+
+<% if scope['::fastd::on_verify_command'] != 'undefined' -%>
+on verify "<%= scope['::fastd::on_verify_command'] %> $PEER_KEY";
+
+<% end -%>
 interface "<%= scope['::fastd::mesh_vpn_interface'] %>";
 <% scope['::fastd::ciphers'].each do |cipher| -%>
 method "<%= cipher %>";
 <% end -%>
+
 bind any:<%= scope['::fastd::port'] %>;
-include "secret.conf";
 secure handshakes yes;
 mtu <%= scope['::fastd::mtu'] %>;
+
+include "secret.conf";
 include peers from "peers";
 on up "./fastd-up";
 status socket "/var/run/fastd.sock";
