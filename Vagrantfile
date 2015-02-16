@@ -7,7 +7,7 @@ require 'yaml'
 configs = {
   'boxname'          => 'mayflower/trusty64-puppet3',
   'memory'           => 1024,
-  'puppet_options'   => '',
+  'puppet_options'   => if ENV['VAGRANT_PUPPET_DEBUG'] == '1' then '--debug' else '' end,
   'vagrant_provider' => ENV['VAGRANT_DEFAULT_PROVIDER'] || 'virtualbox',
   'nfs'              => true,
 }
