@@ -6,7 +6,7 @@ class openvpn::undefined (
 
   validate_ipv4_address($default_gateway_ip)
 
-  warning('You have not defined openvpn::configs in any yaml-file within the hieradata folder! The node-traffik will exit right at your gateway into the internet!')
+  warning('You have not defined openvpn::configs in any yaml-file within the hieradata folder! The node-traffic will exit right at your gateway into the internet!')
 
   exec { "ip route flush table ${routing_table}":
     unless => "ip route show table ${routing_table} | grep ${interface}",
