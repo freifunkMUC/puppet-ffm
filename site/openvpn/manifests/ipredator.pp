@@ -6,7 +6,12 @@ define openvpn::ipredator (
 ) {
   include ::openvpn
 
-  validate_array($dependent_services)
+  if $username == '' {
+    fail('username cannot be empty!')
+  }
+  if $password == '' {
+    fail('password cannot be empty!')
+  }
 
   $interface   = $name
   $provider    = 'ipredator'
@@ -22,7 +27,7 @@ define openvpn::ipredator (
     require => Package['openvpn'],
   }
 
-  file { "/etc/openvpn/${name}.auth":
+  file { "/etc/openvpn/${name}/${name}.auth":
     ensure  => file,
     owner   => 'root',
     group   => 'root',
