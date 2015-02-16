@@ -15,6 +15,7 @@ iface bat0 inet6 manual
         up /sbin/ip link set $IFACE up
         post-up /sbin/brctl addif <%= scope['::batman_adv::bridge'] %> $IFACE
         post-up batctl -m $IFACE it 10000
+	post-up batctl gw_mode server ::batman_adv::rxbw/::batman_adv::txbw
         post-up /sbin/ip rule add iif <%= @bridge %> table <%= @vpn_routing_table %>
         post-up /sbin/ip rule add iif <%= scope['::batman_adv::bridge'] %> table <%= scope['::batman_adv::vpn_routing_table'] %>
         post-up start-stop-daemon -b --start --exec /usr/local/sbin/alfred -- -i <%= @bridge %> -b $IFACE -u /var/run/alfred.sock -m
