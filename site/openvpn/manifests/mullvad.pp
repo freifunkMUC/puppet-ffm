@@ -7,10 +7,6 @@ define openvpn::mullvad (
   include ::openvpn
   include ::package::unzip
 
-  if count($provider_fqdns) == 0 {
-    fail('provider_fqdns needs to contain at least one valid fqdn!')
-  }
-
   $interface   = $name
   $provider    = 'mullvad'
   $config_path = "/etc/openvpn/${name}"

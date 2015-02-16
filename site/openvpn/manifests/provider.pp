@@ -1,7 +1,7 @@
 define openvpn::provider (
   $vpn_routing_table,
+  $dependent_services,
   $provider,
-  $dependent_services = [],
   $provider_fqdns = [],
   $port = 1194,
   $username = '',
