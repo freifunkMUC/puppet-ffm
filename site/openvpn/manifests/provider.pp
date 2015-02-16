@@ -6,6 +6,10 @@ define openvpn::provider (
   $port = 1194,
   $username = '',
   $password = '',
+  $clientcertfilename = '',
+  $nativeipv4gw = '',
+  $staticipv4 = '',
+  $staticipv6 = '',
 ) {
 
   include ::firewall
@@ -28,6 +32,21 @@ define openvpn::provider (
         dependent_services => $dependent_services,
         username           => $username,
         password           => $password,
+      }
+    }
+    'ipredatorstatic': {
+      $ipv6 = split($staticipv6,'/')
+      $ipv6_prefix = $ipv6[0]
+      $ipv6_mask = $ipv6[1]
+      openvpn::ipredatorstatic { $name:
+        vpn_routing_table  => $vpn_routing_table,
+        dependent_services => $dependent_services,
+        clientcertfilename => $clientcertfilename,
+	nativeipv4gw       => $nativeipv4gw,
+	staticipv4         => $staticipv4,
+        staticipv6         => $staticipv6,
+	staticipv6prefix   => $ipv6_prefix,
+        staticipv6mask     => $ipv6_mask,
       }
     }
     default: {
