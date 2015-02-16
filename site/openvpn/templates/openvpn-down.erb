@@ -6,7 +6,7 @@
 <% if scope.source.name == 'openvpn::ipredatorstatic' %>
 /sbin/ip ro del 46.246.52.249 via <%= @nativeipv4gw %>
 /sbin/ip ro del 46.246.52.254 via <%= @nativeipv4gw %>
-/sbin/ip -6 neigh del proxy <%= @staticipv6prefix -%> dev tun0 #ND Fucking
+/sbin/ip -6 neigh del proxy <%= @staticipv6prefix -%> dev $1 #ND Fucking
 /sbin/ip -6 ru del from <%= @staticipv6 -%>  lookup <%= @vpn_routing_table %> #V6 Transfer Net
 /sbin/ip -6 ru del from <%= scope['::radvd::ipv6_prefix_without_length'] %>/<%= scope['::radvd::ipv6_prefix_length'] %> lookup <%= @vpn_routing_table %> #V6 Routed Net
 <% end %>

@@ -6,7 +6,7 @@ profile::fastd::mesh_vpn_interface: 'mesh-vpn'
 profile::fastd::community: 'ff'
 profile::batman_adv::bridge: 'brff'
 profile::firewall::purge: true
-profile::radvd::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
+profile::radvd::ipv6_prefix_without_length: '2001:67c:1350:3f00::'
 profile::radvd::ipv6_prefix_length: 64
 
 profile::dns::listen_address: '127.0.0.1'
