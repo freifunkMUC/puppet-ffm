@@ -4,36 +4,43 @@
 
 require 'yaml'
 
-current_dir   = File.dirname(File.expand_path(__FILE__))
-configs       = YAML.load_file("#{current_dir}/configs.yaml")
+configs = {
+  'boxname'          => 'mayflower/trusty64-puppet3',
+  'memory'           => 1024,
+  'puppet_options'   => if ENV['VAGRANT_PUPPET_DEBUG'] == '1' then '--debug' else '' end,
+  'vagrant_provider' => ENV['VAGRANT_DEFAULT_PROVIDER'] || 'virtualbox',
+  'nfs'              => true,
+}
 
-puppet_folder = configs['puppet_folder']
-hiera_folder  = puppet_folder + '/' + configs['hiera_folder']
+current_dir   = File.dirname(File.expand_path(__FILE__))
+config_file   = "#{current_dir}/configs.yaml"
+configs       = configs.merge(YAML.load_file(config_file)) if File.exist?(config_file)
 
 hiera_hosts = Dir.glob(current_dir + '/hieradata/hosts/*.yaml')
   .map { |host_path| File.basename(host_path, '.yaml') }
 
-ENV['VAGRANT_DEFAULT_PROVIDER'] ||= configs['vagrant_provider']
 
-Vagrant.configure( 2 ) do |config|
+Vagrant.configure(2) do |config|
 
-  hiera_hosts.sort.each do |host|
+  hiera_hosts.sort.each_with_index do |host, index|
     config.vm.define host do |h|
       if configs['boxname']
         h.vm.box = configs['boxname']
 
-        h.vm.provider configs['vagrant_provider'] do |domain|
-          domain.memory = configs['memory']
-          domain.cpus = 1
+        if !['lxc'].include?(configs['vagrant_provider']) then
+          h.vm.provider configs['vagrant_provider'] do |domain|
+            domain.memory = configs['memory']
+            domain.cpus = 1
+          end
         end
 
-        h.vm.synced_folder 'hieradata', '/vagrant/hieradata', type: 'nfs'
+        h.vm.synced_folder 'hieradata', '/vagrant/hieradata', :nfs => configs['nfs']
       end
 
       h.vm.hostname = host + '.localdomain'
 
       h.vm.provision "puppet" do |p|
-        p.synced_folder_type = "nfs"
+        p.synced_folder_type = "nfs" if configs['nfs']
         p.manifests_path = "manifests"
         p.manifest_file = "site.pp"
         p.module_path = [ "site", "modules" ]
@@ -44,9 +51,11 @@ Vagrant.configure( 2 ) do |config|
     end
   end
 
-  config.vm.provider 'docker' do |d|
-    d.image = 'ffmuc/vagrant'
-    d.has_ssh = true
+  if configs['vagrant_provider'] == 'docker' then
+    config.vm.provider 'docker' do |d|
+      d.image = 'ffmuc/vagrant'
+      d.has_ssh = true
+    end
   end
 end
 
