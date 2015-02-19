@@ -2,7 +2,7 @@
 auto <%= scope['::batman_adv::bridge'] %>
 iface <%= scope['::batman_adv::bridge'] %> inet6 static
         bridge-ports none
-        address <%= scope['::batman_adv::ipv6_prefix_without_length'] %><%= scope['::batman_adv::hex_gateway_number'] %>
+        address <%= scope['::batman_adv::ipv6_prefix_without_length'] %><%= @hex_gateway_number %>
         netmask 64
 iface <%= scope['::batman_adv::bridge'] %> inet static
         address <%= scope['::batman_adv::gateway_ip'] %>
