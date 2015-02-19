@@ -2,6 +2,10 @@ class radvd (
   $batman_bridge,
   $ipv6_prefix_without_length,
   $ipv6_prefix_length,
+  $ipv6_prefix_announcedefault,
+  $ipv6_routed_without_length,
+  $ipv6_routed_length,
+  $ipv6_routed_announcedefault,
   $gateway_number,
   $ensure = 'installed',
 ) {

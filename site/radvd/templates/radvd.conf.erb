@@ -2,8 +2,15 @@ interface <%= @batman_bridge %>
 {
 AdvSendAdvert on;
 MaxRtrAdvInterval 200;
+
 prefix <%= @ipv6_prefix_without_length %>/<%= @ipv6_prefix_length %> {
+AdvRouterAddr <%= @ipv6_prefix_announcedefault %>;
 };
+
+prefix <%= @ipv6_routed_without_length %>/<%= @ipv6_routed_length %> {
+AdvRouterAddr <%= @ipv6_routed_announcedefault %>;
+};
+
 RDNSS <%= @RDNSS %> {
 };
 };

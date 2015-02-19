@@ -1,7 +1,7 @@
 #!/bin/bash
 
 /sbin/ip route flush table <%= @vpn_routing_table %>
-/sbin/ip route add default via $route_vpn_gateway dev $1 table <%= @vpn_routing_table %>
+/sbin/ip route add default dev $1 table <%= @vpn_routing_table %>
 
 <%# Required for Sourcebased IPV6 routing %>
 <% if scope.source.name == 'openvpn::ipredatorstatic' %>
@@ -9,7 +9,7 @@
 /sbin/ip ro add 46.246.52.254 via <%= @nativeipv4gw %>
 /sbin/ip -6 neigh add proxy <%= @staticipv6prefix -%> dev $1 #ND Fucking
 /sbin/ip -6 ru add from <%= @staticipv6 -%>  lookup <%= @vpn_routing_table %> #V6 Transfer Net
-/sbin/ip -6 ru add from <%= scope['::radvd::ipv6_prefix_without_length'] %>/<%= scope['::radvd::ipv6_prefix_length'] %> lookup <%= @vpn_routing_table %> #V6 Routed Net
+/sbin/ip -6 ru add from <%= scope['::radvd::ipv6_routed_without_length'] %>/<%= scope['::radvd::ipv6_routed_length'] %> lookup <%= @vpn_routing_table %> #V6 Routed Net
 <% end %>
 
 <% @dependent_services.each do |service| -%>

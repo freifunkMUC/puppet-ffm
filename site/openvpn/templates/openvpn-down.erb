@@ -8,7 +8,7 @@
 /sbin/ip ro del 46.246.52.254 via <%= @nativeipv4gw %>
 /sbin/ip -6 neigh del proxy <%= @staticipv6prefix -%> dev $1 #ND Fucking
 /sbin/ip -6 ru del from <%= @staticipv6 -%>  lookup <%= @vpn_routing_table %> #V6 Transfer Net
-/sbin/ip -6 ru del from <%= scope['::radvd::ipv6_prefix_without_length'] %>/<%= scope['::radvd::ipv6_prefix_length'] %> lookup <%= @vpn_routing_table %> #V6 Routed Net
+/sbin/ip -6 ru del from <%= scope['::radvd::ipv6_routed_without_length'] %>/<%= scope['::radvd::ipv6_routed_length'] %> lookup <%= @vpn_routing_table %> #V6 Routed Net
 <% end %>
 
 <% @dependent_services.each do |service| -%>
