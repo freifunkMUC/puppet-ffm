@@ -13,4 +13,8 @@ mod 'camptocamp-kmod',
   :ref => '1.0.0'
 
 mod 'puppetlabs/concat', '1.1.2'
+mod 'jvaubourg/nginxpack', '0.1.1'
 
+mod 'puppetlabs/vcsrepo', '1.2.0'
+
+mod 'theforeman/git', '1.4.0'

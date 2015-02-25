@@ -5,6 +5,6 @@ Exec{
 node default {
   $role = hiera('role', 'undefined')
 
-  contain "::role::${role}"
+  contain "role::${role}"
 }
 
