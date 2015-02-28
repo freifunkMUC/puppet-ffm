@@ -5,7 +5,7 @@
 # runs exec
 
 class profile::community::website (
-  $domain          = 'website.freifunk-muenchen.de',
+  $domain          = $::fqdn,
   $git_repo_url    = 'https://github.com/freifunkMUC/freifunkmuc.github.io.git',
   $git_destination = '/opt/gitrepo-freifunk-website',) {
   include ::nginxpack
