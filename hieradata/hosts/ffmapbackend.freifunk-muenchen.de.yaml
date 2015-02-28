@@ -1,0 +1,18 @@
+---
+
+role: gateway
+
+profile::fastd::community: ffmuc
+profile::batman_adv::bridge: brffmuc
+profile::batman_adv::version: '2014.4'
+
+profile::dhcpd::range_start: '10.80.4.1'
+profile::dhcpd::range_end: '10.80.4.254'
+profile::dhcpd::subnet: '10.80.0.0'
+
+profile::batman_adv::netmask: '255.255.0.0'
+profile::batman_adv::gateway_ip: '10.80.0.4'
+profile::batman_adv::gateway_number: 5
+
+fastd::secret_key: 'ohp8ahshooChaew4ohthaeFoShei3tongee4wu4lailaix9hahgu5aip1ok4Nai6'
+fastd::public_key: 'ohp8ahshooChaew4ohthaeFoShei3tongee4wu4lailaix9hahgu5aip1ok4Nai6'

@@ -16,13 +16,13 @@ class profile::community::website (
     notify  => Exec['generate_website'],
   }
 
-  include ::git
+  include ::package::git
 
   vcsrepo { $git_destination:
     ensure   => latest,
     provider => git,
     source   => $git_repo_url,
-    require  => Class['git'],
+    require  => Package['git'],
     revision => 'master',
     before   => Exec['generate_website'],
   }
