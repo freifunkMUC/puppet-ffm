@@ -22,7 +22,7 @@ class profile::community::ffmapbackend (
     provider => git,
     source   => $git_repo_url,
     require  => Package['git'],
-    revision => 'master',
+    revision => 'bat15',
     notify   => Exec['generate_nodesjs'],
   }
   ->
