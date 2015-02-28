@@ -5,13 +5,25 @@ class profile::radvd (
 
   include ::profile::batman_adv
 
-  class { '::radvd':
-    batman_bridge              => $::profile::batman_adv::bridge,
-    gateway_number             => $::profile::batman_adv::gateway_number,
-    ipv6_prefix_without_length => $ipv6_prefix_without_length,
-    ipv6_prefix_length         => $ipv6_prefix_length,
+  contain ::radvd
+
+  $hex_gateway_number = inline_template("<%= ${::radvd::gateway_number}.to_i.to_s(16) -%>")
+  $rdnss              = "${::radvd::ipv6_prefix_without_length}${hex_gateway_number}"
+  $ipv6_prefix        = "${ipv6_prefix_without_length}/${ipv6_prefix_length}"
+
+  ::radvd::interface { $::profile::batman_adv::bridge:
+    options => {
+      'AdvSendAdvert'      => 'on',
+      'MaxRtrAdvInterval'  => 100,
+    },
+    prefixes => {
+      "${ipv6_prefix}" => {},
+    },
+    rndss => {
+      "${rdnss}" => {}
+    }
   }
 
-  Exec["/sbin/ifup ${::profile::batman_adv::bridge}"] ~> Service['radvd']
+  Exec["/sbin/ifup ${::profile::batman_adv::bridge}"] ~> Class['::radvd::service']
 
 }
