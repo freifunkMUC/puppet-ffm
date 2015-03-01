@@ -83,10 +83,19 @@ class profile::community::ffmapfrontend (
   file {"${www_root}/build/index.html":
     ensure => link,
     target => "${www_root}/build/geomap.html",
+    owner  => $owner,
+    group  => $group,
   }->
   exec{'retrieve nodes.json':
     command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes.json",
     creates => "${www_root}/build/nodes.json",
+  }
+  
+  cron {'ffmap: retrieve nodes.json':
+    command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes.json",
+    user => $owner,
+    minute => "*/5",
+    require => File["${www_root}/build"]
   }
 
 }
