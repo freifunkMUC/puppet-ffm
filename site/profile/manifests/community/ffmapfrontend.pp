@@ -40,15 +40,7 @@ class profile::community::ffmapfrontend (
     nginxpack::vhost::basic { $domain:
     domains => [$domain],
     files_dir => "$www_root/build"
-  } ->
-  file { "${www_root}/config.json":
-    ensure => file,
-    content => template("${module_name}/community/ffmapfrontend/config.json.erb")
   }->
-  file { "${www_root}/config.js":
-    ensure => file,
-    content => template("${module_name}/community/ffmapfrontend/config.js.erb")
-  }
   package { 'grunt-cli':
     ensure   => present,
     provider => 'npm',
@@ -67,11 +59,22 @@ class profile::community::ffmapfrontend (
     command => 'bower install --allow-root -q',
     cwd     => $www_root,
   } ->
+  file { "${www_root}/config.json":
+    ensure => file,
+    content => template("${module_name}/community/ffmapfrontend/config.json.erb"),
+    notify  => Exec['ffmap: grunt']
+  }->
+  file { "${www_root}/config.js":
+    ensure => file,
+    content => template("${module_name}/community/ffmapfrontend/config.js.erb"),
+    notify  => Exec['ffmap: grunt']    
+  }->
   exec { 'ffmap: grunt':
-    command  => "grunt",
+    command  => "rm -rf ${www_root}/build ; grunt",
     environment => ['HOME=/root'],
     cwd      => $www_root,
-  } ->
+  }
+  ->
   file { "${www_root}/build":
     recurse => true,
     owner      => $owner,
