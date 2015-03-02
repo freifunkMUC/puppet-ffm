@@ -7,7 +7,8 @@
 class profile::community::website (
   $domain          = $::fqdn,
   $git_repo_url    = 'https://github.com/freifunkMUC/freifunkmuc.github.io.git',
-  $git_destination = '/opt/gitrepo-freifunk-website',) {
+  $git_destination = '/opt/gitrepo-freifunk-website',
+) {
   include ::nginxpack
 
   nginxpack::vhost::basic { $domain:
@@ -29,7 +30,7 @@ class profile::community::website (
 
   package { 'jekyll': ensure => present } ->
   exec { 'generate_website':
-    command     => "/usr/bin/jekyll $git_destination /var/www/$domain",
+    command     => "/usr/bin/jekyll ${git_destination} /var/www/${domain}",
     refreshonly => true,
     subscribe   => Vcsrepo[$git_destination]
   }
