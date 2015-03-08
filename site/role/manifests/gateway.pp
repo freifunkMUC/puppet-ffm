@@ -3,6 +3,7 @@
 
 class role::gateway {
   include ::profile::apt
+  include ::profile::locale
   include ::profile::monitoring
   include ::profile::firewall
   include ::profile::openvpn
