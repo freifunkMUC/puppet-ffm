@@ -14,4 +14,5 @@ class role::gateway {
   include ::profile::dhcpd
   include ::etckeeper
   include ::gluonconfig
+  include ::accounts
 }

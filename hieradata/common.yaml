@@ -27,3 +27,65 @@ fastd::mac_suffix: '23:42'
 fastd::version: latest
 fastd::purge_peers: false
 
+accounts::groups:
+  ffmuc-admin:
+    ensure: present
+    gid: 2342
+accounts::users:
+  fpletz:
+    ensure: present
+    home: /home/fpletz
+    shell: /bin/bash
+    uid: 10001
+    gid: 2342
+    groups:
+      - sudo
+#    password: ''
+    managehome: yes
+  markus:
+    ensure: present
+    home: /home/markus
+    shell: /bin/bash
+    uid: 10002
+    gid: 2342
+    groups:
+      - sudo
+    password: '$6$yZkE291v$2yKSDWL47LtngopIBJ4BTJ2Z.VsZs4k53ZIrnmDSc9tTIrrFD0yXp3Fkqn.l1cGiS/n4DHSSSBwMqlWmW8H/f0'
+    managehome: yes
+  ruebezahl:
+    ensure: present
+    home: /home/ruebezahl
+    shell: /bin/bash
+    uid: 10003
+    gid: 2342
+    groups:
+      - sudo
+#    password: ''
+    managehome: yes
+  trino:
+    ensure: present
+    home: /home/trino
+    shell: /bin/bash
+    uid: 10004
+    gid: 2342
+    groups:
+      - sudo
+#    password: ''
+    managehome: yes
+accounts::ssh_authorized_keys:
+  'fpletz':
+    user: fpletz
+    type: 'ssh-ed25519'
+    key:  'AAAAC3NzaC1lZDI1NTE5AAAAIKuIAJJ28E7ak1w8qb7zJSbSROnsEKMul4tfuOVkAha0'
+  'markus':
+    user: markus
+    type: 'ssh-ed25519'
+    key:  'AAAAC3NzaC1lZDI1NTE5AAAAIF1scvgDE1MXuRHLPpoQmVMA1Zubvrh+sBdL+boGFHK4'
+  'ruebezahl':
+    user: ruebezahl
+    type: 'ssh-rsa'
+    key:  'AAAAB3NzaC1yc2EAAAABIwAAAQEA5PD0xVViVQd5qgE2E4iC8ZWLIg8rmhz1Zb7NJgcA/uwvLTsc1aNW5c16qVWQot37EMHTeh1emr6C0oqNXSOsLWlOfcIHuV/QlVFhxiFZjCv/MWenb2US0mS9po7OS1v+zDAfotb2uUf2MPuaOEcnzToCUu4fa2Guh6YqislWfdFJRbA6rHZtWR48t1cJjhYI5KuF4Y2ef3yMDohTBXcA+oy8rKEfrCJuUaxzqlJPzKRsu1i0mooOvIehBUxAecmRBruBnamTf2NYestshazVkFKnUFf9gk25t6dVuT4UiMjBZdT6lqlbyW+RUtJTa6t65oUj4WfSp9Qt5GS172Ko0w=='
+  'trino':
+    user: trino
+    type: 'ssh-rsa'
+    key:  'AAAAB3NzaC1yc2EAAAADAQABAAACAQDXGnigkLtEfAlDG1F9XbZwTV49OAai6xmglPAre0nC6+qnpv15soNRDBdLkK1ALEwYiCHulxF/AUDE2ZqyZtx8Mt4+/Aee0uihhFcsnqEb85ZhSpu9KivLXm050weA+uRgNniMuCQkvNhm37GL35ZVwPmwKf3JhLKgJSFvQ4LMUlll1tzAnFEg1Xl0Ex7SIAnJoddwVm7q2tJEnHKHjRAeG/bxeViP1gbj0wF5BwhRm305Vj82Mci5lyNBptmnn2uZi4N6xZ6K+OVx2OwXgH43YI/EPrD1fUhfI50bH4a7+uR31J3Sxa8+c3UqQvPvPwHzH+deLabxPgcAxw2v8tWNn5EV/0dHbf/Hf1NOon/8Q13XGA4ulhVYbLkXEHO4vhJGX5E3SYkEvEr/SVpqQAi3P4Qs7PRTEZJQmXOaHN9n93mDi1XG5CXyFgMyHMUOdkRvKHxFtMqIzVd1kGuEdE5WH18xpalpsYq8CjRxMx7rtl0+M70WJC3f7JG4zO+kst2fjSqXUh1x9DWfO1hMdVZcpj5lAspPtZc+FYqimcXplJhYkG09bAzN050WeR5jbk0FJsmScvdIMwtNp13PnAvDDeMpIis6cNam8bUMb9Ni1RL1phmZBqdg7WAiLc9+BSZTzAi6qqhEHdXsqk3QjsOw812TVTMU1U/Zp2wkOM4uiQ=='
