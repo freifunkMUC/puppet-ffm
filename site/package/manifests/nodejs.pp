@@ -1,7 +1,6 @@
 class package::nodejs {
 
-  package { [ 'nodejs', 'npm' ]:
-    ensure => present
+  class { '::nodejs':
   } ->
   file { '/usr/bin/node':
     ensure => link,

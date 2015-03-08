@@ -6,7 +6,7 @@ class profile::community::ffmapfrontend (
   $siteurl = 'http://www.freifunk-muenchen.de'
 ) {
 
-  include ::nodejs
+  include ::package::nodejs
   include ::package::git
   include ::nginxpack
 
