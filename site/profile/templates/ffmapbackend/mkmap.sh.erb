@@ -3,7 +3,7 @@
 # managed by puppet
 
 cd $(dirname $0)
-export PATH=/usr/sbin:/usr/local/sbin:$PATH
+export PATH=/usr/sbin:/usr/local/bin:/usr/local/sbin:$PATH
 PEERS=<%= @peers_directory %>
 ALIASES=<%= @git_destination %>/aliases_peers.json
 DEST=<%= @destination_directory %>
