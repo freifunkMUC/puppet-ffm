@@ -6,7 +6,7 @@ class profile::community::ffmapfrontend (
   $siteurl = 'http://www.freifunk-muenchen.de'
 ) {
 
-  include ::package::nodejs
+  include ::nodejs
   include ::package::git
   include ::nginxpack
 
@@ -43,7 +43,7 @@ class profile::community::ffmapfrontend (
   package { 'grunt-cli':
     ensure   => present,
     provider => 'npm',
-    require  => Class['::package::nodejs'],
+    require  => Class['::nodejs'],
   } ->
   package { 'bower':
     ensure   => present,
