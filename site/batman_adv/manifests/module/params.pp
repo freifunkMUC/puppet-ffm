@@ -43,7 +43,7 @@ class batman_adv::module::params {
                 $batctl_version = '2014.3.0-1'
               }
               '2014.4': {
-                $kernel_version = '3.18'
+                $kernel_version = '3.19'
                 $batctl_version = '2014.4.0-1'
               }
               default: {
