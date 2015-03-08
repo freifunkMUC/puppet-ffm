@@ -9,7 +9,7 @@ class role::gateway {
   include ::profile::alfred
   include ::profile::networking
   include ::profile::dns
-  include ::profile::ffmapbackend
+  #include ::profile::ffmapbackend
   include ::profile::dhcpd
   include ::etckeeper
   include ::gluonconfig
