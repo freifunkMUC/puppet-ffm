@@ -6,8 +6,11 @@ profile::fastd::mesh_vpn_interface: 'mesh-vpn'
 profile::fastd::community: 'ff'
 profile::batman_adv::bridge: 'brff'
 profile::firewall::purge: true
+
 profile::radvd::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
 profile::radvd::ipv6_prefix_length: 64
+# Only announce router if you can globally route the ipv6 prefix
+profile::radvd::announce_router: false
 
 profile::dns::listen_address: '127.0.0.1'
 profile::dns::upstream_servers:

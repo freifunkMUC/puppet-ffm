@@ -17,3 +17,5 @@ mod 'puppetlabs/vcsrepo', '1.2.0'
 mod 'jvaubourg/nginxpack', '0.1.1'
 
 mod 'puppetlabs/nodejs', '0.7.1'
+
+mod 'fpletz/radvd', '0.3.0'
