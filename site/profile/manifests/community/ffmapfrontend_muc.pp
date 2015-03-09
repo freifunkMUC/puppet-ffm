@@ -47,7 +47,12 @@ class profile::community::ffmapfrontend_muc (
     recurse => true,
     owner   => $owner,
     group   => $group,
-  }-> 
+  }->
+  exec { "compile js":
+    command => "/usr/bin/make",
+    cwd     => "${www_root}/build",
+    user    => $owner,
+  }->
   cron { 'ffmap: retrieve nodes.json':
     command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes.json.new ; mv ${www_root}/build/nodes.json.new ${www_root}/build/nodes.json",
     user    => $owner,
