@@ -4,5 +4,5 @@
 class role::gateway_with_map {
   include ::role::gateway
   include ::profile::ffmapbackend
-  include ::role::community::ffmapfrontend
+  include ::role::community::ffmapfrontend_muc
 }
