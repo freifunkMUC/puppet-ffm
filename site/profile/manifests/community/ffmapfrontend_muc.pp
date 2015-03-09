@@ -41,10 +41,14 @@ class profile::community::ffmapfrontend_muc (
     files_dir => "${www_root}/build"
   }
   
+  file { "${www_root}/build":
+    recurse => true,
+    owner   => $owner,
+    group   => $group,
+  }-> 
   cron { 'ffmap: retrieve nodes.json':
     command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes.json.new ; mv ${www_root}/build/nodes.json.new ${www_root}/build/nodes.json",
     user    => $owner,
     minute  => '*/1',
-    require => File["${www_root}/build"]
   }
 }
