@@ -1,0 +1,34 @@
+---
+
+role: gateway
+
+profile::fastd::community: ffmuc
+profile::batman_adv::bridge: brffmuc
+profile::batman_adv::version: '2014.4'
+
+profile::dhcpd::range_start: '10.0.2.0'
+profile::dhcpd::range_end: '10.0.3.255'
+profile::dhcpd::subnet: '10.0.0.0'
+
+profile::batman_adv::netmask: '255.255.224.0'
+profile::batman_adv::gateway_ip: '10.0.0.9'
+profile::batman_adv::gateway_number: 9
+
+fastd::purge_peers: true
+# XXX: these keys are public and need to be generated before deploying!
+fastd::secret_key: '604b94346dfda1010177121991a33810c3785e7250799084e53c724837ef1a71'
+fastd::public_key: 'bcc047f2fb0acc2fd57028265607a7543aeb0bae3bf8f9f51389c080d0eff018'
+
+fastd::on_verify_command: 'true'
+fastd::log_level: 'debug2'
+
+profile::openvpn::configs:
+  mullvad1:
+    vpn_routing_table: 'freifunk'
+    dependent_services:
+      - 'dnsmasq'
+    provider_fqdns:
+      - 'se.mullvad.net'
+    port: 1194
+    provider: 'mullvad'
+
