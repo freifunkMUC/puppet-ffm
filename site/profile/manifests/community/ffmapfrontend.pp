@@ -3,7 +3,9 @@ class profile::community::ffmapfrontend (
   $nodesjson_downloadurl = 'http://map.freifunk-muenchen.de/nodes.json',
   $cityname = 'Muenchen',
   $sitename = 'www.freifunk-muenchen.de',
-  $siteurl = 'http://www.freifunk-muenchen.de'
+  $siteurl = 'http://www.freifunk-muenchen.de',
+  $ffmap_repo = 'https://github.com/freifunkMUC/ffmap',
+  $ffmap_revision = 'master',
 ) {
 
   include ::package::nodejs
@@ -13,10 +15,8 @@ class profile::community::ffmapfrontend (
   $target_folder = '/var/www'
   $owner = 'www-data'
   $group = 'www-data'
-  $commit = 'master'
   $www_root = "${target_folder}/${domain}"
-
-
+  
   file { $target_folder:
     ensure => directory,
     owner  => $owner,
@@ -32,8 +32,8 @@ class profile::community::ffmapfrontend (
   vcsrepo { $www_root:
     ensure   => present,
     provider => 'git',
-    source   => 'https://github.com/ffnord/ffmap-d3.git',
-    revision => $commit,
+    source   => $ffmap_repo,
+    revision => $ffmap_revision,
     require  => [Package['git'],File[$www_root]]
   } ->
     nginxpack::vhost::basic { $domain:
@@ -90,9 +90,9 @@ class profile::community::ffmapfrontend (
   }
 
   cron { 'ffmap: retrieve nodes.json':
-    command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes.json",
+    command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes.json.new ; mv ${www_root}/build/nodes.json.new ${www_root}/build/nodes.json",
     user    => $owner,
-    minute  => '*/5',
+    minute  => '*/1',
     require => File["${www_root}/build"]
   }
 }
