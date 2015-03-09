@@ -28,12 +28,14 @@ class profile::ffmapbackend (
     mode => '0440',
     owner => 'root',
     group => 'root',
-    content => 'ffmap   ALL = NOPASSWD:/usr/local/sbin/batctl'
+    content => "ffmap ALL = NOPASSWD:/usr/local/sbin/batctl\n"
    }
 
   vcsrepo { $git_destination:
     ensure   => latest,
     provider => git,
+    owner    => 'ffmap',
+    group    => 'www-data',
     source   => $git_repo_url,
     require  => Package['git'],
     revision => $git_revision,

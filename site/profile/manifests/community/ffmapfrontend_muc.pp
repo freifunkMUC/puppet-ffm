@@ -32,6 +32,8 @@ class profile::community::ffmapfrontend_muc (
   vcsrepo { "$www_root/build":
     ensure   => present,
     provider => 'git',
+    owner    => $owner,
+    group    => $group,
     source   => $ffmap_repo,
     revision => $ffmap_revision,
     require  => [Package['git'],File[$www_root]]
