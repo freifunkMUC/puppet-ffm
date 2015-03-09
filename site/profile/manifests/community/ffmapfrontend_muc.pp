@@ -41,8 +41,7 @@ class profile::community::ffmapfrontend_muc (
     nginxpack::vhost::basic { $domain:
     domains   => [$domain],
     files_dir => "${www_root}/build"
-  }
-  
+  } ->
   file { "${www_root}/build":
     recurse => true,
     owner   => $owner,
