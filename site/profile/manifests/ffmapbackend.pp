@@ -39,7 +39,7 @@ class profile::ffmapbackend (
     source   => $git_repo_url,
     require  => Package['git'],
     revision => $git_revision,
-    notify   => Exec['generate_nodesjs'],
+    notify   => Exec['generate_nodesjson'],
   }
   ->
   file { "${git_destination}/mkmap.sh":
@@ -57,7 +57,7 @@ class profile::ffmapbackend (
     user        => 'ffmap'    
   }
 
-  cron { 'cron_nodesjs':
+  cron { 'cron_nodesjson':
     command => $ffmap_command,
     minute  => '*/1',
     user    => 'ffmap'
