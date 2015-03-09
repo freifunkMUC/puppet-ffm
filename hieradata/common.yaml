@@ -40,7 +40,7 @@ accounts::users:
     gid: 2342
     groups:
       - sudo
-#    password: ''
+    password: '$6$Gfcm1ilr$Egw6rSSadO/sSB/7NknhieJN./6zLQDjcNRu/vlm3j3qTHDn4xTrue2hYBD04BvTlA7JRXp9UTBczKrtEOITm0'
     managehome: yes
   markus:
     ensure: present
