@@ -45,18 +45,21 @@ class profile::ffmapbackend (
   file { "${git_destination}/mkmap.sh":
     ensure  => file,
     content => template("${module_name}/ffmapbackend/mkmap.sh.erb"),
-    mode    => '0555'
+    mode    => '0555',
+    owner    => 'ffmap',
   }
 
   $ffmap_command = "${git_destination}/mkmap.sh "
 
-  exec { 'generate_nodesjs':
+  exec { 'generate_nodesjson':
     command     => $ffmap_command,
     refreshonly => true,
+    user        => 'ffmap'    
   }
 
   cron { 'cron_nodesjs':
     command => $ffmap_command,
     minute  => '*/1',
+    user    => 'ffmap'
   }
 }
