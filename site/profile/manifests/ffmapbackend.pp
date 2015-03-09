@@ -19,8 +19,9 @@ class profile::ffmapbackend (
 
   file { $destination_directory:
     ensure => directory,
-    owner  => 'www-data',
+    owner  => 'ffmap',
     group  => 'www-data',
+    mode   => '0775',
   }
 
   user { 'ffmap':
