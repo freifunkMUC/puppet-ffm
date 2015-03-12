@@ -5,6 +5,7 @@ class profile::fastd (
 ) {
 
   include ::profile::batman_adv
+  include ::package::haveged
 
   class { '::fastd':
     mesh_vpn_interface => $mesh_vpn_interface,
