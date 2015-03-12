@@ -29,7 +29,7 @@ class profile::community::ffmapfrontend_muc (
     owner  => $owner,
     group  => $group,
   } ->
-  vcsrepo { "$www_root/build":
+  vcsrepo { "${www_root}/build":
     ensure   => present,
     provider => 'git',
     owner    => $owner,
@@ -47,8 +47,8 @@ class profile::community::ffmapfrontend_muc (
     owner   => $owner,
     group   => $group,
   }->
-  exec { "compile js":
-    command => "/usr/bin/make",
+  exec { 'compile js':
+    command => '/usr/bin/make',
     cwd     => "${www_root}/build",
     user    => $owner,
   }->

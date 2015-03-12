@@ -66,6 +66,6 @@ class profile::ffmapbackend (
     command => $ffmap_command,
     minute  => '*/1',
     user    => 'ffmap',
-    require     => File[$destination_directory],
+    require => File[$destination_directory],
   }
 }
