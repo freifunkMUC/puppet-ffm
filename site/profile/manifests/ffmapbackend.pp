@@ -53,7 +53,7 @@ class profile::ffmapbackend (
     owner   => 'ffmap',
   }
 
-  $ffmap_command = "${git_destination}/mkmap.sh "
+  $ffmap_command = "${git_destination}/mkmap.sh 2>&1 >> /tmp/mkmap.log"
 
   exec { 'generate_nodesjson':
     command     => $ffmap_command,
