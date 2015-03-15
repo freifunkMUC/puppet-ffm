@@ -31,7 +31,7 @@ class profile::community::ffmapfrontend_muc (
     group  => $group,
   } ->
   vcsrepo { "${www_root}/build":
-    ensure   => present,
+    ensure   => latest,
     provider => 'git',
     owner    => $owner,
     group    => $group,
