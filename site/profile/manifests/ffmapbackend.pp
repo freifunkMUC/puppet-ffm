@@ -33,7 +33,7 @@ class profile::ffmapbackend (
     mode    => '0440',
     owner   => 'root',
     group   => 'root',
-    content => "ffmap ALL = NOPASSWD:/usr/local/sbin/batctl\n"
+    content => "ffmap ALL = NOPASSWD:/usr/local/sbin/batctl, /usr/local/bin/alfred-json\n"
   }
 
   vcsrepo { $git_destination:

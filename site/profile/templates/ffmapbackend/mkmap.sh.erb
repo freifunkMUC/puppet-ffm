@@ -11,3 +11,4 @@ set -e
 "$(dirname "$0")"/mkaliases.py -p $PEERS -d $ALIASES
 #"$(dirname "$0")"/bat2nodes.py -A -m <%= @mesh_network_interface %> -a $ALIASES -a /opt/ffmap-backend/aliases.json -o -d $DEST
 "$(dirname "$0")"/bat2nodes.py -A -a $ALIASES -a /opt/ffmap-backend/aliases.json -o -d $DEST
+sudo /usr/local/bin/alfred-json -r 159 -f json -z > $DEST/nodes_load.json
