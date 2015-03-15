@@ -80,7 +80,7 @@ accounts::users:
     gid: 2342
     groups:
       - sudo
-#    password: ''
+    password: '$6$5QnM69q7$yhAMiICOWlGiG69pD0BpH3dF9X0Os.b30O.tW1V/gDdQgKzcD2fg8WHUb6t6X3awzXtJyRjgntAnQOavdZZGo/'
     managehome: yes
 accounts::ssh_authorized_keys:
   'fpletz':
