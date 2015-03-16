@@ -60,7 +60,7 @@ class profile::community::ffmapfrontend_muc (
   }
   
   cron { 'ffmap: retrieve nodes_load.json':
-    command => "wget -q ${nodesjson_downloadurl} -O ${www_root}/build/nodes_load.json.new ; mv ${www_root}/build/nodes_load.json.new ${www_root}/build/nodes_load.json",
+    command => "wget -q ${$nodes_loadjson_downloadurl} -O ${www_root}/build/nodes_load.json.new ; mv ${www_root}/build/nodes_load.json.new ${www_root}/build/nodes_load.json",
     user    => $owner,
     minute  => '*/1',
   }
