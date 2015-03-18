@@ -93,6 +93,9 @@ profile::openvpn::configs:
   the command `fastd --generate-key`
 - `fastd::public_key`: you need to provide this key by yourself by using
   the command `fastd --generate-key`
+
+!!! generate your fastd key on a local machine, because on first run, there's no fastd on the node you are provisioning!
+
 - vpn_service: which vpn-provider do you use? right now it is only mullvad
                supported but it should be rather easy to adjust to others
 
