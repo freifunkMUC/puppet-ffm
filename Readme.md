@@ -22,7 +22,7 @@ As a first step you should install ubuntu 14.04 lts on your machine.
 # bootstrapping the installation
 ```
 sudo apt-get -y upgrade
-curl https://apt.puppetlabs.com/puppetlabs-release-trusty.deb -O
+wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
 sudo dpkg -i puppetlabs-release-trusty.deb
 sudo apt-get update
 
