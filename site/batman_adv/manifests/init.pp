@@ -7,8 +7,8 @@ class batman_adv (
   $netmask,
   $version,
   $ipv6_prefix_without_length,
-  $download_bandwidth = 10,
-  $upload_bandwidth = 5,
+  $download_bandwidth = 100,
+  $upload_bandwidth = 100,
 ) {
   contain ::batman_adv::install
   contain ::batman_adv::config

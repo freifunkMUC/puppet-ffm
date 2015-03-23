@@ -11,7 +11,7 @@ iface <%= scope['::batman_adv::bridge'] %> inet static
 allow-hotplug bat0
 iface bat0 inet6 manual
         pre-up /sbin/modprobe batman-adv
-        pre-up batctl -m $IFACE gw server <%= scope['::batman_adv::download_bandwidth'] %>mbit/ <%= scope['::batman_adv::upload_bandwidth'] %>mbit
+        pre-up batctl -m $IFACE gw server <%= scope['::batman_adv::download_bandwidth'] %>mbit/<%= scope['::batman_adv::upload_bandwidth'] %>mbit
         up /sbin/ip link set $IFACE up
         post-up /sbin/brctl addif <%= scope['::batman_adv::bridge'] %> $IFACE
         post-up batctl -m $IFACE it 10000
@@ -20,6 +20,6 @@ iface bat0 inet6 manual
         post-up start-stop-daemon -b --start --exec /usr/local/sbin/batadv-vis -- -i $IFACE /var/run/alfred.sock -s
         post-down /sbin/ip rule del iif <%= scope['::batman_adv::bridge'] %> table <%= scope['::batman_adv::vpn_routing_table'] %>
         pre-down /sbin/brctl delif <%= scope['::batman_adv::bridge'] %> $IFACE || true
-        down start-stop-daemon --stop --oknodo --name alfred --retry 5 
+        down start-stop-daemon --stop --oknodo --name alfred --retry 5
         down start-stop-daemon --stop --oknodo --name batadv-vis --retry 5
         down /sbin/ip link set $IFACE down
