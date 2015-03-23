@@ -2,6 +2,7 @@
 # for a freifunk-gateway
 
 class role::gateway {
+  include ::profile::default
   include ::profile::apt
   include ::profile::locale
   include ::profile::monitoring
