@@ -1,7 +1,7 @@
 class profile::community::ffmapfrontend_muc (
   $domain = $::fqdn,
   $nodesjson_downloadurl = 'http://map.freifunk-muenchen.de/nodes.json',
-  $nodes_loadjson_downloadurl = 'http://map.freifunk-muenchen.de/nodes_load.json',  
+  $nodes_loadjson_downloadurl = 'http://map.freifunk-muenchen.de/nodes_load.json',
   $cityname = 'Muenchen',
   $sitename = 'www.freifunk-muenchen.de',
   $siteurl = 'http://www.freifunk-muenchen.de',
