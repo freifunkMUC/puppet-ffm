@@ -1,14 +1,14 @@
 class profile::openvpn (
-  $configs = 'undefined',
+  $configs = undef,
 ) {
 
   include ::profile::networking
 
-  if $configs != 'undefined' {
+  if $configs != undef {
     class { '::openvpn':
       configs => $configs,
     }
-  } else {
+  } else if $configs == 'undefined' {
     class { '::openvpn::undefined':
       routing_table => $::profile::networking::vpn_routing_table_name,
     }
