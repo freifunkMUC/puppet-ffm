@@ -18,7 +18,8 @@ profile::dns::upstream_servers:
   - '213.73.91.35'   # dnscache.berlin.ccc.d
 
 chrony::servers: [ '0.ntp.ffmuc.net', 'de.pool.ntp.org' ]
-chrony::queryhosts: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/64' ]
+chrony::serve_ntp: true
+chrony::client_allow: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/64' ]
 
 fastd::port: 10000
 
