@@ -1,0 +1,12 @@
+#!/bin/bash
+
+/sbin/ip route flush table <%= @vpn_routing_table %>
+/sbin/ip route add default via $route_vpn_gateway dev $1 table <%= @vpn_routing_table %>
+
+/sbin/ip route add $route_network_1/$route_netmask_1 via $route_gateway_1
+
+<% @dependent_services.each do |service| -%>
+service <%= service -%> restart
+<% end -%>
+
+exit 0

@@ -49,7 +49,7 @@ define openvpn::ipredator (
     owner   => 'root',
     group   => 'root',
     mode    => '0754',
-    content => template('openvpn/openvpn-up.erb'),
+    content => template('openvpn/ipredator-up.erb'),
     notify  => Service['openvpn'],
   } ->
   file { "${config_path}/${name}-down":
@@ -57,7 +57,7 @@ define openvpn::ipredator (
     owner   => 'root',
     group   => 'root',
     mode    => '0754',
-    content => template('openvpn/openvpn-down.erb'),
+    content => template('openvpn/ipredator-down.erb'),
     notify  => Service['openvpn'],
   }
 
