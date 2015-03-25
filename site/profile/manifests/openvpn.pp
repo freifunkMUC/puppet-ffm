@@ -8,7 +8,7 @@ class profile::openvpn (
     class { '::openvpn':
       configs => $configs,
     }
-  } else if $configs == 'undefined' {
+  } elsif $configs == 'undefined' {
     class { '::openvpn::undefined':
       routing_table => $::profile::networking::vpn_routing_table_name,
     }
