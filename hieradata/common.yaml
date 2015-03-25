@@ -17,6 +17,9 @@ profile::dns::upstream_servers:
   - '85.214.20.141'  # FoeBud
   - '213.73.91.35'   # dnscache.berlin.ccc.d
 
+chrony::servers: [ '0.ntp.ffmuc.net', 'de.pool.ntp.org' ]
+chrony::queryhosts: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/64' ]
+
 fastd::port: 10000
 
 # fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
@@ -103,4 +106,3 @@ accounts::ssh_authorized_keys:
     user: spoonicorn
     type: 'ssh-rsa'
     key:  'AAAAB3NzaC1yc2EAAAADAQABAAABAQCc6LzsqXpmBndNvDc/y8GiEYDS3ByUKjEhGLCpv8YD6Ngtq0/L+IZR0ni991Q1NcBuQPzDlWUXe8e45mHlBhytEhvn73FAyFd62zw+/0HjjBOAxLh1/IXcBC3gm9S7Y9a08WRtZinYgL4q2JLml+YPHyCtDeQfcquIn2FI2sLIusnRJdgwixLwOtB+9j6jBDrNQwE3aNv9gtt8MuuM/2JEVWPX4vPg/mEqCQ9FtM3Ws169mSAjIGIrQc/rxXR+nIKHdoTQ5OfmrfXhHV3MBIAugQPdEgnzAVg+UIXro9396+yMzAOoPctwJv9NZGTfIwRYxFcmH/w+WQQZHFDgQRGL'
-    
