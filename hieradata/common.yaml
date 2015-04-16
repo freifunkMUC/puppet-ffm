@@ -86,6 +86,16 @@ accounts::users:
       - sudo
     password: '$6$5QnM69q7$yhAMiICOWlGiG69pD0BpH3dF9X0Os.b30O.tW1V/gDdQgKzcD2fg8WHUb6t6X3awzXtJyRjgntAnQOavdZZGo/'
     managehome: yes
+  lhampe:
+    ensure: present
+    home: /home/lhampe
+    shell: /bin/bash
+    uid: 10006
+    gid: 2342
+    groups:
+      - sudo
+    password: '$6$bWgQAOHl/$BQxsaYa6uFHYQ31uOIcuBBrszsqRCEhbfjggtXqLdaRxHsb4o85fNWzePsSvG62rmrALrhFPoJPEK5ne1CyfV/'
+    managehome: yes
 accounts::ssh_authorized_keys:
   'fpletz':
     user: fpletz
@@ -107,3 +117,7 @@ accounts::ssh_authorized_keys:
     user: spoonicorn
     type: 'ssh-rsa'
     key:  'AAAAB3NzaC1yc2EAAAADAQABAAABAQCc6LzsqXpmBndNvDc/y8GiEYDS3ByUKjEhGLCpv8YD6Ngtq0/L+IZR0ni991Q1NcBuQPzDlWUXe8e45mHlBhytEhvn73FAyFd62zw+/0HjjBOAxLh1/IXcBC3gm9S7Y9a08WRtZinYgL4q2JLml+YPHyCtDeQfcquIn2FI2sLIusnRJdgwixLwOtB+9j6jBDrNQwE3aNv9gtt8MuuM/2JEVWPX4vPg/mEqCQ9FtM3Ws169mSAjIGIrQc/rxXR+nIKHdoTQ5OfmrfXhHV3MBIAugQPdEgnzAVg+UIXro9396+yMzAOoPctwJv9NZGTfIwRYxFcmH/w+WQQZHFDgQRGL'
+  'lhampe':
+    user: lhampe
+    type: 'ssh-rsa'
+    key:  'AAAAB3NzaC1yc2EAAAADAQABAAABAQDQooEsyAa2hT2dUSvcPz2Iu5qJe+YUFybUR82kLJeMx8LOFRK4l6n9CP5OUpRoMCiOmwlPLWaaQfzyBDZvgQVS0k5wH0z+gL2/843pg6SMQ0pbnu4rJogspDMuwyjDNuzLLgj8YuIswuExyz++3oJtYPwQ2axZHVFIzjD9oOjbXn1i+RePNF9Me8vTLEWIvOFVbtuDjdLw/6N4TYXHcwDfaNBzMgtQrBlBy+0ahlRQ09vQIbFzJOORECeqvKBrG2aPv7tAFAjGMDSE4+sKCL4IECqTQTIAlpTpsNeOj2PvFyNszKhdefRF88O83qq6hgPMGU7p9p4hl8tIISWrkr8v'
