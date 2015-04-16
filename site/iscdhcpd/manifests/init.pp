@@ -8,8 +8,8 @@ class iscdhcpd (
   $ensure = 'installed',
   $dns_servers = [ $gateway_ip ],
   $routers = [ $gateway_ip ],
-  $default_lease_time = 600,
-  $max_lease_time = 7200,
+  $default_lease_time = 300,
+  $max_lease_time = 600,
 ) {
 
   include ::iscdhcpd::params
