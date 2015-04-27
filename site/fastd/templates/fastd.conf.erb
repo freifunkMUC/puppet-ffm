@@ -1,6 +1,9 @@
 log level <%= scope['::fastd::log_level'] %>;
 log to syslog level <%= scope['::fastd::log_level'] %>;
 
+hide ip addresses yes;
+hide mac addresses yes;
+
 <% if scope['::fastd::on_verify_command'] != 'undefined' -%>
 on verify "<%= scope['::fastd::on_verify_command'] %> $PEER_KEY";
 
