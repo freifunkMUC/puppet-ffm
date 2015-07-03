@@ -17,6 +17,8 @@ bind any:<%= scope['::fastd::port'] %>;
 secure handshakes yes;
 mtu <%= scope['::fastd::mtu'] %>;
 
+on verify "true";
+
 include "secret.conf";
 include peers from "peers";
 on up "./fastd-up";
