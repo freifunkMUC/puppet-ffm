@@ -21,6 +21,7 @@ hiera_hosts = Dir.glob(current_dir + '/hieradata/hosts/*.yaml')
 
 
 Vagrant.configure(2) do |config|
+  config.cache.scope = :box
 
   hiera_hosts.sort.each_with_index do |host, index|
     config.vm.define host do |h|
