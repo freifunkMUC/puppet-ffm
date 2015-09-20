@@ -33,8 +33,6 @@ Vagrant.configure(2) do |config|
             domain.cpus = 1
           end
         end
-
-        h.vm.synced_folder 'hieradata', '/vagrant/hieradata', :nfs => configs['nfs']
       end
 
       h.vm.hostname = host + '.localdomain'
@@ -46,15 +44,8 @@ Vagrant.configure(2) do |config|
         p.module_path = [ "legacy", "site", "modules" ]
         p.hiera_config_path = "hiera.yaml"
         p.working_directory = "/vagrant"
-        p.options = [ '--parser=future', configs['puppet_options']].join(' ')
+        p.options = [ '--parser=future', configs['puppet_options'] ].join(' ')
       end
-    end
-  end
-
-  if configs['vagrant_provider'] == 'docker' then
-    config.vm.provider 'docker' do |d|
-      d.image = 'ffmuc/vagrant'
-      d.has_ssh = true
     end
   end
 end
