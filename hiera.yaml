@@ -7,8 +7,7 @@
 :hierarchy:
   - "hosts/%{::fqdn}"
   - "hosts/%{::hostname}"
-  - 'server-peers'
-  - 'client-peers'
+  - "roles/%{::role::role_class}"
   - 'common'
 
 :yaml:

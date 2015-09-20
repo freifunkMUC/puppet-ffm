@@ -1,4 +1,7 @@
 ---
+role::default_profiles:
+  - default
+
 profile::default::default_components:
   - apt
   - sysctl

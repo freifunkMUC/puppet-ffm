@@ -10,4 +10,8 @@ class role (
   } else {
     fail('No role specified!')
   }
+
+  each($default_profiles) |$profile| {
+    contain "::profile::${profile}"
+  }
 }
