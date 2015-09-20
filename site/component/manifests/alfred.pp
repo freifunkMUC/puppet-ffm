@@ -1,22 +1,17 @@
 class component::alfred (
-  $ensure        = 'present',
-  $version,
-  $json_version
+  $ensure  = 'present',
+  $version = '2014.4*',
 ) {
   package { 'libgps21':
     ensure  => present,
     require => Apt::Pin['libgps']
   }
 
-  package { [ 'zlib1g', 'libjansson4']:
+  package { [ 'zlib1g', 'libjansson4', 'alfred-json']:
     ensure => $ensure
   }
 
   package { 'alfred':
     ensure => $version
-  }
-
-  package { 'alfred-json':
-    ensure => $json_version
   }
 }

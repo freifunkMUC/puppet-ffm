@@ -79,9 +79,6 @@ component::dnsmasq::pools:
     netmask: 255.255.0.0
     lease_time: 24h # ???
 
-component::alfred::version: 2014.4
-component::alfred::json_version: 0.3.1-1
-
 fastd::port: 10000
 
 # fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
