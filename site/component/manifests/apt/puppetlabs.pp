@@ -8,9 +8,8 @@ class component::apt::puppetlabs (
   apt::source { 'puppetlabs':
     location    => $location,
     repos       => 'main',
-    key         => '4BD6EC30',
-    key_server  => 'keyserver.ubuntu.com',
-    include_src => false,
+    key      => { 'id' => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30', 'server' => 'keyserver.ubuntu.com' },
+    include  => { 'deb' => true, 'src' => false },
     require     => Package['puppetlabs-release'],
   }
 }

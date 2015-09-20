@@ -5,9 +5,9 @@ class component::apt::ubuntu::utopic (
   $repos_str = join($repos, ' ')
 
   apt::source { "ubuntu_utopic_${mirror}":
-    location    => "http://${mirror}/ubuntu/",
-    repos       => $repos_str,
-    release     => 'utopic',
-    include_src => false,
+    location => "http://${mirror}/ubuntu/",
+    repos    => $repos_str,
+    release  => 'utopic',
+    include  => { 'deb' => true, 'src' => false },
   }
 }
