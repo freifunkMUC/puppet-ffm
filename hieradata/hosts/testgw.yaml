@@ -16,6 +16,10 @@ component::sysctl::settings:
     value: "1"
   net.ipv6.conf.all.forwarding:
     value: "1"
+  net.ipv6.conf.all.use_tempaddr:
+    value: "0"
+  net.ipv6.conf.default.use_tempaddr:
+    value: "0"
   net.ipv4.conf.default.rp_filter:
     value: "2"
   net.ipv4.conf.all.rp_filter:
@@ -75,7 +79,14 @@ component::sysctl::settings:
     value: "0"
   net.ipv4.conf.all.accept_redirects:
     value: "0"
+  net.ipv6.conf.all.accept_redirects:
+    value: "0"
   net.ipv4.conf.all.accept_source_route:
+    value: "0"
+  net.ipv6.conf.all.accept_source_route:
+    value: "0"
+  # Log martian packets
+  net.ipv4.conf.all.log_martians:
     value: "0"
 
 dnsmasq::dns_interfaces:
