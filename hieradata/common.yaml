@@ -5,6 +5,7 @@ profile::default::default_components:
   - users
   - network
   - resolvconf
+  - fail2ban
 
 component::apt::repos:
   - ubuntu
@@ -12,8 +13,8 @@ component::apt::repos:
   - puppetlabs
   - freifunk
 
-component::apt::ubuntu::mirror: mirror.hetzner.de
-component::apt::ubuntu::utopic::mirror: mirror.hetzner.de
+component::apt::ubuntu::mirror: mirror.lrz.de
+component::apt::ubuntu::utopic::mirror: mirror.lrz.de
 
 component::resolvconf::nameservers:
   - 213.73.91.35
@@ -27,6 +28,10 @@ component::resolvconf::template: |
   <% @nameservers.sort.each do |ns| -%>
   nameserver <%= ns %>
   <% end -%>
+
+fail2ban::bantime: 900
+fail2ban::findtime: 600
+fail2ban::maxretry: 3
 
 profile::fastd::mesh_vpn_interface: 'mesh-vpn'
 profile::fastd::community: 'ff'

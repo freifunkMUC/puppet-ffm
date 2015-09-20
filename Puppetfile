@@ -10,6 +10,7 @@ mod 'puppetlabs/nodejs',            '0.7.1'
 mod 'jvaubourg/nginxpack',          '0.1.1'
 mod 'lex/dnsmasq',                  '2.6.1'
 mod 'ringingliberty/chrony',        '0.2.1'
+mod 'dhoppe/fail2ban',              '1.0.8'
 
 mod 'kmod',
   :git => "https://github.com/camptocamp/puppet-kmod.git",
