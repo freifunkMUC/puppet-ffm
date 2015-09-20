@@ -4,48 +4,47 @@
 
 require 'yaml'
 
-configs = {
+cfg = {
   'boxname'          => 'mayflower/trusty64-puppet3',
   'memory'           => 1024,
+  'cpus'             => 1,
   'puppet_options'   => if ENV['VAGRANT_PUPPET_DEBUG'] == '1' then '--debug' else '' end,
   'vagrant_provider' => ENV['VAGRANT_DEFAULT_PROVIDER'] || 'virtualbox',
   'nfs'              => false,
 }
 
-current_dir   = File.dirname(File.expand_path(__FILE__))
-config_file   = "#{current_dir}/.config.yaml"
-configs       = configs.merge(YAML.load_file(config_file)) if File.exist?(config_file)
+current_dir = File.dirname(File.expand_path(__FILE__))
+config_file = "#{current_dir}/.config.yaml"
+cfg = cfg.merge(YAML.load_file(config_file)) if File.exist?(config_file)
 
 hiera_hosts = Dir.glob(current_dir + '/hieradata/hosts/*.yaml')
   .map { |host_path| File.basename(host_path, '.yaml') }
 
-
 Vagrant.configure(2) do |config|
+  config.vm.box = cfg['boxname']
+
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :box
+  end
+
+  config.vm.provider :virtualbox do |domain|
+    domain.memory = cfg['memory']
+    domain.cpus = cfg['cpus']
+  end
+
+  config.vm.provision :puppet do |p|
+    p.synced_folder_type = "nfs" if cfg['nfs']
+    p.manifests_path = "."
+    p.manifest_file = "site.pp"
+    p.module_path = [ "legacy", "site", "modules" ]
+    p.hiera_config_path = "hiera.yaml"
+    p.working_directory = "/vagrant"
+    p.options = [ '--parser=future', cfg['puppet_options'] ].join(' ')
+  end
 
   hiera_hosts.sort.each_with_index do |host, index|
     config.vm.define host do |h|
-      if configs['boxname']
-        h.vm.box = configs['boxname']
-
-        if !['lxc'].include?(configs['vagrant_provider']) then
-          h.vm.provider configs['vagrant_provider'] do |domain|
-            domain.memory = configs['memory']
-            domain.cpus = 1
-          end
-        end
-      end
-
       h.vm.hostname = host + '.localdomain'
-
-      h.vm.provision "puppet" do |p|
-        p.synced_folder_type = "nfs" if configs['nfs']
-        p.manifests_path = "."
-        p.manifest_file = "site.pp"
-        p.module_path = [ "legacy", "site", "modules" ]
-        p.hiera_config_path = "hiera.yaml"
-        p.working_directory = "/vagrant"
-        p.options = [ '--parser=future', configs['puppet_options'] ].join(' ')
-      end
     end
   end
 end
