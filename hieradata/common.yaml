@@ -12,6 +12,9 @@ component::apt::repos:
   - puppetlabs
   - freifunk
 
+component::apt::ubuntu::mirror: mirror.hetzner.de
+component::apt::ubuntu::utopic::mirror: mirror.hetzner.de
+
 component::resolvconf::nameservers:
   - 213.73.91.35
 
