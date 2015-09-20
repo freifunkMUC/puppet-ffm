@@ -89,14 +89,9 @@ component::sysctl::settings:
   net.ipv4.conf.all.log_martians:
     value: "0"
 
-dnsmasq::dns_interfaces:
+dnsmasq::interfaces:
   - brffmuc
-dnsmasq::no_dhcp_interface: brffmuc
-# dnsmasq::forward_interfaces: ...
-dnsmasq::listen_address: 127.0.0.1
-dnsmasq::upstream_servers:
-  - 85.214.20.141
-  - 213.73.91.35
+dnsmasq::no_hosts: true
 
 component::dnsmasq::pools:
   access:
