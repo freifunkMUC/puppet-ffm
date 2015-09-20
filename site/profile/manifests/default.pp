@@ -1,8 +1,8 @@
-class profile::default {
-
-  sysctl { 'fs.file-max': value => '100000' }
-  sysctl { 'vm.swappiness': value => '10' }
-
-  contain '::chrony'
-
+class profile::default (
+  $default_components = [],
+  $default_packages   = []
+) {
+  each($default_components) |$component| {
+    contain "::component::${component}"
+  }
 }

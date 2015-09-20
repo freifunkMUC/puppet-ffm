@@ -9,11 +9,11 @@ configs = {
   'memory'           => 1024,
   'puppet_options'   => if ENV['VAGRANT_PUPPET_DEBUG'] == '1' then '--debug' else '' end,
   'vagrant_provider' => ENV['VAGRANT_DEFAULT_PROVIDER'] || 'virtualbox',
-  'nfs'              => true,
+  'nfs'              => false,
 }
 
 current_dir   = File.dirname(File.expand_path(__FILE__))
-config_file   = "#{current_dir}/configs.yaml"
+config_file   = "#{current_dir}/.config.yaml"
 configs       = configs.merge(YAML.load_file(config_file)) if File.exist?(config_file)
 
 hiera_hosts = Dir.glob(current_dir + '/hieradata/hosts/*.yaml')
@@ -41,12 +41,12 @@ Vagrant.configure(2) do |config|
 
       h.vm.provision "puppet" do |p|
         p.synced_folder_type = "nfs" if configs['nfs']
-        p.manifests_path = "manifests"
+        p.manifests_path = "."
         p.manifest_file = "site.pp"
-        p.module_path = [ "site", "modules" ]
+        p.module_path = [ "legacy", "site", "modules" ]
         p.hiera_config_path = "hiera.yaml"
         p.working_directory = "/vagrant"
-        p.options = configs['puppet_options']
+        p.options = [ '--parser=future', configs['puppet_options']].join(' ')
       end
     end
   end
@@ -58,4 +58,3 @@ Vagrant.configure(2) do |config|
     end
   end
 end
-

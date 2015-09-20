@@ -33,13 +33,8 @@ class batman_adv::module {
       } ->
       package { 'libnl-3-200':
       } ->
-      file { "/tmp/batctl_${::batman_adv::module::params::batctl_version}_amd64.deb":
-        source => "puppet:///modules/batman_adv/batctl_${::batman_adv::module::params::batctl_version}_amd64.deb",
-      } ->
       package { 'batctl':
         ensure   => latest, # if this is not here, we wont get an updated package
-        provider => 'dpkg',
-        source   => "/tmp/batctl_${::batman_adv::module::params::batctl_version}_amd64.deb",
       }
     }
     default: {
