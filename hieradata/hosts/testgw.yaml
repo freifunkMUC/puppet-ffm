@@ -52,6 +52,21 @@ component::sysctl::settings:
     value: "1"
   net.ipv4.tcp_fin_timeout:
     value: "10"
+  # Increase garbage collection thresholds for neighbor tables
+  net.ipv4.neigh.default.gc_thresh1:
+    value: "2048"
+  net.ipv4.neigh.default.gc_thresh2:
+    value: "5120"
+  net.ipv4.neigh.default.gc_thresh3:
+    value: "10240"
+  net.ipv6.neigh.default.gc_thresh1:
+    value: "2048"
+  net.ipv6.neigh.default.gc_thresh2:
+    value: "5120"
+  net.ipv6.neigh.default.gc_thresh3:
+    value: "10240"
+  net.ipv6.route.gc_thresh:
+    value: "10240"
   # Disable TCP slow start on idle connections
   net.ipv4.tcp_slow_start_after_idle:
     value: "0"
