@@ -9,14 +9,17 @@ component::apt::pins:
 
 dnsmasq::interfaces:
   - brffmuc
-dnsmasq::no_hosts: true
 
 component::dnsmasq::pools:
   access:
-    dhcp_start: 10.0.2.0
-    dhcp_end: 10.0.3.255
+    dhcp_start: 10.80.2.0
+    dhcp_end: 10.80.3.255
     netmask: 255.255.0.0
-    lease_time: 24h # ???
+    lease_time: 1h
+
+component::dnsmasq::dnsservers:
+  google:
+    ip: 8.8.8.8
 
 fastd::port: 10000
 

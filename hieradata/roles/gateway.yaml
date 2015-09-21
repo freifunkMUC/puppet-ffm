@@ -1,4 +1,6 @@
 ---
+dnsmasq::no_hosts: true
+dnsmasq::cache_size: 4096
 
 component::sysctl::settings:
   fs.file-max:
