@@ -11,8 +11,6 @@ profile::default::default_components:
   - fail2ban
 
 component::apt::repos:
-  - ubuntu
-  - ubuntu::utopic
   - puppetlabs
   - freifunk
 

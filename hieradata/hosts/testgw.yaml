@@ -1,12 +1,6 @@
 ---
 role::role_class: gateway
 
-component::apt::pins:
-  libgps:
-    packages: libgps21
-    release: utopic
-    priority: 500
-
 dnsmasq::interfaces:
   - brffmuc
 

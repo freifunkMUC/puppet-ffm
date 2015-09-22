@@ -4,7 +4,6 @@ class component::alfred (
 ) {
   package { 'libgps21':
     ensure  => present,
-    require => Apt::Pin['libgps']
   }
 
   package { [ 'zlib1g', 'libjansson4', 'alfred-json']:

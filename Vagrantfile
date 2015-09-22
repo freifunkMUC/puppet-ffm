@@ -5,7 +5,7 @@
 require 'yaml'
 
 cfg = {
-  'boxname'          => 'mayflower/trusty64-puppet3',
+  'boxname'          => 'debian/jessie64', #'mayflower/trusty64-puppet3',
   'memory'           => 1024,
   'cpus'             => 1,
   'puppet_options'   => if ENV['VAGRANT_PUPPET_DEBUG'] == '1' then '--debug' else '' end,
@@ -32,6 +32,8 @@ Vagrant.configure(2) do |config|
     domain.cpus = cfg['cpus']
   end
 
+  config.vm.provision "shell", path: 'scripts/bootstrap_puppetdeps.sh'
+
   config.vm.provision :puppet do |p|
     p.synced_folder_type = "nfs" if cfg['nfs']
     p.manifests_path = "."
@@ -39,7 +41,7 @@ Vagrant.configure(2) do |config|
     p.module_path = [ "legacy", "site", "modules" ]
     p.hiera_config_path = "hiera.yaml"
     p.working_directory = "/vagrant"
-    p.options = [ '--parser=future', cfg['puppet_options'] ].join(' ')
+    p.options = [ '--parser=future', '--verbose', cfg['puppet_options'] ].join(' ')
   end
 
   hiera_hosts.sort.each_with_index do |host, index|

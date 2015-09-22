@@ -22,6 +22,11 @@ class component::batman (
         }
       }
     }
+    'Debian': {
+      package { 'linux-image-amd64':
+        ensure => '4.*',
+      }
+    }
     default: {
       fail("${::operatingsystem} yet supported!")
     }
