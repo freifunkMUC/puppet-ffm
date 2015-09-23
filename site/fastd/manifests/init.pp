@@ -1,61 +1,63 @@
-# vim: set sw=2 sts=2 et tw=80 :
-class fastd (
-  $public_key,
-  $secret_key,
-  $mesh_vpn_interface,
-  $gateway_number,
-  $mac_prefix,
-  $mac_suffix,
-  $config_path,
-  $ciphers = [ 'salsa2012+umac', 'salsa2012+gmac', 'xsalsa20-poly1305' ],
-  $client_pubkeys = [],
-  $server_peers = {},
-  $port = '10000',
-  $mtu = '1426',
-  $version = 'latest',
-  $purge_peers = false,
-  $connection_ip = $::ipaddress,
-  $routing_type = 'batman',
-  $routing_interface = 'bat0',
-  $log_level = 'warn',
-  $on_verify_command = 'undefined',
+define fastd (
+  $secret,
+  $public,
+  $bind="any:10000",
+  $mode='tap',
+  $mtu=1426,
+  $methods=["salsa2012+umac"],
+  $user="fastd-${name}",
+  $group="fastd-${name}",
+  $on_up="/sbin/ip link set ${name} up",
+  $verify_all=false,
+  $log_level="info",
+  $peers={},
 ) {
-  include ::fastd::params
-  include ::fastd::install
-  include ::fastd::config
-  include ::fastd::service
-  include ::fastd::status
-  include ::fastd::gluonconfig
+  $service_name="fastd@${name}"
 
-  validate_re($public_key, '^.{64}$', 'public_key is not 64 characters long!')
-  validate_re($secret_key, '^.{64}$', 'secret_key is not 64 characters long!')
-  validate_bool($purge_peers)
+  ensure_packages(['fastd'], { ensure => installed });
 
-  if ! is_integer($mtu) {
-    fail('mtu is not an integer!')
-  } elsif $mtu < 0 or $mtu > 2000 {
-    fail('make sure that your mtu is valid!')
+  group { $group:
+    ensure => present,
+    system => true,
+  } ->
+
+  user { $user:
+    ensure => present,
+    gid    => $group,
+    shell  => "/bin/true",
+    system => true,
+  } ->
+
+  file { ["/etc/fastd/${name}", "/etc/fastd/${name}/peers"]:
+    ensure => directory,
+  } ->
+
+  file { "/etc/fastd/${name}/fastd.conf":
+    ensure  => file,
+    owner   => $user,
+    group   => $group,
+    mode    => "0600",
+    content => template('fastd/fastd.conf.erb'),
+  } ~>
+
+  service { $service_name:
+    ensure   => running,
+    enable   => true,
+    provider => 'systemd',
   }
 
-  if ! is_integer($gateway_number) {
-    fail('gateway_number is not an integer!')
-  } elsif $gateway_number < 0 {
-    fail('gateway_number is not a positive integer!')
+  Fastd::Peer {
+    instance => $name,
+    notify   => Service[$service_name],
   }
 
-  if ! is_integer($port) {
-    fail("port '${port}' is not an integer!")
-  } elsif ! ($port > 1024) or ! ($port < 65536) {
-    fail("port '${port}' is not a valid port-number!")
+  ::fastd::peer { "${name}-${fqdn}":
+    key  => $public,
+    path => "/etc/fastd/${name}/${fqdn}",
   }
 
-  $log_level_array = ['error', 'warn', 'info', 'verbose', 'debug', 'debug2']
-  if !($log_level in $log_level_array) {
-    fail("${log_level} is not a valid log-level for fastd!")
+  validate_hash($peers)
+  each($peers) |$peer, $args| {
+    create_resources('::fastd::peer', { "${name}-${peer}" => merge({ name => $peer }, $args) })
   }
-
-  create_resources( ::fastd::server_peer, $server_peers )
-
-  fastd::peer { $client_pubkeys: }
-
 }
