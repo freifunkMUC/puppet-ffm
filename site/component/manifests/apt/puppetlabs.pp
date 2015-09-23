@@ -6,10 +6,11 @@ class component::apt::puppetlabs (
   }
 
   apt::source { 'puppetlabs':
-    location    => $location,
-    repos       => 'main',
+    location => $location,
+    release  => 'stable',
+    repos    => 'main',
     key      => { 'id' => '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30', 'server' => 'keyserver.ubuntu.com' },
     include  => { 'deb' => true, 'src' => false },
-    require     => Package['puppetlabs-release'],
+    require  => Package['puppetlabs-release'],
   }
 }
