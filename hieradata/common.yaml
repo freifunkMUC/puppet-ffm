@@ -17,6 +17,10 @@ component::apt::repos:
 component::apt::ubuntu::mirror: mirror.lrz.de
 component::apt::ubuntu::utopic::mirror: mirror.lrz.de
 
+apt::purge:
+  sources.list: true
+  sources.list.d: true
+
 component::resolvconf::nameservers:
   - 213.73.91.35
 
