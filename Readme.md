@@ -1,5 +1,9 @@
 # puppet-ffm
 
+**We’re currently in the process of rewriting our puppet manifests. Please
+note that this documentation might be out of date and the code is not yet
+fully functional.**
+
 These are puppet manifests to set up Freifunk gateways and servers that are
 compatible with the gluon firmware. The goal is to keep them as general and
 configurable as possible to be used in other communities.
