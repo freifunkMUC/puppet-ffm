@@ -48,7 +48,6 @@ define fastd (
 
   Fastd::Peer {
     instance => $name,
-    notify   => Service[$service_name],
   }
 
   ::fastd::peer { "${name}-${fqdn}":
