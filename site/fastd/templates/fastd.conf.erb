@@ -1,0 +1,34 @@
+log to syslog level <%= @log_level %>;
+
+hide ip addresses yes;
+hide mac addresses yes;
+secure handshakes yes;
+
+drop capabilities yes;
+user "<%= @user %>";
+group "<%= @group %>";
+
+mode <%= @mode %>;
+interface "<%= @name %>";
+
+<% @methods.each do |meth| -%>
+method "<%= meth %>";
+<% end -%>
+
+bind <%= @bind %>;
+mtu <%= @mtu %>;
+
+secret "<%= @secret %>";
+
+status socket "/tmp/fastd@<%= @name %>.sock";
+
+on up "
+<%= @on_up %>
+";
+
+<% if @verify_all -%>
+on verify "/bin/true";
+<% end -%>
+
+include peers from "peers";
+

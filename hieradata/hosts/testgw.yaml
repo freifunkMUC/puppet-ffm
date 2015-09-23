@@ -15,7 +15,20 @@ component::dnsmasq::dnsservers:
   google:
     ip: 8.8.8.8
 
-fastd::port: 10000
+component::fastd::defaults:
+  mtu: 1426
+  verify_all: true
+  log_level: debug2
+  methods:
+    - salsa2012+umac
+
+component::fastd::instances:
+  meshvpn:
+    public: 'bcc047f2fb0acc2fd57028265607a7543aeb0bae3bf8f9f51389c080d0eff018'
+    secret: '604b94346dfda1010177121991a33810c3785e7250799084e53c724837ef1a71'
+    peers:
+      foobar:
+        key: '81324cf1ecb9266158bc1edc17f29bf77622588bc73dcebb3bce31a94617c7bb'
 
 # fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
 # hex_gateway_number is gateway_number automatically converted into hex
@@ -37,7 +50,7 @@ batman_adv::vpn_routing_table: freifunk
 batman_adv::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
 batman_adv::ipv6_prefix_length: 64
 
-profile::openvpn::configs: {}
+profile::openvpn::configs:
   mullvad1:
     vpn_routing_table: 'freifunk'
     dependent_services:
