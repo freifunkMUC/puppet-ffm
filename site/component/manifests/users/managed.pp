@@ -1,5 +1,5 @@
 define component::users::managed (
-  $password="!",
+  $password='!',
   $comment='',
   $ensure='present',
   $groups=[],

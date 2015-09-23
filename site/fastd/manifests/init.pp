@@ -1,15 +1,15 @@
 define fastd (
   $secret,
   $public,
-  $bind="any:10000",
+  $bind='any:10000',
   $mode='tap',
   $mtu=1426,
-  $methods=["salsa2012+umac"],
+  $methods=['salsa2012+umac'],
   $user="fastd-${name}",
   $group="fastd-${name}",
   $on_up="/sbin/ip link set ${name} up",
   $verify_all=false,
-  $log_level="info",
+  $log_level='info',
   $peers={},
 ) {
   $service_name="fastd@${name}"
@@ -24,7 +24,7 @@ define fastd (
   user { $user:
     ensure => present,
     gid    => $group,
-    shell  => "/bin/true",
+    shell  => '/bin/true',
     system => true,
   } ->
 
@@ -36,7 +36,7 @@ define fastd (
     ensure  => file,
     owner   => $user,
     group   => $group,
-    mode    => "0600",
+    mode    => '0600',
     content => template('fastd/fastd.conf.erb'),
   } ~>
 
@@ -50,13 +50,15 @@ define fastd (
     instance => $name,
   }
 
-  ::fastd::peer { "${name}-${fqdn}":
+  ::fastd::peer { "${name}-${::fqdn}":
     key  => $public,
-    path => "/etc/fastd/${name}/${fqdn}",
+    path => "/etc/fastd/${name}/${::fqdn}",
   }
 
   validate_hash($peers)
   each($peers) |$peer, $args| {
-    create_resources('::fastd::peer', { "${name}-${peer}" => merge({ name => $peer }, $args) })
+    create_resources('::fastd::peer',
+      { "${name}-${peer}" => merge({ name => $peer }, $args) }
+    )
   }
 }

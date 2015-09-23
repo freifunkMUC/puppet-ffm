@@ -21,6 +21,8 @@ hiera_hosts = Dir.glob(current_dir + '/hieradata/hosts/*.yaml')
   .map { |host_path| File.basename(host_path, '.yaml') }
 
 Vagrant.configure(2) do |config|
+  config.vm.box = cfg['boxname']
+
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
   end

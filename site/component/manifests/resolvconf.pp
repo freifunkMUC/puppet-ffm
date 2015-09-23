@@ -15,9 +15,9 @@ class component::resolvconf (
       group   => root,
       mode    => '0644',
       content => join([
-        "make_resolv_conf() {",
-        "    :",
-        "}"
+        'make_resolv_conf() {',
+        '    :',
+        '}'
       ], "\n")
     } ->
 
