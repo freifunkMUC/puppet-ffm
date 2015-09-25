@@ -2,6 +2,16 @@
 dnsmasq::no_hosts: true
 dnsmasq::cache_size: 4096
 
+dnsmasq::interfaces:
+  - br0
+
+component::fastd::defaults:
+  mtu: 1426
+  verify_all: true
+  log_level: debug2
+  methods:
+    - salsa2012+umac
+
 component::sysctl::settings:
   fs.file-max:
     value: "100000"

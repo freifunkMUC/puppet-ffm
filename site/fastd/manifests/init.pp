@@ -7,7 +7,7 @@ define fastd (
   $methods=['salsa2012+umac'],
   $user="fastd-${name}",
   $group="fastd-${name}",
-  $on_up="/sbin/ip link set ${name} up",
+  $on_up="/sbin/ifup ${name}",
   $verify_all=false,
   $log_level='info',
   $peers={},
@@ -58,7 +58,7 @@ define fastd (
   validate_hash($peers)
   each($peers) |$peer, $args| {
     create_resources('::fastd::peer',
-      { "${name}-${peer}" => merge({ name => $peer }, $args) }
+      { "${name}-${peer}" => $args }
     )
   }
 }

@@ -2,10 +2,13 @@
 role::role_class: gateway
 
 dnsmasq::interfaces:
-  - brffmuc
+  - br0
+
+profile::gateway::ipv4: 10.80.0.10/16
+profile::gateway::ipv6: fdef:fc0:4fff::10/64
 
 component::dnsmasq::pools:
-  access:
+  ff:
     dhcp_start: 10.80.2.0
     dhcp_end: 10.80.3.255
     netmask: 255.255.0.0
@@ -15,48 +18,19 @@ component::dnsmasq::dnsservers:
   google:
     ip: 8.8.8.8
 
-component::fastd::defaults:
-  mtu: 1426
-  verify_all: true
-  log_level: debug2
-  methods:
-    - salsa2012+umac
-
 component::fastd::instances:
-  meshvpn:
+  meshvpn0:
     public: 'bcc047f2fb0acc2fd57028265607a7543aeb0bae3bf8f9f51389c080d0eff018'
     secret: '604b94346dfda1010177121991a33810c3785e7250799084e53c724837ef1a71'
+    bind: 'any:10000'
     peers:
       foobar:
         key: '81324cf1ecb9266158bc1edc17f29bf77622588bc73dcebb3bce31a94617c7bb'
-
-# fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
-# hex_gateway_number is gateway_number automatically converted into hex
-# therefor we only have at the moment the possibility of 0xff gateways
-fastd::mac_prefix: 'f2:80:00'
-fastd::mac_suffix: '23:42'
-fastd::version: latest
-fastd::purge_peers: false
-
-
-profile::fastd::mesh_vpn_interface: 'mesh-vpn'
-profile::fastd::community: ffmuc
-
-batman_adv::netmask: '255.255.224.0'
-batman_adv::gateway_ip: '10.0.0.9'
-batman_adv::gateway_number: 9
-batman_adv::vpn_routing_table: freifunk
-
-batman_adv::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
-batman_adv::ipv6_prefix_length: 64
-
-profile::openvpn::configs:
-  mullvad1:
-    vpn_routing_table: 'freifunk'
-    dependent_services:
-      - 'dnsmasq'
-    provider_fqdns:
-      - 'se.mullvad.net'
-    port: 1194
-    provider: 'mullvad'
+  meshvpn1:
+    public: 'bcc047f2fb0acc2fd57028265607a7543aeb0bae3bf8f9f51389c080d0eff018'
+    secret: '604b94346dfda1010177121991a33810c3785e7250799084e53c724837ef1a71'
+    bind: 'any:10001'
+    peers:
+      foobar:
+        key: '81324cf1ecb9266158bc1edc17f29bf77622588bc73dcebb3bce31a94617c7bb'
 

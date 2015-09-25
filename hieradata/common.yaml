@@ -17,6 +17,10 @@ component::apt::repos:
 component::apt::ubuntu::mirror: mirror.lrz.de
 component::apt::ubuntu::utopic::mirror: mirror.lrz.de
 
+network::interfaces_hash:
+  eth0:
+    method: dhcp
+
 apt::purge:
   sources.list: true
   sources.list.d: true

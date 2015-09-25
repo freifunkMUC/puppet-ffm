@@ -1,5 +1,7 @@
 class component::network (
-  $routing_tables = {}
 ) {
-  # FIXME: create routing tables
+  package { 'bridge-utils':
+    ensure => present,
+    before => Class['::network'],
+  }
 }
