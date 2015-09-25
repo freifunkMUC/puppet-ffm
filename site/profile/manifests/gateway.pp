@@ -3,6 +3,7 @@ class profile::gateway (
   $ipv6,
   $interface='bat0',
   $bridge_name='br0',
+  $tunnel_name='tun0',
 ) {
   require ::component::apt
 
@@ -49,4 +50,41 @@ class profile::gateway (
       'ip link set $IFACE up',
     ],
   }
+
+  contain ::firewall
+
+  firewall { '000 Masquerade VPN traffic':
+    table    => 'nat',
+    chain    => 'POSTROUTING',
+    proto    => 'all',
+    outiface => $tunnel_name,
+    jump     => 'MASQUERADE',
+  }
+
+  firewallchain { 'FORWARD:filter:IPv4':
+    ensure => present,
+    policy => drop,
+    before => undef,
+  }
+
+  firewallchain { 'FORWARD:filter:IPv6':
+    ensure => present,
+    policy => drop,
+    before => undef,
+  }
+
+  firewall { '000 Allow bridge to tunnel forwarding':
+    chain    => 'FORWARD',
+    iniface  => $tunnel_name,
+    outiface => $bridge_name,
+    action   => 'accept',
+  }
+
+  firewall { '000 Allow tunnel to bridge forwarding':
+    chain    => 'FORWARD',
+    iniface  => $bridge_name,
+    outiface => $tunnel_name,
+    action   => 'accept',
+  }
+
 }
