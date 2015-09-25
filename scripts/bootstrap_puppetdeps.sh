@@ -11,14 +11,15 @@ if [ ! -e "$STAMP" ]; then
     rm puppetlabs-release-stable.deb
 
     apt-get update
-    apt-get -y upgrade
-    apt-get -y install git puppet facter r10k
+    apt-get -y install git puppet facter
 
     touch "$STAMP"
 fi
 
-if [ ! -e "$MOD_STAMP" ] || [ "$MOD_STAMP" -ot /vagrant/Puppetfile ]; then
+if [ -e /vagrant ] && [ ! -e "$MOD_STAMP" ] || [ "$MOD_STAMP" -ot /vagrant/Puppetfile ]; then
     cd /vagrant
+
+    apt-get -y install r10k
 
     r10k -v info puppetfile install
 
