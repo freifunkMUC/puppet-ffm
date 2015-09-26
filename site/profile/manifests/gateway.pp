@@ -45,7 +45,7 @@ class profile::gateway (
       "batctl -m ${interface} if add bat-dummy",
     ],
     up     => [
-      "batctl -m ${interface} gw mode server 100/100",
+      "batctl -m ${interface} gw server 100000/100000",
       "batctl -m ${interface} it 10000",
       'ip link set $IFACE up',
     ],
