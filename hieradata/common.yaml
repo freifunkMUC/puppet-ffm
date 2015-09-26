@@ -10,6 +10,7 @@ profile::default::default_components:
   - resolvconf
   - fail2ban
   - packages
+  - collectd
 
 component::apt::repos:
   - puppetlabs
@@ -58,6 +59,41 @@ fail2ban::maxretry: 3
 chrony::servers: [ '0.ntp.ffmuc.net', 'de.pool.ntp.org' ]
 chrony::serve_ntp: true
 chrony::client_allow: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/48' ]
+
+collectd::purge: true
+collectd::purge_config: true
+collectd::recurse: true
+
+component::collectd::plugin_classes:
+  - syslog
+  - cpu
+  - df
+  - disk
+  - entropy
+  - interface
+  - load
+  - memory
+  - processes
+  - swap
+  - users
+  - write_graphite
+
+collectd::plugin::df::ignoreselected: true
+collectd::plugin::df::fstypes:
+  - rootfs
+  - sysfs
+  - proc
+  - devtmpfs
+  - devpts
+  - fusectl
+  - cgroup
+  - tmpfs
+  - vboxsf
+
+collectd::plugin::write_graphite::carbon_defaults:
+  protocol: tcp
+  storerates: true
+  graphiteprefix: 'servers.'
 
 component::users::collections:
   - admin

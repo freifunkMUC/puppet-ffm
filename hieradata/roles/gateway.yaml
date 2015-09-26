@@ -12,6 +12,16 @@ component::fastd::defaults:
   methods:
     - salsa2012+umac
 
+component::collectd::plugin_classes:
+  - conntrack
+
+component::collectd::plugins:
+  dns:
+    content: |
+      <Plugin dns>
+        Interface "br0"
+      </Plugin>
+
 component::sysctl::settings:
   fs.file-max:
     value: "100000"

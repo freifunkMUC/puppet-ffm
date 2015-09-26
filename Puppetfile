@@ -12,6 +12,7 @@ mod 'puppetlabs/firewall',      '1.7.1'
 mod 'dhoppe/fail2ban',          '1.0.8'
 mod 'ringingliberty/chrony',    '0.2.1'
 mod 'example42/network',        '3.1.23'
+mod 'puppet/collectd',          '4.2.0'
 
 mod 'puppetlabs/vcsrepo',       '1.3.1'
 mod 'puppetlabs/nodejs',        '0.8.0'

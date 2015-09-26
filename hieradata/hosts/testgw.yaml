@@ -18,6 +18,11 @@ component::dnsmasq::dnsservers:
   google:
     ip: 8.8.8.8
 
+collectd::plugin::write_graphite::carbons:
+  stats.localdomain:
+    graphitehost: 'stats.localdomain'
+    graphiteport: 42003
+
 component::fastd::instances:
   meshvpn0:
     public: 'bcc047f2fb0acc2fd57028265607a7543aeb0bae3bf8f9f51389c080d0eff018'
