@@ -41,8 +41,8 @@ class profile::gateway (
   network::interface { $interface:
     method => 'manual',
     pre_up => [
-      'ip link add bat-dummy type dummy || true',
-      "batctl -m ${interface} if add bat-dummy",
+      'ip link add dummy0 type dummy || true',
+      "batctl -m ${interface} if add dummy0",
     ],
     up     => [
       "batctl -m ${interface} gw server 100000/100000",
