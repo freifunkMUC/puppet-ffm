@@ -73,15 +73,17 @@ class profile::gateway (
     before => undef,
   }
 
-  firewall { '000 Allow bridge to tunnel forwarding':
+  firewall { '000 Allow tunnel to bridge forwarding':
     chain    => 'FORWARD',
+    proto    => 'all',
     iniface  => $tunnel_name,
     outiface => $bridge_name,
     action   => 'accept',
   }
 
-  firewall { '000 Allow tunnel to bridge forwarding':
+  firewall { '000 Allow bridge to tunnel forwarding':
     chain    => 'FORWARD',
+    proto    => 'all',
     iniface  => $bridge_name,
     outiface => $tunnel_name,
     action   => 'accept',
