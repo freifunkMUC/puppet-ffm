@@ -9,6 +9,7 @@ profile::default::default_components:
   - network
   - resolvconf
   - fail2ban
+  - packages
 
 component::apt::repos:
   - puppetlabs
@@ -16,6 +17,18 @@ component::apt::repos:
 
 component::apt::ubuntu::mirror: mirror.lrz.de
 component::apt::ubuntu::utopic::mirror: mirror.lrz.de
+
+component::packages::names:
+  - htop
+  - iftop
+  - molly-guard
+  - ethtool
+  - nmon
+  - iotop
+  - memlockd
+  - strace
+  - tcpdump
+  - dstat
 
 network::interfaces_hash:
   eth0:
