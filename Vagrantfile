@@ -34,15 +34,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", path: 'scripts/bootstrap_puppetdeps.sh'
 
-  config.vm.provision :puppet do |p|
-    p.synced_folder_type = "nfs" if cfg['nfs']
-    p.manifests_path = "."
-    p.manifest_file = "site.pp"
-    p.module_path = [ "legacy", "site", "modules" ]
-    p.hiera_config_path = "hiera.yaml"
-    p.working_directory = "/vagrant"
-    p.options = [ '--parser=future', '--verbose', cfg['puppet_options'] ].join(' ')
-  end
+  config.vm.provision "shell", inline: 'cd /vagrant; ./scripts/apply.sh ' + cfg['puppet_options']
 
   hiera_hosts.sort.each_with_index do |host, index|
     config.vm.define host do |h|
