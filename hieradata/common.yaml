@@ -42,34 +42,9 @@ fail2ban::bantime: 900
 fail2ban::findtime: 600
 fail2ban::maxretry: 3
 
-profile::fastd::mesh_vpn_interface: 'mesh-vpn'
-profile::fastd::community: 'ff'
-profile::batman_adv::bridge: 'brff'
-profile::firewall::purge: true
-
-profile::radvd::ipv6_prefix_without_length: 'fdef:ffc0:4fff::'
-profile::radvd::ipv6_prefix_length: 64
-# Only announce router if you can globally route the ipv6 prefix
-profile::radvd::announce_router: false
-
-profile::dns::listen_address: '127.0.0.1'
-profile::dns::upstream_servers:
-  - '85.214.20.141'  # FoeBud
-  - '213.73.91.35'   # dnscache.berlin.ccc.d
-
 chrony::servers: [ '0.ntp.ffmuc.net', 'de.pool.ntp.org' ]
 chrony::serve_ntp: true
-chrony::client_allow: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/64' ]
-
-fastd::port: 10000
-
-# fastd mac address: ${mac_prefix}:${hex_gateway_number}:${mac_suffix}
-# hex_gateway_number is gateway_number automatically converted into hex
-# therefor we only have at the moment the possibility of 0xff gateways
-fastd::mac_prefix: 'f2:80:00'
-fastd::mac_suffix: '23:42'
-fastd::version: latest
-fastd::purge_peers: false
+chrony::client_allow: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/48' ]
 
 component::users::collections:
   - admin
