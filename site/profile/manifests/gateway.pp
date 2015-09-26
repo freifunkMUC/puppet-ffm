@@ -24,10 +24,10 @@ class profile::gateway (
     allow_hotplug => true,
     up => [
       'ip rule add iif $IFACE table 42',
-      'ip route add unreachable default table 42',
+      'ip route add unreachable default metric 2000 table 42',
     ],
     down => [
-      'ip route del unreachable default table 42',
+      'ip route del unreachable default metric 2000 table 42',
       'ip rule del iif $IFACE table 42',
     ],
   }
