@@ -5,6 +5,8 @@ class component::apt (
   contain '::apt'
   contain '::apt::update'
 
+  Class['::component::apt'] -> Class['::role']
+
   $os = downcase($::operatingsystem)
   contain "component::apt::${os}"
 

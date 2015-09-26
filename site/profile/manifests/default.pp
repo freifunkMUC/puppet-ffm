@@ -1,8 +1,12 @@
 class profile::default (
-  $default_components = [],
-  $default_packages   = []
+  $includes = [],
+  $components = [],
 ) {
-  each($default_components) |$component| {
+  each($includes) |$include| {
+    include "::${include}"
+  }
+
+  each($components) |$component| {
     contain "::component::${component}"
   }
 }
