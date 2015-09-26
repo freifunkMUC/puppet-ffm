@@ -65,6 +65,7 @@ chrony::client_allow: [ '10.80.0.0/16', 'fdef:ffc0:4fff::/48' ]
 collectd::purge: true
 collectd::purge_config: true
 collectd::recurse: true
+collectd::interval: 30
 
 component::collectd::plugin_classes:
   - syslog
