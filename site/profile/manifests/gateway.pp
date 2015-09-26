@@ -17,16 +17,16 @@ class profile::gateway (
   contain ::component::fastd
 
   network::interface { "${name}-v4":
-    interface => $bridge_name,
-    family    => 'inet',
-    ipaddress => $ipv4,
-    bridge_ports => [$interface],
+    interface     => $bridge_name,
+    family        => 'inet',
+    ipaddress     => $ipv4,
+    bridge_ports  => [$interface],
     allow_hotplug => true,
-    up => [
+    up            => [
       'ip rule add iif $IFACE table 42',
       'ip route add unreachable default metric 2000 table 42',
     ],
-    down => [
+    down          => [
       'ip route del unreachable default metric 2000 table 42',
       'ip rule del iif $IFACE table 42',
     ],
