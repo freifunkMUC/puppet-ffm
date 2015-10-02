@@ -20,7 +20,7 @@ Until that you should probably stop fastd with "service fastd stop".
 
 # base system
 
-As a first step you should install ubuntu 14.04 lts on your machine.
+As a first step you should install Debian Jessie on your machine.
 
 
 # bootstrapping the installation
@@ -31,13 +31,13 @@ sudo dpkg -i puppetlabs-release-trusty.deb
 sudo apt-get update
 
 sudo apt-get -y install git puppet facter make ruby-dev
-sudo gem install librarian-puppet
+sudo gem install r10k
 
 cd /opt
 sudo git clone https://github.com/freifunkMUC/puppet-ffm.git
 sudo chown -R $USER:$USER puppet-ffm
 cd puppet-ffm
-librarian-puppet install
+r10k puppetfile install
 ```
 
 # configuration
