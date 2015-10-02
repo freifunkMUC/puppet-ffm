@@ -113,6 +113,12 @@ component::users::admin:
       ffmucpletz:
         type: ssh-ed25519
         key:  AAAAC3NzaC1lZDI1NTE5AAAAIKuIAJJ28E7ak1w8qb7zJSbSROnsEKMul4tfuOVkAha0
+  fadenb:
+    password: '$6$b2Wxzp2m$wsJ9PY7KeacQP/eaIuzC8xazJSf9a8OX0Oo/PtTEAMyruyf58Mh7C0d5YCNkhuDG3b.vIiOQsuo8akiXYUfac.'
+    ssh_authorized_keys:
+      p4x382:
+        type: 'ssh-rsa'
+        key:  'AAAAB3NzaC1yc2EAAAADAQABAAACAQCrdelMia5gDDkEUC0lfRXxKQo0oPVpg/MxZAX44MGxqE+jgBk7VoIw6YvGcoeLboDh0SIuWXMIkVzWIF1CCpcKlhJ1GaMFH7URCQvJd636SO9sg3bjoRENh8GJaQpgKp+yeH7wvfwSpkrk7RoadfvTu0KGTUH8J5f3GTZU4CHAn9PfAv4+BVPvM6DRLxIJJA6/zFWW42Q5A9rUOgdpua+5xzCKJ0AHaVRoE935kXC2DogxHWQaJ45EeqPZJHCyuZRqTRpGKTQBMWWrmk4R+bJtUME+xmvf1cG5RCy1/8YPEkBfv2GbmVFSomH9ZeaMQRd8ZOcUitYzcxF1HJwxsSqCUTdt1JTYu/qyhXl1fNFfAW1+oWIDzbeaY5oZQzRH3pl/bf2uvoLHXgNZz5Dkgj8FdUjpGML9kUq2/aH3sLtOPO5NKnJcGPBjTfKL91z21nlBfVw4+Yi6J5h/ORsucJsR9HjDuBsudjSL0PTrYzZkAGZE5CrU8t/6IS++VUDCCYA4XITcMNIb5gnav20Wn8UUg4zZh+M6cPTmFONCLsYcsEBgspuPQT0TwWVdDYoSmlVrEngGeeVARGQJ6Hr70VkmNX0hrVkudlrjWjidxVmIBCpHehk9ucLRCFvBfcV9h6McpeXvFERKOyUel3+4Q8bacgzjZd0tXHonJwHhVOxhdw=='
   ruebezahl:
     ssh_authorized_keys:
       ruebezahl:
