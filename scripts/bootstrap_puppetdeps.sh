@@ -5,8 +5,10 @@ set -e
 STAMP="/var/lib/.puppet_bootstrapped"
 MOD_STAMP="/vagrant/modules/.stamp"
 
+cd /tmp
+
 if [ ! -e "$STAMP" ]; then
-    curl -Oq https://apt.puppetlabs.com/puppetlabs-release-stable.deb
+    wget https://apt.puppetlabs.com/puppetlabs-release-stable.deb
     dpkg -i puppetlabs-release-stable.deb
     rm puppetlabs-release-stable.deb
 
