@@ -5,6 +5,10 @@ class component::fastd (
 ) {
   validate_hash($instances)
 
+  package { 'fastd-query':
+    ensure => latest,
+  }
+
   network::interface { keys($instances):
     method        => 'manual',
     up            => ['ip link set $IFACE up'],
