@@ -51,7 +51,7 @@ class profile::gateway (
     ],
   }
 
-  contain ::firewall
+  contain ::component::firewall
 
   firewall { '000 Masquerade VPN traffic':
     table    => 'nat',
