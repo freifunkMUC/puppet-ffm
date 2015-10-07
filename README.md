@@ -26,8 +26,8 @@ As a first step you should install Debian Jessie on your machine.
 # bootstrapping the installation
 ```
 sudo apt-get -y upgrade
-wget https://apt.puppetlabs.com/puppetlabs-release-trusty.deb
-sudo dpkg -i puppetlabs-release-trusty.deb
+wget https://apt.puppetlabs.com/puppetlabs-release-jessie.deb
+sudo dpkg -i puppetlabs-release-jessie.deb
 sudo apt-get update
 
 sudo apt-get -y install git puppet facter make ruby-dev
