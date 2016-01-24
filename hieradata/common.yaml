@@ -124,15 +124,3 @@ component::users::admin:
       ruebezahl:
         type: 'ssh-rsa'
         key:  'AAAAB3NzaC1yc2EAAAABIwAAAQEA5PD0xVViVQd5qgE2E4iC8ZWLIg8rmhz1Zb7NJgcA/uwvLTsc1aNW5c16qVWQot37EMHTeh1emr6C0oqNXSOsLWlOfcIHuV/QlVFhxiFZjCv/MWenb2US0mS9po7OS1v+zDAfotb2uUf2MPuaOEcnzToCUu4fa2Guh6YqislWfdFJRbA6rHZtWR48t1cJjhYI5KuF4Y2ef3yMDohTBXcA+oy8rKEfrCJuUaxzqlJPzKRsu1i0mooOvIehBUxAecmRBruBnamTf2NYestshazVkFKnUFf9gk25t6dVuT4UiMjBZdT6lqlbyW+RUtJTa6t65oUj4WfSp9Qt5GS172Ko0w=='
-  trino:
-    ssh_authorized_keys:
-      trino:
-        type: 'ssh-rsa'
-        key:  'aaaab3nzac1yc2eaaaadaqabaaacaqdxgnigkltefaldg1f9xbzwtv49oaai6xmglpare0nc6+qnpv15sonrdbdlkk1alewyichulxf/aude2zqyztx8mt4+/aee0uihhfcsnqeb85zhspu9kivlxm050wea+urgnnimucqkvnhm37gl35zvwpmwkf3jhlkgjsfvq4lmulll1tzanfeg1xl0ex7sianjoddwvm7q2tjenhkhjraeg/bxevip1gbj0wf5bwhrm305vj82mci5lynbptmnn2uzi4n6xz6k+ovx2owxgh43yi/eprd1fuhfi50bh4a7+ur31j3sxa8+c3uqqvpvpwhzh+delabxpgcaxw2v8twnn5ev/0dhbf/hf1noon/8q13xga4ulhvyblkxeho4vhjgx5e3sykever/svpqqai3p4qs7prtezjqmxoahn9n93mdi1xg5cxyfgmyhmuodkrvkhxftmqizvd1kguede5wh18xpalpsyq8cjrxmx7rtl0+m70wjc3f7jg4zo+kst2fjsqxuh1x9dwfo1hmdvzcpj5laspptzc+fyqimcxpljhykg09bazn050wer5jbk0fjsmscvdimwtnp13pnavddempiis6cnam8bumb9ni1rl1phmzbqdg7wailc9+bsztzai6qqhehdxsqk3qjsow812tvtmu1u/zp2wkom4uiq=='
-  lhampe:
-    password: '$6$bWgQAOHl/$BQxsaYa6uFHYQ31uOIcuBBrszsqRCEhbfjggtXqLdaRxHsb4o85fNWzePsSvG62rmrALrhFPoJPEK5ne1CyfV/'
-    ssh_authorized_keys:
-      lhampe:
-        type: 'ssh-rsa'
-        key:  'AAAAB3NzaC1yc2EAAAADAQABAAABAQDQooEsyAa2hT2dUSvcPz2Iu5qJe+YUFybUR82kLJeMx8LOFRK4l6n9CP5OUpRoMCiOmwlPLWaaQfzyBDZvgQVS0k5wH0z+gL2/843pg6SMQ0pbnu4rJogspDMuwyjDNuzLLgj8YuIswuExyz++3oJtYPwQ2axZHVFIzjD9oOjbXn1i+RePNF9Me8vTLEWIvOFVbtuDjdLw/6N4TYXHcwDfaNBzMgtQrBlBy+0ahlRQ09vQIbFzJOORECeqvKBrG2aPv7tAFAjGMDSE4+sKCL4IECqTQTIAlpTpsNeOj2PvFyNszKhdefRF88O83qq6hgPMGU7p9p4hl8tIISWrkr8v'
-
